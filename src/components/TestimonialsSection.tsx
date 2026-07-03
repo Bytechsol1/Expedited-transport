@@ -1,106 +1,143 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import PixelTransition from "./PixelTransition";
 import { DotField } from "./DotField";
 
-const CARD_W = 310;        // card width in px
-const ASPECT = "148%";     // height = 310 * 1.48 ≈ 459 px  (portrait)
-const GAP = 22;            // gap between cards
-const SPEED = 0.55;        // px per rAF frame ≈ 33px/s
+const CARD_W = 340;
+const ASPECT = "148%";   // ≈ 503 px tall
+const GAP = 22;
+const SPEED = 0.65;
 
 const TESTIMONIALS = [
   {
     quote: "Deliveries always on time. Expedited Transport never lets us down — our entire supply chain depends on them.",
     name: "Nora Elkind",
     company: "Tri-State Parts",
-    bg: "#0d1f14",
-    photo: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    quote: "We moved our entire Connecticut distribution through them. Flawless execution every single time.",
-    name: "Amira Benali",
-    company: "Paloma CT",
-    bg: "#111827",
-    photo: "https://randomuser.me/api/portraits/women/68.jpg",
-  },
-  {
-    quote: "Our perishables reach customers fresh because these drivers understand what urgency actually means.",
-    name: "Priya Sharma",
-    company: "NE Supply Co.",
-    bg: "#1f1108",
-    photo: "https://randomuser.me/api/portraits/women/21.jpg",
+    photo: "https://img.magnific.com/free-photo/cheerful-entrepreneur_1098-17978.jpg?semt=ais_hybrid&w=740&q=80",
   },
   {
     quote: "Best freight partner we've had in 15 years of retail operations. Wouldn't consider switching.",
     name: "Leo Hartmann",
     company: "Tynker Retail",
-    bg: "#0b1528",
-    photo: "https://randomuser.me/api/portraits/men/46.jpg",
+    photo: "https://img.magnific.com/premium-photo/happy-mid-aged-business-man-ceo-standing-office-arms-crossed-smiling-mature-confident-professional-executive-manager-proud-l-ai-generated-illustration_866663-25746.jpg?semt=ais_hybrid&w=740&q=80",
   },
   {
-    quote: "Real-time tracking and zero damage claims across three years of heavy shipping partnership.",
-    name: "Suki Tanaka",
-    company: "CT Foods Co.",
-    bg: "#180b28",
-    photo: "https://randomuser.me/api/portraits/women/9.jpg",
+    quote: "We moved our entire Connecticut distribution through them. Flawless execution every single time.",
+    name: "Amira Benali",
+    company: "Paloma CT",
+    photo: "https://img.magnific.com/free-photo/woman-showing-ok-sign_23-2148990150.jpg?semt=ais_hybrid&w=740&q=80",
   },
   {
-    quote: "They handle our most time-critical shipments with an impressive reliability record.",
-    name: "James Wilson",
-    company: "Skybreak Logistics",
-    bg: "#102010",
-    photo: "https://randomuser.me/api/portraits/men/77.jpg",
+    quote: "Our perishables reach customers fresh because these drivers understand what urgency actually means.",
+    name: "Priya Sharma",
+    company: "NE Supply Co.",
+    photo: "https://img.magnific.com/premium-photo/portrait-young-indian-woman-happy-with-internship-human-resources-opportunity-mission-vision-company-values-goals-face-headshot-gen-z-person-with-hr-job-about-us-faq_590464-134290.jpg",
   },
 ];
 
 function TestimonialBack({
-  quote, name, company, bg,
-}: { quote: string; name: string; company: string; bg: string }) {
+  quote, name, company, photo,
+}: { quote: string; name: string; company: string; photo: string }) {
   return (
     <div style={{
       width: "100%", height: "100%",
-      background: bg,
-      display: "flex", flexDirection: "column", justifyContent: "center",
-      padding: "1.75rem 1.5rem",
+      background: "#000",
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center",
+      padding: "2rem 1.6rem",
       boxSizing: "border-box",
+      textAlign: "center",
+      gap: 0,
     }}>
-      <span style={{
-        color: "#b6f000",
-        fontSize: "3.5rem",
-        fontFamily: "Georgia, serif",
-        lineHeight: 0.7,
-        display: "block",
-      }}>&ldquo;</span>
+      {/* Avatar */}
+      <img
+        src={photo}
+        alt={name}
+        style={{
+          width: 76,
+          height: 76,
+          borderRadius: "50%",
+          objectFit: "cover",
+          objectPosition: "top center",
+          border: "2.5px solid #b6f000",
+          marginBottom: "1rem",
+          flexShrink: 0,
+        }}
+      />
 
+      {/* Name */}
       <p style={{
-        color: "#f0f0f0",
-        fontSize: "0.93rem",
-        lineHeight: 1.62,
-        marginTop: "0.85rem",
+        color: "#ffffff",
+        fontWeight: 700,
+        fontSize: "1rem",
+        fontFamily: "var(--font-primary, 'Inter', sans-serif)",
+        margin: "0 0 0.3rem",
+        letterSpacing: "-0.01em",
+      }}>{name}</p>
+
+      {/* Company */}
+      <p style={{
+        color: "#b6f000",
+        fontSize: "0.78rem",
+        fontFamily: "var(--font-primary, 'Inter', sans-serif)",
+        margin: "0 0 1.1rem",
+        fontWeight: 500,
+      }}>{company}</p>
+
+      {/* Thin separator */}
+      <div style={{
+        width: "52%", height: 1,
+        background: "rgba(255,255,255,0.12)",
+        marginBottom: "1.1rem",
+      }} />
+
+      {/* Stars */}
+      <div style={{ display: "flex", gap: 3, marginBottom: "1.1rem" }}>
+        {[1,2,3,4,5].map(s => (
+          <span key={s} style={{ color: "#f59e0b", fontSize: "1.05rem", lineHeight: 1 }}>★</span>
+        ))}
+      </div>
+
+      {/* Quote */}
+      <p style={{
+        color: "rgba(255,255,255,0.76)",
+        fontSize: "0.875rem",
+        lineHeight: 1.65,
         fontFamily: "var(--font-primary, 'Inter', sans-serif)",
         fontWeight: 400,
-        margin: "0.85rem 0 0",
+        fontStyle: "italic",
+        margin: 0,
       }}>
-        {quote}
+        &ldquo;{quote}&rdquo;
       </p>
+    </div>
+  );
+}
 
-      <div style={{ marginTop: "1.6rem" }}>
-        <div style={{ width: 44, height: 2, background: "#b6f000", marginBottom: "0.9rem" }} />
-        <p style={{
-          color: "#b6f000",
-          fontWeight: 700,
-          fontSize: "0.9rem",
-          fontFamily: "var(--font-primary, 'Inter', sans-serif)",
-          margin: 0,
-        }}>{name}</p>
-        <p style={{
-          color: "rgba(255,255,255,0.46)",
-          fontSize: "0.78rem",
-          fontFamily: "var(--font-primary, 'Inter', sans-serif)",
-          margin: "0.28rem 0 0",
-        }}>{company}</p>
-      </div>
+/* Pop wrapper — lifts & scales the card on hover with a spring overshoot */
+function PopCard({ children, onEnter, onLeave }: {
+  children: React.ReactNode;
+  onEnter: () => void;
+  onLeave: () => void;
+}) {
+  const [popped, setPopped] = useState(false);
+  return (
+    <div
+      style={{
+        flexShrink: 0,
+        position: "relative",
+        zIndex: popped ? 10 : 1,
+        transform: popped
+          ? "scale(1.055) translateY(-10px)"
+          : "scale(1) translateY(0px)",
+        transition: "transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0s",
+        willChange: "transform",
+      }}
+      onMouseEnter={() => { setPopped(true); onEnter(); }}
+      onMouseLeave={() => { setPopped(false); onLeave(); }}
+    >
+      {children}
     </div>
   );
 }
@@ -189,13 +226,11 @@ export function TestimonialsSection() {
               paddingLeft: GAP,
             }}
           >
-            {/* Duplicate set for seamless infinite loop */}
-            {[...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
-              <div
+            {Array.from({ length: 6 }, () => TESTIMONIALS).flat().map((t, i) => (
+              <PopCard
                 key={i}
-                style={{ flexShrink: 0 }}
-                onMouseEnter={() => { isPausedRef.current = true; }}
-                onMouseLeave={() => { isPausedRef.current = false; }}
+                onEnter={() => { isPausedRef.current = true; }}
+                onLeave={() => { isPausedRef.current = false; }}
               >
                 <PixelTransition
                   firstContent={
@@ -210,17 +245,17 @@ export function TestimonialsSection() {
                       quote={t.quote}
                       name={t.name}
                       company={t.company}
-                      bg={t.bg}
+                      photo={t.photo}
                     />
                   }
                   gridSize={8}
                   pixelColor="#b6f000"
                   once={false}
-                  animationStepDuration={0.4}
+                  animationStepDuration={0.18}
                   style={{ width: CARD_W }}
                   aspectRatio={ASPECT}
                 />
-              </div>
+              </PopCard>
             ))}
           </div>
         </div>

@@ -218,9 +218,22 @@ export function SiteHeader() {
       <style>{`
         .site-header {
           position: fixed;
-          top: 0; left: 0; right: 0;
+          top: 0;
+          left: 0;
+          right: 0;
           z-index: 100;
           padding: 0.875rem 1.5rem 0;
+          pointer-events: none;
+          transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+        }
+
+        .site-header > * {
+          pointer-events: auto;
+        }
+
+        .site-header.hero-ended {
+          transform: translateY(-120%);
+          opacity: 0;
           pointer-events: none;
         }
 
@@ -233,18 +246,17 @@ export function SiteHeader() {
           margin: 0 auto;
           padding: 0.9rem 0.9rem 0.9rem 1.5rem;
           background: transparent;
-          border: 1px solid rgba(255,255,255,0.18);
+          border: 1px solid rgba(255,255,255,0.15);
           border-radius: 20px;
-          pointer-events: auto;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           text-rendering: optimizeLegibility;
-          transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+          transition: background 0.3s ease, border-color 0.3s ease;
         }
+
         .hero-ended .nav-card {
-          background: #13131a;
+          background: #000;
           border-color: rgba(255,255,255,0.1);
-          box-shadow: 0 4px 32px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.06) inset;
         }
 
         .brand {

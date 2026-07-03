@@ -252,11 +252,15 @@ export function FeaturesSection() {
                 }}
               >
                 {FEATURES.map((feature, idx) => (
-                  <p
+                  <div
                     key={idx}
+                    className="feature-text-item"
                     style={{
                       gridRow: "1",
                       gridColumn: "1",
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "0.6rem",
                       fontFamily: "var(--font-primary)",
                       fontSize: "clamp(1.5rem, 2.396vw, 3.833rem)",
                       fontWeight: 450,
@@ -264,16 +268,16 @@ export function FeaturesSection() {
                       letterSpacing: "min(-0.024vw, -0.613px)",
                       margin: 0,
                       color: "var(--c-dark-green)",
-                      pointerEvents: "none",
+                      pointerEvents: idx === currentItem ? "auto" : "none",
                       /* Before measurement: hide non-active items to avoid flash */
                       opacity: slotHeight === 0 ? (idx === currentItem ? 1 : 0) : 1,
                       transform: `translateY(${slotHeight === 0
                         ? 0
                         : idx === currentItem
-                          ? 0                           // active: resting position
+                          ? 0
                           : idx < currentItem
-                            ? -(slotHeight + 24)          // exited: just above the window
-                            : viewportH * 0.55            // entering: ~55vh below, dramatic rise
+                            ? -(slotHeight + 24)
+                            : viewportH * 0.55
                         }px)`,
                       transition: slotHeight > 0
                         ? "transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
@@ -282,7 +286,20 @@ export function FeaturesSection() {
                     }}
                   >
                     {feature.text}
-                  </p>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/arrow.svg"
+                      alt=""
+                      className="feature-arrow"
+                      style={{
+                        width: "clamp(1.1rem, 1.6vw, 1.9rem)",
+                        height: "clamp(1.1rem, 1.6vw, 1.9rem)",
+                        marginTop: "0.18em",
+                        flexShrink: 0,
+                        transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                      }}
+                    />
+                  </div>
                 ))}
               </div>
 
@@ -302,11 +319,10 @@ export function FeaturesSection() {
                       color: "var(--c-dark-green)",
                       maxWidth: "420px",
                       opacity: idx === currentItem ? 1 : 0,
-                      transform: `translateY(${
-                        idx === currentItem ? 0
-                        : idx < currentItem ? -60
-                        : viewportH * 0.3
-                      }px)`,
+                      transform: `translateY(${idx === currentItem ? 0
+                          : idx < currentItem ? -60
+                            : viewportH * 0.3
+                        }px)`,
                       transition: "transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease",
                       willChange: "transform",
                       pointerEvents: "none",
@@ -408,8 +424,12 @@ export function FeaturesSection() {
           </div>
 
           {/* Feature text */}
-          <p
+          <div
+            className="feature-text-item"
             style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "0.5rem",
               fontFamily: "var(--font-primary)",
               fontSize: "1.375rem",
               fontWeight: 450,
@@ -422,7 +442,20 @@ export function FeaturesSection() {
             }}
           >
             {FEATURES[currentItem].text}
-          </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/arrow.svg"
+              alt=""
+              className="feature-arrow"
+              style={{
+                width: "1.1rem",
+                height: "1.1rem",
+                marginTop: "0.2em",
+                flexShrink: 0,
+                transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+            />
+          </div>
 
           {/* Video */}
           <div
@@ -512,6 +545,11 @@ export function FeaturesSection() {
       </section>
 
       <style>{`
+        /* Arrow hover — rotates to northeast (45° up-right) */
+        .feature-text-item:hover .feature-arrow {
+          transform: rotate(-45deg);
+        }
+
         /* Desktop: section = 700svh tall scroll driver */
         .features-scroll-driver {
           height: calc(${TOTAL + 1} * 100svh);

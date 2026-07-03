@@ -1,8 +1,12 @@
 import { SiteHeader } from "@/components/SiteHeader";
 import { HeroSection } from "@/components/HeroSection";
+import { TruckLogoBar } from "@/components/TruckLogoBar";
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { ScrollFrameSection } from "@/components/ScrollFrameSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { ContactSection } from "@/components/ContactSection";
+import { DotSeparator } from "@/components/DotSeparator";
+import { FooterSection } from "@/components/FooterSection";
 
 export default function Home() {
   return (
@@ -18,15 +22,21 @@ export default function Home() {
           marginTop: "-60px",
           backgroundColor: "#fff",
         }}>
+          <TruckLogoBar />
           <FeaturesSection />
         </div>
         <div style={{ position: "relative", zIndex: 3 }}>
           <ScrollFrameSection />
         </div>
-        <div style={{ position: "relative", zIndex: 4 }}>
+        <div style={{ position: "relative", zIndex: 4, marginBottom: "0" }}>
           <TestimonialsSection />
         </div>
+        <DotSeparator />
+        <div style={{ position: "relative", zIndex: 5 }}>
+          <ContactSection />
+        </div>
       </main>
+      <FooterSection />
     </>
   );
 }

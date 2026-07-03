@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, memo } from 'react';
+import { useEffect, useRef, useId, memo } from 'react';
 
 const TWO_PI = Math.PI * 2;
 
@@ -52,7 +52,8 @@ export const DotField = memo(function DotField({
   const propsRef = useRef<Record<string, unknown>>({});
   propsRef.current = { dotRadius, dotSpacing, cursorRadius, cursorForce, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo };
   const rebuildRef = useRef<(() => void) | null>(null);
-  const glowIdRef = useRef(`dot-field-glow-${Math.random().toString(36).slice(2, 9)}`);
+  const uid = useId();
+  const glowIdRef = useRef(`dot-field-glow-${uid.replace(/:/g, '')}`);
 
   useEffect(() => {
     const canvas = canvasRef.current;

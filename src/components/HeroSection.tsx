@@ -2,15 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
-/* ─────────────────────────────────────────────────────────────────────────── */
-/*  Config                                                                     */
-/* ─────────────────────────────────────────────────────────────────────────── */
 const FRAME_COUNT = 240;
-
-/** Pad number to 5 digits: 0 → "00000" */
 const pad = (n: number) => String(n).padStart(5, "0");
-
-/** Public path to a frame (0-indexed) */
 const frameSrc = (i: number) => `/frames/frame_${pad(i)}.jpg`;
 
 const TITLES = [
@@ -20,9 +13,6 @@ const TITLES = [
   "Trusted since 2014.",
 ];
 
-/* ─────────────────────────────────────────────────────────────────────────── */
-/*  Image Preloader Hook                                                       */
-/* ─────────────────────────────────────────────────────────────────────────── */
 function useFrames() {
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -31,7 +21,6 @@ function useFrames() {
   useEffect(() => {
     const imgs: HTMLImageElement[] = [];
     let count = 0;
-
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
       img.src = frameSrc(i);
@@ -42,134 +31,133 @@ function useFrames() {
       };
       imgs.push(img);
     }
-
     imagesRef.current = imgs;
   }, []);
 
   return { imagesRef, loaded, loadedCount };
 }
 
-/* ─────────────────────────────────────────────────────────────────────────── */
-/*  Canvas Renderer Hook                                                       */
-/* ─────────────────────────────────────────────────────────────────────────── */
-function useCanvasRenderer(
-  canvasRef: React.RefObject<HTMLCanvasElement | null>,
-  imagesRef: React.RefObject<HTMLImageElement[]>,
-  frameIndex: number,
-  loaded: boolean
-) {
-  const draw = useCallback(() => {
-    const canvas = canvasRef.current;
-    const images = imagesRef.current;
-    if (!canvas || !images.length || !loaded) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Enable best possible image quality
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
-
-    const img = images[frameIndex];
-    if (!img || !img.complete || img.naturalWidth === 0) return;
-
-    const cw = canvas.width;
-    const ch = canvas.height;
-    const iw = img.naturalWidth;
-    const ih = img.naturalHeight;
-
-    // "cover" fit — image always fills the full viewport, no black bars
-    const scale = Math.max(cw / iw, ch / ih);
-    const dw = iw * scale;
-    const dh = ih * scale;
-    const dx = (cw - dw) / 2;
-    const dy = (ch - dh) / 2;
-
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, cw, ch);
-    ctx.drawImage(img, dx, dy, dw, dh);
-  }, [canvasRef, imagesRef, frameIndex, loaded]);
-
-  useEffect(() => {
-    draw();
-  }, [draw]);
-}
-
-/* ─────────────────────────────────────────────────────────────────────────── */
-/*  Main Hero Component                                                        */
-/* ─────────────────────────────────────────────────────────────────────────── */
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const duskRef = useRef<HTMLDivElement>(null);
 
-  const [scrollProgress, setScrollProgress] = useState(0);
+  // Continuous scroll values live in refs — no React re-renders on scroll
+  const scrollProgressRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const lastFrameRef = useRef(-1);
+  const lastTitleIdxRef = useRef(-1);
+  const loadedRef = useRef(false);
+
+  // Only discrete JSX-driving values need state
   const [activeTitleIdx, setActiveTitleIdx] = useState(0);
   const [revealedChars, setRevealedChars] = useState(0);
 
   const { imagesRef, loaded, loadedCount } = useFrames();
 
-  // Map progress [0,1] → frame index [0, FRAME_COUNT-1]
-  // Use round so the last frame is reachable before hitting absolute scroll bottom
-  const frameIndex = Math.min(
-    FRAME_COUNT - 1,
-    Math.max(0, Math.round(scrollProgress * (FRAME_COUNT - 1)))
-  );
+  // Keep loadedRef in sync without closure staleness in RAF
+  useEffect(() => { loadedRef.current = loaded; }, [loaded]);
 
-  // Draw frame on canvas
-  useCanvasRenderer(canvasRef, imagesRef, frameIndex, loaded);
+  // Draw directly to canvas — called from RAF, zero React overhead
+  const drawFrame = useCallback((frameIdx: number) => {
+    const canvas = canvasRef.current;
+    const images = imagesRef.current;
+    if (!canvas || !images.length) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const img = images[frameIdx];
+    if (!img || !img.complete || img.naturalWidth === 0) return;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    const cw = canvas.width, ch = canvas.height;
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const scale = Math.max(cw / iw, ch / ih);
+    const dw = iw * scale, dh = ih * scale;
+    const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.drawImage(img, dx, dy, dw, dh);
+  }, []);
 
-  // Sync canvas size to element size
+  // Sync canvas resolution to element size
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const sync = () => {
+      const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * (window.devicePixelRatio || 1);
-      canvas.height = rect.height * (window.devicePixelRatio || 1);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      if (loadedRef.current && lastFrameRef.current >= 0) drawFrame(lastFrameRef.current);
     };
-
     sync();
     const ro = new ResizeObserver(sync);
     ro.observe(canvas);
     return () => ro.disconnect();
-  }, []);
+  }, [drawFrame]);
 
-  // Scroll listener
+  // Draw frame 0 as soon as images finish loading
+  useEffect(() => {
+    if (loaded && lastFrameRef.current < 0) {
+      lastFrameRef.current = 0;
+      drawFrame(0);
+    }
+  }, [loaded, drawFrame]);
+
+  // RAF tick — canvas draw + DOM mutations, minimal setState
+  const tick = useCallback(() => {
+    rafRef.current = null;
+    const p = scrollProgressRef.current;
+
+    // Canvas frame — only redraw when index actually changes
+    const frameIdx = Math.min(FRAME_COUNT - 1, Math.max(0, Math.round(p * (FRAME_COUNT - 1))));
+    if (frameIdx !== lastFrameRef.current && loadedRef.current) {
+      lastFrameRef.current = frameIdx;
+      drawFrame(frameIdx);
+    }
+
+    // Dusk overlay — direct DOM write, no re-render
+    if (duskRef.current) {
+      duskRef.current.style.opacity = String(Math.max(0, 1 - p / 0.25));
+    }
+
+    // Title index — setState only when discrete value changes
+    const segSize = 1 / TITLES.length;
+    const idx = Math.min(TITLES.length - 1, Math.floor(p / segSize));
+    const segProgress = (p - idx * segSize) / segSize;
+    const chars = TITLES[idx].length;
+    const newRevealedChars = p < 0.01 ? 0 : Math.min(chars, Math.floor(segProgress * chars * 1.5));
+
+    if (idx !== lastTitleIdxRef.current) {
+      lastTitleIdxRef.current = idx;
+      setActiveTitleIdx(idx);
+    }
+    setRevealedChars(newRevealedChars);
+  }, [drawFrame]);
+
+  // Passive scroll listener → schedules RAF, never blocks scroll thread
   useEffect(() => {
     const onScroll = () => {
       const el = sectionRef.current;
       if (!el) return;
       const { top, height } = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, -top / (height - vh)));
-      setScrollProgress(progress);
-
-      const segSize = 1 / TITLES.length;
-      const idx = Math.min(TITLES.length - 1, Math.floor(progress / segSize));
-      const segProgress = (progress - idx * segSize) / segSize;
-
-      setActiveTitleIdx(idx);
-
-      if (progress < 0.01) {
-        setRevealedChars(0);
-      } else {
-        const chars = TITLES[idx].length;
-        setRevealedChars(Math.min(chars, Math.floor(segProgress * chars * 1.5)));
-      }
+      scrollProgressRef.current = Math.max(0, Math.min(1, -top / (height - vh)));
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const duskOpacity = Math.max(0, 1 - scrollProgress / 0.25);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [tick]);
 
   return (
     <section ref={sectionRef} style={{ position: "relative", height: "350svh" }}>
 
-      {/* ── Sticky viewport ── */}
+      {/* Sticky viewport */}
       <div
         style={{
           position: "sticky",
@@ -177,9 +165,10 @@ export function HeroSection() {
           height: "100svh",
           overflow: "hidden",
           backgroundColor: "#000",
+          willChange: "transform",
+          contain: "layout style paint",
         }}
       >
-        {/* ── Canvas (frame sequence) ── */}
         <canvas
           ref={canvasRef}
           style={{
@@ -192,10 +181,9 @@ export function HeroSection() {
           }}
         />
 
-        {/* ── Gradient overlays ── */}
-
-        {/* Dusk warm overlay — fades out as you scroll */}
+        {/* Dusk — opacity driven via DOM ref, never triggers React re-render */}
         <div
+          ref={duskRef}
           style={{
             position: "absolute",
             inset: 0,
@@ -203,8 +191,6 @@ export function HeroSection() {
               "radial-gradient(ellipse 120% 60% at 70% 45%, rgba(200,114,42,0.35) 0%, rgba(154,79,26,0.22) 25%, transparent 60%)",
             zIndex: 1,
             pointerEvents: "none",
-            opacity: duskOpacity,
-            transition: "opacity 0.6s ease",
           }}
         />
 
@@ -236,7 +222,7 @@ export function HeroSection() {
           }}
         />
 
-        {/* ── Title sequence ── */}
+        {/* Title sequence */}
         {TITLES.map((title, idx) => {
           const isActive = idx === activeTitleIdx;
           return (
@@ -286,13 +272,7 @@ export function HeroSection() {
           );
         })}
 
-        {/* ── Frame counter (dev aid, remove if unwanted) ── */}
-        {/* Uncomment to debug: */}
-        {/* <div style={{ position:"absolute", top:10, right:10, color:"#abff02", fontFamily:"monospace", fontSize:"0.7rem", zIndex:99 }}>
-          frame {frameIndex + 1}/{FRAME_COUNT} | {Math.round(scrollProgress * 100)}%
-        </div> */}
-
-        {/* ── Scroll indicator ── */}
+        {/* Scroll indicator */}
         <div
           style={{
             position: "absolute",
