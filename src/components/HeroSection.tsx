@@ -37,7 +37,10 @@ function useFrames() {
   return { imagesRef, loaded };
 }
 
-export function HeroSection() {
+export function HeroSection({ onReady }: { onReady?: () => void }) {
+  const onReadyRef  = useRef(onReady);
+  onReadyRef.current = onReady;
+
   const sectionRef  = useRef<HTMLElement>(null);
   const canvasRef   = useRef<HTMLCanvasElement>(null);
   const duskRef     = useRef<HTMLDivElement>(null);
@@ -59,7 +62,10 @@ export function HeroSection() {
   const [activeTitleIdx, setActiveTitleIdx] = useState(0);
 
   const { imagesRef, loaded } = useFrames();
-  useEffect(() => { loadedRef.current = loaded; }, [loaded]);
+  useEffect(() => {
+    loadedRef.current = loaded;
+    if (loaded) onReadyRef.current?.();
+  }, [loaded]);
 
   const drawFrame = useCallback((frameIdx: number) => {
     const ctx = ctxRef.current;

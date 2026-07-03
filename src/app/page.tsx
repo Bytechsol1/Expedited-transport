@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { HeroSection } from "@/components/HeroSection";
 import { TruckLogoBar } from "@/components/TruckLogoBar";
@@ -10,13 +13,15 @@ import { FooterSection } from "@/components/FooterSection";
 import { IntroAnimation } from "@/components/IntroAnimation";
 
 export default function Home() {
+  const [siteReady, setSiteReady] = useState(false);
+
   return (
     <>
-      <IntroAnimation />
+      <IntroAnimation siteReady={siteReady} />
       <SiteHeader />
       <main>
         <div style={{ position: "relative", zIndex: 1 }}>
-          <HeroSection />
+          <HeroSection onReady={() => setSiteReady(true)} />
         </div>
         <div style={{
           position: "relative",

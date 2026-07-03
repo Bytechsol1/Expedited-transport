@@ -4,17 +4,11 @@ import Image from "next/image";
 
 /* Rounded rect outlines positioned in full-viewport coordinates (vh/vw) */
 const RECTS: React.CSSProperties[] = [
-  // Top-left — large, bleeds off top & left edges
   { top: "-9vh",  left:  "-7vw",  width: "42vw", height: "54vh" },
-  // Top-right — medium, bleeds off top & right
   { top: "-5vh",  right: "-5vw",  width: "33vw", height: "40vh" },
-  // Left-middle — bleeds off left edge
   { top: "26vh",  left: "-13vw",  width: "38vw", height: "46vh" },
-  // Right-large — bleeds off right edge
   { top: "17vh",  right: "-7vw",  width: "50vw", height: "60vh" },
-  // Bottom-left — bleeds off left & bottom
   { top: "60vh",  left:  "-5vw",  width: "32vw", height: "46vh" },
-  // Bottom-right pair
   { top: "52vh",  right:  "1vw",  width: "25vw", height: "52vh" },
   { top: "69vh",  right:  "7vw",  width: "16vw", height: "34vh" },
 ];
@@ -37,7 +31,7 @@ function RectLayout() {
   );
 }
 
-export function IntroAnimation() {
+export function IntroAnimation({ siteReady }: { siteReady: boolean }) {
   const [phase, setPhase] = useState<"hold" | "exit" | "done">("hold");
 
   /* Lock body scroll while intro is visible */
@@ -48,18 +42,18 @@ export function IntroAnimation() {
     return () => { document.body.style.overflow = prev; };
   }, [phase]);
 
+  /* Exit as soon as frames are ready — small delay so it feels intentional */
   useEffect(() => {
-    /* Only show on fresh link navigation — skip on reload or back/forward */
-    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-    const isReload = nav ? nav.type !== "navigate" : false;
+    if (!siteReady || phase !== "hold") return;
+    const t1 = setTimeout(() => setPhase("exit"), 300);
+    const t2 = setTimeout(() => setPhase("done"), 300 + 950);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [siteReady, phase]);
 
-    if (isReload) {
-      setPhase("done");
-      return;
-    }
-
-    const t1 = setTimeout(() => setPhase("exit"), 1600);
-    const t2 = setTimeout(() => setPhase("done"), 1600 + 950);
+  /* Safety timeout — split open after 10 s even if images never finish */
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase(p => p === "hold" ? "exit" : p), 10000);
+    const t2 = setTimeout(() => setPhase(p => p !== "done"  ? "done"  : p), 10950);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
@@ -81,10 +75,6 @@ export function IntroAnimation() {
         transform: exiting ? "translateY(-100%)" : "translateY(0)",
         transition: exiting ? EASE : "none",
       }}>
-        {/*
-          Full-viewport inner layer: rects are positioned in 100vh space.
-          overflow:hidden on parent clips at 50vh — shows only top half.
-        */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "100vh" }}>
           <RectLayout />
         </div>
@@ -100,16 +90,12 @@ export function IntroAnimation() {
         transform: exiting ? "translateY(100%)" : "translateY(0)",
         transition: exiting ? EASE : "none",
       }}>
-        {/*
-          Shift up by 50vh so rects appear at the same viewport positions
-          they occupy in the top curtain — overflow:hidden shows only bottom half.
-        */}
         <div style={{ position: "absolute", top: "-50vh", left: 0, right: 0, height: "100vh" }}>
           <RectLayout />
         </div>
       </div>
 
-      {/* ── Logo — sits above both curtains, fades out before the split ── */}
+      {/* ── Logo + name + loading dots ── */}
       <div style={{
         position: "fixed", inset: 0,
         zIndex: 10000,
@@ -140,7 +126,34 @@ export function IntroAnimation() {
         }}>
           Expedited Transport Services
         </p>
+
+        {/* Loading dots — hidden once ready */}
+        {!siteReady && (
+          <div style={{ display: "flex", gap: "6px", marginTop: "1.5rem" }}>
+            {[0, 1, 2].map(i => (
+              <div
+                key={i}
+                style={{
+                  width: "5px",
+                  height: "5px",
+                  borderRadius: "50%",
+                  background: "#052424",
+                  opacity: 0.35,
+                  animation: "introDot 1.2s ease-in-out infinite",
+                  animationDelay: `${i * 0.2}s`,
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
+
+      <style>{`
+        @keyframes introDot {
+          0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+          40%            { opacity: 0.8; transform: scale(1.2); }
+        }
+      `}</style>
     </>
   );
 }
