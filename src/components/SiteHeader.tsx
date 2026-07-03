@@ -80,8 +80,8 @@ function ServicesMega({ open }: { open: boolean }) {
                   <lord-icon
                     src={svc.icon}
                     trigger="hover"
-                    colors="primary:#555555"
-                    style={{ width: "22px", height: "22px", flexShrink: 0, opacity: 0.55 }}
+                    colors="primary:#111111,secondary:#111111"
+                    style={{ width: "22px", height: "22px", flexShrink: 0 }}
                   />
                   <span className="mega-link-text" style={{
                     display: "flex", alignItems: "center", gap: "0.35rem",

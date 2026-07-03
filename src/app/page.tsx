@@ -7,10 +7,12 @@ import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { DotSeparator } from "@/components/DotSeparator";
 import { FooterSection } from "@/components/FooterSection";
+import { IntroAnimation } from "@/components/IntroAnimation";
 
 export default function Home() {
   return (
     <>
+      <IntroAnimation />
       <SiteHeader />
       <main>
         <div style={{ position: "relative", zIndex: 1 }}>

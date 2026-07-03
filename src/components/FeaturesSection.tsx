@@ -161,6 +161,47 @@ export function FeaturesSection() {
 
   return (
     <div>
+      {/* SVG clip-path definition — rounded notch corners via quadratic beziers.
+          objectBoundingBox maps coords 0-1 to element width/height, so it's fully responsive. */}
+      <svg width="0" height="0" style={{ position: "absolute", overflow: "hidden" }}>
+        <defs>
+          <clipPath id="features-video-clip" clipPathUnits="objectBoundingBox">
+            {/*
+              Original polygon points (normalized):
+              0,0 → 0.72,0 → 0.80,0.05 → 1,0.05 → 1,1 → 0,1 → 0,0.65 → 0.05,0.60 → 0.05,0.22 → 0,0.18 → 0,0
+
+              Each notch vertex replaced with:
+                L <approach>  Q <vertex-control> <departure>
+              radius ≈ 0.025 (objectBoundingBox units)
+            */}
+            <path d="
+              M 0.025,0
+              L 0.545,0
+              Q 0.57,0 0.5877,0.0177
+              L 0.6023,0.0323
+              Q 0.62,0.05 0.645,0.05
+              L 0.975,0.05
+              Q 1.0,0.05 1.0,0.075
+              L 1.0,0.975
+              Q 1.0,1.0 0.975,1.0
+              L 0.025,1.0
+              Q 0,1.0 0,0.975
+              L 0,0.675
+              Q 0,0.65 0.0177,0.6323
+              L 0.0323,0.6177
+              Q 0.05,0.60 0.05,0.575
+              L 0.05,0.245
+              Q 0.05,0.22 0.0305,0.2044
+              L 0.0195,0.1956
+              Q 0,0.18 0,0.155
+              L 0,0.025
+              Q 0,0 0.025,0
+              Z
+            " />
+          </clipPath>
+        </defs>
+      </svg>
+
       {/* ── Intro paragraph ── */}
       {/* <section
         style={{
@@ -292,11 +333,10 @@ export function FeaturesSection() {
                       alt=""
                       className="feature-arrow"
                       style={{
-                        width: "clamp(1.1rem, 1.6vw, 1.9rem)",
-                        height: "clamp(1.1rem, 1.6vw, 1.9rem)",
+                        width: "clamp(1.3rem, 2vw, 2.2rem)",
+                        height: "clamp(1.3rem, 2vw, 2.2rem)",
                         marginTop: "0.18em",
                         flexShrink: 0,
-                        transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
                       }}
                     />
                   </div>
@@ -320,8 +360,8 @@ export function FeaturesSection() {
                       maxWidth: "420px",
                       opacity: idx === currentItem ? 1 : 0,
                       transform: `translateY(${idx === currentItem ? 0
-                          : idx < currentItem ? -60
-                            : viewportH * 0.3
+                        : idx < currentItem ? -60
+                          : viewportH * 0.3
                         }px)`,
                       transition: "transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease",
                       willChange: "transform",
@@ -364,8 +404,8 @@ export function FeaturesSection() {
                 height: "calc(100svh - 4.375rem)",
                 position: "relative",
                 overflow: "hidden",
-                borderRadius: "0.625rem",
                 alignSelf: "center",
+                clipPath: "url(#features-video-clip)",
               }}
             >
               {FEATURES.map((feature, idx) => (
@@ -448,8 +488,8 @@ export function FeaturesSection() {
               alt=""
               className="feature-arrow"
               style={{
-                width: "1.1rem",
-                height: "1.1rem",
+                width: "1.3rem",
+                height: "1.3rem",
                 marginTop: "0.2em",
                 flexShrink: 0,
                 transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -545,8 +585,13 @@ export function FeaturesSection() {
       </section>
 
       <style>{`
-        /* Arrow hover — rotates to northeast (45° up-right) */
+        /* Arrow — hidden by default, fades in and rotates northeast on hover */
+        .feature-arrow {
+          opacity: 0;
+          transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
         .feature-text-item:hover .feature-arrow {
+          opacity: 1;
           transform: rotate(-45deg);
         }
 

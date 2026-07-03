@@ -105,12 +105,7 @@ export function FooterSection() {
     }}>
 
       {/* ── Main info grid ── */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1.2fr 1fr 0.8fr 1fr",
-        padding: "4rem 4rem 3.5rem",
-        gap: "2.5rem",
-      }}>
+      <div className="footer-grid">
 
         {/* Contact */}
         <div>
@@ -195,10 +190,7 @@ export function FooterSection() {
       <hr style={DIVIDER} />
 
       {/* ── Bottom meta ── */}
-      <div style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "1.4rem 4rem",
-      }}>
+      <div className="footer-meta">
         <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.78rem" }}>
           ©2024–26 Expedited Transport Services. All rights reserved.
         </span>
@@ -236,6 +228,47 @@ export function FooterSection() {
       </Link>
 
       <style>{`
+        /* ── Desktop grid ── */
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr 0.8fr 1fr;
+          padding: 4rem 4rem 3.5rem;
+          gap: 2.5rem;
+        }
+        .footer-meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1.4rem 4rem;
+        }
+
+        /* ── Tablet ── */
+        @media (max-width: 900px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            padding: 3rem 2rem 2.5rem;
+            gap: 2rem;
+          }
+          .footer-meta {
+            padding: 1.2rem 2rem;
+          }
+        }
+
+        /* ── Mobile ── */
+        @media (max-width: 600px) {
+          .footer-grid {
+            grid-template-columns: 1fr;
+            padding: 2.5rem 1.25rem 2rem;
+            gap: 2rem;
+          }
+          .footer-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1.2rem 1.25rem;
+          }
+        }
+
         .footer-expedited-text {
           font-size: clamp(64px, 15.5vw, 250px) !important;
           font-weight: 900 !important;

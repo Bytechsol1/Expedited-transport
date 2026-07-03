@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 
-const BULLETS = [
-  "Same-day quote turnaround",
-  "24/7 dispatch & emergency coverage",
-  "DOT-compliant, fully insured fleet",
-];
+const Threads = dynamic(() => import("./Threads"), { ssr: false });
+const SideRays = dynamic(() => import("./SideRays"), { ssr: false });
 
 export function ContactSection() {
   const [form, setForm] = useState({
@@ -14,92 +12,141 @@ export function ContactSection() {
   });
 
   const set = (k: keyof typeof form) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setForm(f => ({ ...f, [k]: e.target.value }));
 
   return (
-    <section style={{
-      background: "#fff",
-      padding: "7rem 2rem 6rem",
-      clipPath: "polygon(25% 10%, 75% 10%, 85% 0, 100% 0, 100% 100%, 0 100%, 0 0, 15% 0)",
+    <section className="contact-section" style={{
+      display: "flex",
+      minHeight: "100vh",
+      background: "#0a1628",
+      overflow: "hidden",
+      position: "relative",
     }}>
-      <div style={{
-        maxWidth: "1100px",
-        margin: "0 auto",
-        display: "grid",
-        gridTemplateColumns: "1fr 1.1fr",
-        gap: "5rem",
-        alignItems: "center",
-      }}>
 
-        {/* ── Left ── */}
-        <div>
+      {/* ── SideRays — top-right corner, covers ~60% of the section width ── */}
+      <div className="contact-siderays" style={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        width: "60%",
+        height: "70%",
+        pointerEvents: "none",
+        zIndex: 0,
+      }}>
+        <SideRays
+          rayColor1="#b6f000"
+          rayColor2="#96c8ff"
+          origin="top-right"
+          speed={2.5}
+          intensity={2}
+          spread={2}
+          tilt={0}
+          saturation={1.5}
+          blend={0.75}
+          falloff={1.6}
+          opacity={1}
+        />
+      </div>
+
+      {/* ── LEFT: Threads animation (vertical) + contact info overlay ── */}
+      <div className="contact-left" style={{
+        position: "relative",
+        overflow: "hidden",
+        zIndex: 1,
+      }}>
+        {/* Threads canvas — rotated 90° so threads flow top-to-bottom.
+            100vmax guarantees coverage on any aspect ratio (wide laptop or tall screen). */}
+        <div className="contact-threads-rotator" style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          width: "100vmax",
+          height: "100vmax",
+          transform: "translate(-50%, -50%) rotate(90deg)",
+          pointerEvents: "none",
+        }}>
+          <Threads
+            color={[0.7137254901960784, 0.9411764705882353, 0]}
+            amplitude={0.5}
+            distance={0}
+            enableMouseInteraction={false}
+          />
+        </div>
+
+        {/* Subtle dark vignette so text is readable */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 20%, rgba(10,22,40,0.55) 100%)",
+          pointerEvents: "none",
+        }} />
+
+        {/* Contact info text — bottom-left */}
+        <div style={{
+          position: "absolute",
+          bottom: "3rem",
+          left: "3rem",
+          right: "2rem",
+        }}>
           <p style={{
             fontFamily: "var(--font-mono, monospace)",
-            fontSize: "0.85rem",
+            fontSize: "0.7rem",
             fontWeight: 700,
-            letterSpacing: "0.24em",
+            letterSpacing: "0.28em",
             textTransform: "uppercase",
             color: "#b6f000",
-            margin: "0 0 1.25rem",
+            margin: "0 0 0.9rem",
           }}>
             Get in Touch
           </p>
-
           <h2 style={{
             fontFamily: "var(--font-primary, 'Inter', sans-serif)",
-            fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)",
+            fontSize: "clamp(1.6rem, 3vw, 2.6rem)",
             fontWeight: 700,
-            lineHeight: 1.15,
+            lineHeight: 1.1,
             letterSpacing: "-0.03em",
-            color: "#0a1628",
-            margin: "0 0 1.5rem",
+            color: "#fff",
+            margin: "0 0 1.4rem",
           }}>
             Contact us and we'll be in touch the same day
           </h2>
-
-          <p style={{
-            fontFamily: "var(--font-primary, 'Inter', sans-serif)",
-            fontSize: "1rem",
-            lineHeight: 1.7,
-            color: "rgba(0,0,0,0.5)",
-            margin: "0 0 2rem",
-          }}>
-            Fill out the form and our team will reach out promptly to discuss your freight needs.
-          </p>
-
-          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            {BULLETS.map(b => (
-              <li key={b} style={{ display: "flex", alignItems: "center", gap: "0.75rem",
-                fontFamily: "var(--font-primary, 'Inter', sans-serif)",
-                fontSize: "0.95rem", color: "rgba(0,0,0,0.65)" }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#b6f000", flexShrink: 0 }} />
-                {b}
-              </li>
-            ))}
-          </ul>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             <a href="tel:8609883887" style={{
               fontFamily: "var(--font-primary, 'Inter', sans-serif)",
-              fontSize: "1.05rem", fontWeight: 700,
-              color: "#0a1628", textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: 700,
+              color: "#fff",
+              textDecoration: "none",
               letterSpacing: "-0.01em",
             }}>
               (860) 988-3887
             </a>
             <a href="mailto:info@expeditedtransportservices.net" style={{
               fontFamily: "var(--font-primary, 'Inter', sans-serif)",
-              fontSize: "0.9rem", color: "rgba(0,0,0,0.45)", textDecoration: "none",
+              fontSize: "0.85rem",
+              color: "rgba(255,255,255,0.45)",
+              textDecoration: "none",
             }}>
               info@expeditedtransportservices.net
             </a>
           </div>
         </div>
+      </div>
 
-        {/* ── Right — form card ── */}
+      {/* ── RIGHT: Form card ── */}
+      <div className="contact-right" style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        zIndex: 1,
+      }}>
         <div className="contact-form-card" style={{
-          background: "#0a1628",
+          width: "100%",
+          maxWidth: "520px",
+          background: "#ffffff",
+          border: "1px solid rgba(0,0,0,0.08)",
           borderRadius: "20px",
           padding: "2.5rem",
           display: "flex",
@@ -107,21 +154,19 @@ export function ContactSection() {
           gap: "1.25rem",
         }}>
           {/* Row 1 */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+          <div className="form-row-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <Field label="Full Name" placeholder="Salik" value={form.name} onChange={set("name")} />
             <Field label="Phone Number" placeholder="(860) 555-0147" value={form.phone} onChange={set("phone")} type="tel" />
           </div>
 
           {/* Row 2 */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+          <div className="form-row-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <Field label="Email" placeholder="name@email.com" value={form.email} onChange={set("email")} type="email" />
-            <Field label="Company Name" placeholder="Acme Corp" value={form.company} onChange={set("company")} />
+            <Field label="Company Name" placeholder="Bytechsol LLC" value={form.company} onChange={set("company")} />
           </div>
 
-          {/* Service text input */}
           <Field label="Service Needed" placeholder="e.g. Hotshot Trucking, Freight Shipping…" value={form.service} onChange={set("service") as (e: React.ChangeEvent<HTMLInputElement>) => void} />
 
-          {/* Message */}
           <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
             <label style={LABEL_STYLE}>Message</label>
             <textarea
@@ -148,6 +193,7 @@ export function ContactSection() {
               letterSpacing: "-0.01em",
               cursor: "pointer",
               transition: "background 0.15s ease",
+              width: "100%",
             }}
             onMouseEnter={e => (e.currentTarget.style.background = "#cbff1a")}
             onMouseLeave={e => (e.currentTarget.style.background = "#b6f000")}
@@ -160,15 +206,63 @@ export function ContactSection() {
       <style>{`
         .contact-form-card input::placeholder,
         .contact-form-card textarea::placeholder {
-          color: rgba(255,255,255,0.35);
+          color: rgba(0,0,0,0.55);
         }
         .contact-form-card input,
-        .contact-form-card textarea,
-        .contact-form-card select {
-          color: #fff;
+        .contact-form-card textarea {
+          color: #0a1628;
         }
-        @media (max-width: 768px) {
-          .contact-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+
+        /* Desktop: side-by-side, equal halves */
+        .contact-section { flex-direction: row; }
+        .contact-left  { flex: 0 0 50%; min-height: 100%; }
+        .contact-right { flex: 0 0 50%; padding: 4rem 3rem 4rem 2rem; }
+
+        /* Tablet + mobile: stack vertically */
+        @media (max-width: 1024px) {
+          .contact-section {
+            flex-direction: column;
+            min-height: auto;
+          }
+          .contact-left {
+            flex: none;
+            width: 100%;
+            height: 320px;
+            min-height: 0;
+          }
+          .contact-right {
+            flex: none;
+            width: 100%;
+            padding: 2.5rem 1.5rem 3rem;
+          }
+          /* Two-column form rows → single column */
+          .form-row-2col {
+            grid-template-columns: 1fr !important;
+          }
+          /* Contact info repositioned for shorter strip */
+          .contact-left > div:last-child {
+            bottom: 1.5rem !important;
+            left: 1.5rem !important;
+            right: 1.5rem !important;
+          }
+          .contact-left > div:last-child h2 {
+            font-size: clamp(1.1rem, 4vw, 1.5rem) !important;
+            margin-bottom: 0.75rem !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .contact-right { padding: 2rem 1rem 2.5rem; }
+          .contact-form-card { padding: 1.5rem !important; }
+        }
+
+        /* Mobile: horizontal wave + hide SideRays */
+        @media (max-width: 1024px) {
+          .contact-siderays { display: none; }
+          .contact-threads-rotator {
+            top: 55% !important;
+            transform: translate(-50%, -50%) !important;
+          }
         }
       `}</style>
     </section>
@@ -182,16 +276,16 @@ const LABEL_STYLE: React.CSSProperties = {
   fontWeight: 600,
   letterSpacing: "0.06em",
   textTransform: "uppercase",
-  color: "rgba(255,255,255,0.45)",
+  color: "rgba(0,0,0,0.65)",
 };
 
 const INPUT_STYLE: React.CSSProperties = {
   background: "transparent",
   border: "none",
-  borderBottom: "1px solid rgba(255,255,255,0.15)",
+  borderBottom: "1px solid rgba(0,0,0,0.15)",
   borderRadius: 0,
   padding: "0.6rem 0",
-  color: "#fff",
+  color: "#0a1628",
   fontFamily: "var(--font-primary, 'Inter', sans-serif)",
   fontSize: "0.95rem",
   outline: "none",
@@ -216,9 +310,9 @@ function Field({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        style={{ ...INPUT_STYLE, color: value ? "#fff" : undefined }}
+        style={INPUT_STYLE}
         onFocus={e => (e.currentTarget.style.borderBottomColor = "#b6f000")}
-        onBlur={e => (e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.15)")}
+        onBlur={e => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.15)")}
       />
     </div>
   );
