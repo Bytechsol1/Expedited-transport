@@ -34,9 +34,9 @@ function RectLayout() {
 export function IntroAnimation({ siteReady }: { siteReady: boolean }) {
   const [phase, setPhase] = useState<"hold" | "exit" | "done">("hold");
 
-  /* Lock body scroll while intro is visible */
+  /* Lock body scroll only during hold — release the moment curtains start moving */
   useEffect(() => {
-    if (phase === "done") return;
+    if (phase !== "hold") return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = prev; };
