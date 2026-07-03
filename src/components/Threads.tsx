@@ -208,14 +208,24 @@ export default function Threads({
 
     let isVisible = true;
     const intersectionObserver = new IntersectionObserver(
-      (entries) => { isVisible = entries[0].isIntersecting; },
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+        // Restart the RAF loop when scrolled back into view
+        if (isVisible && !animationFrameId.current) {
+          animationFrameId.current = requestAnimationFrame(update);
+        }
+      },
       { threshold: 0 }
     );
     intersectionObserver.observe(container);
 
     function update(t: number) {
+      // Stop the loop entirely when off-screen — restart via IntersectionObserver
+      if (!isVisible || document.hidden) {
+        animationFrameId.current = 0;
+        return;
+      }
       animationFrameId.current = requestAnimationFrame(update);
-      if (!isVisible || document.hidden) return;
 
       const { color, amplitude, distance, enableMouseInteraction } = propsRef.current;
       program.uniforms.uColor.value.set(...color);

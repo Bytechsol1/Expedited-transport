@@ -49,12 +49,14 @@ export function IntroAnimation() {
   }, [phase]);
 
   useEffect(() => {
-    /* Show only once per browser session */
-    if (sessionStorage.getItem("ets_intro_shown")) {
+    /* Only show on fresh link navigation — skip on reload or back/forward */
+    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const isReload = nav ? nav.type !== "navigate" : false;
+
+    if (isReload) {
       setPhase("done");
       return;
     }
-    sessionStorage.setItem("ets_intro_shown", "1");
 
     const t1 = setTimeout(() => setPhase("exit"), 1600);
     const t2 = setTimeout(() => setPhase("done"), 1600 + 950);
@@ -124,7 +126,7 @@ export function IntroAnimation() {
           alt="Expedited Transport Services logo"
           width={88}
           height={88}
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: "contain", width: "88px", height: "auto" }}
           priority
         />
         <p style={{

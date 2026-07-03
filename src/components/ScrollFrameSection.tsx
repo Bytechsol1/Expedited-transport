@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 
-const FRAME_COUNT = 240;
+const FRAME_COUNT = 230;
 const pad = (n: number) => String(n).padStart(5, "0");
 const frameSrc = (i: number) => `/frames2/frame_${pad(i)}.jpg`;
 
@@ -16,17 +16,17 @@ const CAPTIONS = [
 function useFrames2() {
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [loadedCount, setLoadedCount] = useState(0);
 
   useEffect(() => {
     const imgs: HTMLImageElement[] = [];
     let count = 0;
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
+      img.decoding = "async";
       img.src = frameSrc(i);
+      // No setLoadedCount — eliminates 230 re-renders during load
       img.onload = img.onerror = () => {
         count++;
-        setLoadedCount(count);
         if (count === FRAME_COUNT) setLoaded(true);
       };
       imgs.push(img);
@@ -34,7 +34,7 @@ function useFrames2() {
     imagesRef.current = imgs;
   }, []);
 
-  return { imagesRef, loaded, loadedCount };
+  return { imagesRef, loaded };
 }
 
 export function ScrollFrameSection() {
@@ -43,38 +43,37 @@ export function ScrollFrameSection() {
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   // Continuous scroll values in refs — no re-renders on scroll
-  const scrollProgressRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
-  const lastFrameRef = useRef(-1);
-  const lastCaptionIdxRef = useRef(-1);
-  const loadedRef = useRef(false);
+  const scrollProgressRef  = useRef(0);
+  const rafRef             = useRef<number | null>(null);
+  const lastFrameRef       = useRef(-1);
+  const lastCaptionIdxRef  = useRef(-1);
+  const loadedRef          = useRef(false);
+  const ctxRef             = useRef<CanvasRenderingContext2D | null>(null);
+  const sectionTopRef      = useRef(0);
+  const sectionHeightRef   = useRef(0);
 
   // Only discrete JSX-driving values need state
   const [activeCaptionIdx, setActiveCaptionIdx] = useState(0);
   const [captionVisible, setCaptionVisible] = useState(false);
+  const lastCaptionVisibleRef = useRef(false);
 
-  const { imagesRef, loaded, loadedCount } = useFrames2();
+  const { imagesRef, loaded } = useFrames2();
 
   useEffect(() => { loadedRef.current = loaded; }, [loaded]);
 
   // Direct canvas draw — zero React overhead
   const drawFrame = useCallback((frameIdx: number) => {
-    const canvas = canvasRef.current;
+    const ctx = ctxRef.current;
     const images = imagesRef.current;
-    if (!canvas || !images.length) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx || !images.length) return;
     const img = images[frameIdx];
     if (!img || !img.complete || img.naturalWidth === 0) return;
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
+    const canvas = ctx.canvas;
     const cw = canvas.width, ch = canvas.height;
     const iw = img.naturalWidth, ih = img.naturalHeight;
     const scale = Math.max(cw / iw, ch / ih);
     const dw = iw * scale, dh = ih * scale;
     const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, 0, cw, ch);
     ctx.drawImage(img, dx, dy, dw, dh);
   }, []);
 
@@ -82,11 +81,21 @@ export function ScrollFrameSection() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    ctxRef.current = canvas.getContext("2d");
+    if (ctxRef.current) {
+      ctxRef.current.imageSmoothingEnabled = true;
+      ctxRef.current.imageSmoothingQuality = "medium";
+    }
     const sync = () => {
-      const dpr = window.devicePixelRatio || 1;
+      // Cap DPR at 1 — quarters pixel count on retina, eliminates upscaling cost
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      canvas.width  = rect.width;
+      canvas.height = rect.height;
+      // Restore smoothing after canvas resize (resize resets context state)
+      if (ctxRef.current) {
+        ctxRef.current.imageSmoothingEnabled = true;
+        ctxRef.current.imageSmoothingQuality = "medium";
+      }
       if (loadedRef.current && lastFrameRef.current >= 0) drawFrame(lastFrameRef.current);
     };
     sync();
@@ -128,18 +137,34 @@ export function ScrollFrameSection() {
       lastCaptionIdxRef.current = idx;
       setActiveCaptionIdx(idx);
     }
-    // captionVisible is boolean — cheap setState, only flips once
-    setCaptionVisible(newVisible);
+    // Guard against redundant setState on every tick
+    if (newVisible !== lastCaptionVisibleRef.current) {
+      lastCaptionVisibleRef.current = newVisible;
+      setCaptionVisible(newVisible);
+    }
   }, [drawFrame]);
+
+  // Cache section bounds — recompute only on resize, not on every scroll event
+  useEffect(() => {
+    const updateBounds = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      sectionTopRef.current    = el.getBoundingClientRect().top + window.scrollY;
+      sectionHeightRef.current = el.offsetHeight;
+    };
+    updateBounds();
+    window.addEventListener("resize", updateBounds, { passive: true });
+    return () => window.removeEventListener("resize", updateBounds);
+  }, []);
 
   // Passive scroll listener → RAF scheduled
   useEffect(() => {
     const onScroll = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const { top, height } = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      scrollProgressRef.current = Math.max(0, Math.min(1, -top / (height - vh)));
+      const sTop = sectionTopRef.current;
+      const sH   = sectionHeightRef.current;
+      const vh   = window.innerHeight;
+      const scrolled = window.scrollY - sTop;
+      scrollProgressRef.current = Math.max(0, Math.min(1, scrolled / (sH - vh)));
       if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
     };
 
@@ -150,9 +175,6 @@ export function ScrollFrameSection() {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [tick]);
-
-  const pct = Math.round(loadedCount / FRAME_COUNT * 100);
-  void pct;
 
   return (
     <section

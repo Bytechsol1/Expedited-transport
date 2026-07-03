@@ -3,7 +3,6 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 
-const Threads = dynamic(() => import("./Threads"), { ssr: false });
 const SideRays = dynamic(() => import("./SideRays"), { ssr: false });
 
 export function ContactSection() {
@@ -49,30 +48,28 @@ export function ContactSection() {
         />
       </div>
 
-      {/* ── LEFT: Threads animation (vertical) + contact info overlay ── */}
+      {/* ── LEFT: CSS wave animation + contact info overlay ── */}
       <div className="contact-left" style={{
         position: "relative",
         overflow: "hidden",
         zIndex: 1,
       }}>
-        {/* Threads canvas — rotated 90° so threads flow top-to-bottom.
-            100vmax guarantees coverage on any aspect ratio (wide laptop or tall screen). */}
-        <div className="contact-threads-rotator" style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          width: "100vmax",
-          height: "100vmax",
-          transform: "translate(-50%, -50%) rotate(90deg)",
-          pointerEvents: "none",
-        }}>
-          <Threads
-            color={[0.7137254901960784, 0.9411764705882353, 0]}
-            amplitude={0.5}
-            distance={0}
-            enableMouseInteraction={false}
-          />
-        </div>
+        {/* CSS animated SVG waves — replaces WebGL Threads (zero GPU shader overhead) */}
+        <svg
+          viewBox="0 0 500 900"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+          aria-hidden
+        >
+          <path d="M-50,80 C80,30 170,130 250,80 S420,30 550,80"    fill="none" stroke="#b6f000" strokeWidth="1.8" opacity="0.25" style={{animation:"cw-float 4.2s ease-in-out infinite alternate"}} />
+          <path d="M-50,170 C80,115 170,225 250,170 S420,115 550,170" fill="none" stroke="#b6f000" strokeWidth="1.2" opacity="0.18" style={{animation:"cw-float 3.8s ease-in-out infinite alternate",animationDelay:"0.4s"}} />
+          <path d="M-50,270 C80,215 170,325 250,270 S420,215 550,270" fill="none" stroke="#b6f000" strokeWidth="2.0" opacity="0.30" style={{animation:"cw-float 5.0s ease-in-out infinite alternate",animationDelay:"0.8s"}} />
+          <path d="M-50,370 C80,315 170,425 250,370 S420,315 550,370" fill="none" stroke="#b6f000" strokeWidth="1.0" opacity="0.15" style={{animation:"cw-float 4.5s ease-in-out infinite alternate",animationDelay:"0.2s"}} />
+          <path d="M-50,470 C80,415 170,525 250,470 S420,415 550,470" fill="none" stroke="#b6f000" strokeWidth="1.6" opacity="0.22" style={{animation:"cw-float 3.6s ease-in-out infinite alternate",animationDelay:"1.0s"}} />
+          <path d="M-50,570 C80,515 170,625 250,570 S420,515 550,570" fill="none" stroke="#b6f000" strokeWidth="1.3" opacity="0.20" style={{animation:"cw-float 4.8s ease-in-out infinite alternate",animationDelay:"0.6s"}} />
+          <path d="M-50,670 C80,615 170,725 250,670 S420,615 550,670" fill="none" stroke="#b6f000" strokeWidth="1.9" opacity="0.28" style={{animation:"cw-float 4.0s ease-in-out infinite alternate",animationDelay:"0.3s"}} />
+          <path d="M-50,770 C80,715 170,825 250,770 S420,715 550,770" fill="none" stroke="#b6f000" strokeWidth="1.1" opacity="0.17" style={{animation:"cw-float 5.2s ease-in-out infinite alternate",animationDelay:"0.9s"}} />
+        </svg>
 
         {/* Subtle dark vignette so text is readable */}
         <div style={{
@@ -109,7 +106,7 @@ export function ContactSection() {
             color: "#fff",
             margin: "0 0 1.4rem",
           }}>
-            Contact us and we'll be in touch the same day
+            Contact us and we&apos;ll be in touch the same day
           </h2>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             <a href="tel:8609883887" style={{
@@ -204,6 +201,11 @@ export function ContactSection() {
       </div>
 
       <style>{`
+        @keyframes cw-float {
+          0%   { transform: translateY(0px); }
+          100% { transform: translateY(-24px); }
+        }
+
         .contact-form-card input::placeholder,
         .contact-form-card textarea::placeholder {
           color: rgba(0,0,0,0.55);
@@ -256,13 +258,9 @@ export function ContactSection() {
           .contact-form-card { padding: 1.5rem !important; }
         }
 
-        /* Mobile: horizontal wave + hide SideRays */
+        /* Mobile: hide SideRays */
         @media (max-width: 1024px) {
           .contact-siderays { display: none; }
-          .contact-threads-rotator {
-            top: 55% !important;
-            transform: translate(-50%, -50%) !important;
-          }
         }
       `}</style>
     </section>
