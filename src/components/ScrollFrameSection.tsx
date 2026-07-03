@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const FRAME_COUNT = 230;
 const pad = (n: number) => String(n).padStart(5, "0");
-const frameSrc = (i: number) => `/frames2/frame_${pad(i)}.jpg`;
+const frameSrc = (i: number) => `/frames2/frame_${pad(i)}.webp`;
 
 const CAPTIONS = [
   { heading: "Precision in Motion",    body: "Every mile is planned. Every load is secured." },

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 const FRAME_COUNT = 240;
 const pad = (n: number) => String(n).padStart(5, "0");
-const frameSrc = (i: number) => `/frames/frame_${pad(i)}.jpg`;
+const frameSrc = (i: number) => `/frames/frame_${pad(i)}.webp`;
 
 const TITLES = [
   "Work with a Top Trucking Company",
