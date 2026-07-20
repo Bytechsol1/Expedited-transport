@@ -421,11 +421,10 @@ export function FeaturesSection() {
                   <video
                     ref={(el) => { videoRefs.current[idx] = el; }}
                     src={feature.video}
-                    autoPlay
                     muted
                     loop
                     playsInline
-                    preload="auto"
+                    preload="none"
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                 </div>
@@ -520,11 +519,11 @@ export function FeaturesSection() {
               >
                 <video
                   src={feature.video}
-                  autoPlay
+                  autoPlay={idx === currentItem}
                   muted
                   loop
                   playsInline
-                  preload="auto"
+                  preload="none"
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>

@@ -23,12 +23,14 @@ export default function Home() {
         <div style={{ position: "relative", zIndex: 1 }}>
           <HeroSection onReady={() => setSiteReady(true)} />
         </div>
-        <div style={{
-          position: "relative",
-          zIndex: 2,
-          marginTop: "-60px",
-          backgroundColor: "#fff",
-        }}>
+        <div
+          style={{
+            position: "relative",
+            zIndex: 2,
+            marginTop: "-60px",
+            backgroundColor: "#fff",
+          }}
+        >
           <TruckLogoBar />
           <FeaturesSection />
         </div>

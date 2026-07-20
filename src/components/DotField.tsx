@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useId, memo } from 'react';
+import { useEffect, useRef, memo, useId } from 'react';
 
 const TWO_PI = Math.PI * 2;
 
@@ -52,8 +52,8 @@ export const DotField = memo(function DotField({
   const propsRef = useRef<Record<string, unknown>>({});
   propsRef.current = { dotRadius, dotSpacing, cursorRadius, cursorForce, bulgeOnly, bulgeStrength, sparkle, waveAmplitude, gradientFrom, gradientTo };
   const rebuildRef = useRef<(() => void) | null>(null);
-  const uid = useId();
-  const glowIdRef = useRef(`dot-field-glow-${uid.replace(/:/g, '')}`);
+  const baseId = useId();
+  const glowId = `dot-field-glow-${baseId.replace(/:/g, '')}`;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -251,7 +251,7 @@ export const DotField = memo(function DotField({
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
       >
         <defs>
-          <radialGradient id={glowIdRef.current}>
+          <radialGradient id={glowId}>
             <stop offset="0%" stopColor={glowColor} />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
@@ -260,7 +260,7 @@ export const DotField = memo(function DotField({
           ref={glowRef}
           cx="-9999" cy="-9999"
           r={glowRadius}
-          fill={`url(#${glowIdRef.current})`}
+          fill={`url(#${glowId})`}
           style={{ opacity: 0, willChange: 'opacity' }}
         />
       </svg>

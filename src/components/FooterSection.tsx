@@ -157,7 +157,7 @@ export function FooterSection() {
           <span style={SECTION_LABEL}>Quick Links</span>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
             {[
-              { label: "Services",  href: "/trucking-services/hotshot-trucking-services" },
+              { label: "Services",  href: "/trucking-services/expedited-trucking" },
               { label: "About Us",  href: "/about-us" },
               { label: "Careers",   href: "/careers" },
             ].map(({ label, href }) => (
