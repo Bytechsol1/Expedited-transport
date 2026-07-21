@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import Link from "next/link";
@@ -113,12 +113,16 @@ function ServicesMega({ open }: { open: boolean }) {
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
+  const [quoteStatus, setQuoteStatus] = useState<string | null>(null);
+  const [quoteSending, setQuoteSending] = useState(false);
   const [heroEnded, setHeroEnded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const isLightPage = pathname === "/about-us" || pathname === "/warehousing";
+  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname.startsWith("/trucking-services");
   const navCardRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const quoteFormRef = useRef<HTMLFormElement>(null);
 
   const openDropdown = () => {
     if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
@@ -128,6 +132,61 @@ export function SiteHeader() {
   const closeDropdown = () => {
     closeTimerRef.current = setTimeout(() => setServicesOpen(false), 120);
   };
+
+  const openQuoteModal = () => {
+    setQuoteOpen(true);
+    setQuoteStatus(null);
+    setMobileOpen(false);
+  };
+
+  const closeQuoteModal = () => setQuoteOpen(false);
+
+  const handleQuoteSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
+    const payload = {
+      fullName: String(formData.get("fullName") ?? "").trim(),
+      phoneNumber: String(formData.get("phoneNumber") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      companyName: String(formData.get("companyName") ?? "").trim(),
+      serviceNeeded: String(formData.get("serviceNeeded") ?? "").trim(),
+      message: String(formData.get("message") ?? "").trim(),
+    };
+
+    try {
+      setQuoteSending(true);
+      setQuoteStatus("Sending message...");
+
+      const response = await fetch("/api/quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result: { ok?: boolean; error?: string } = await response.json().catch(() => ({}));
+
+      if (!response.ok || result.ok === false) {
+        throw new Error(result.error || "Message could not be sent.");
+      }
+
+      form.reset();
+      setQuoteStatus("Message sent to c.taveras@expeditedtransportservices.net.");
+    } catch {
+      setQuoteStatus("Message could not be sent right now. Please try again.");
+    } finally {
+      setQuoteSending(false);
+    }
+  };
+
 
   useEffect(() => {
     const onScroll = () => {
@@ -156,6 +215,25 @@ export function SiteHeader() {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [servicesOpen]);
+
+  useEffect(() => {
+    if (!quoteOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setQuoteOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [quoteOpen]);
 
   return (
     <>
@@ -203,7 +281,7 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <a href="/request-a-quote" className="cta-contact">Get a Quote</a>
+          <button type="button" className="cta-contact" onClick={openQuoteModal}>Get a Quote</button>
 
           <button
             className={`burger${mobileOpen ? " is-open" : ""}`}
@@ -231,10 +309,39 @@ export function SiteHeader() {
           <Link href="/about-us" className="drawer-link" onClick={() => setMobileOpen(false)}>About Us</Link>
           <Link href="/warehousing" className="drawer-link" onClick={() => setMobileOpen(false)}>Warehousing</Link>
           <Link href="/careers" className="drawer-link" onClick={() => setMobileOpen(false)}>Careers</Link>
-          <a href="/request-a-quote" className="drawer-cta" onClick={() => setMobileOpen(false)}>Get a Quote</a>
+          <button type="button" className="drawer-cta" onClick={openQuoteModal}>Get a Quote</button>
         </div>
       </header>
 
+
+      {quoteOpen && (
+        <div className="quote-modal-backdrop" role="presentation" onClick={closeQuoteModal}>
+          <div className="quote-modal" role="dialog" aria-modal="true" aria-labelledby="quote-modal-title" onClick={(event) => event.stopPropagation()}>
+            <button type="button" className="quote-modal-close" aria-label="Close quote form" onClick={closeQuoteModal}>
+              X
+            </button>
+            <h2 id="quote-modal-title" className="quote-modal-title">Request a Quote</h2>
+            <form className="quote-form" ref={quoteFormRef} onSubmit={handleQuoteSubmit}>
+              <div className="quote-grid">
+                <Field name="fullName" label="Full Name" placeholder="Salik" required />
+                <Field name="phoneNumber" label="Phone Number" placeholder="(860) 555-0147" type="tel" required />
+                <Field name="email" label="Email" placeholder="name@email.com" type="email" required />
+                <Field name="companyName" label="Company Name" placeholder="Bytechsol LLC" required />
+              </div>
+
+              <Field name="serviceNeeded" label="Service Needed" placeholder="e.g. Hotshot Trucking, Freight Shipping..." required />
+
+              <div className="quote-field quote-field--message">
+                <label htmlFor="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell us about your freight needs..." rows={4} required />
+              </div>
+
+              <button type="submit" className="quote-submit" disabled={quoteSending}>Send Message</button>
+              {quoteStatus && <p className="quote-status" aria-live="polite">{quoteStatus}</p>}
+            </form>
+          </div>
+        </div>
+      )}
       <style>{`
         .site-header {
           position: fixed;
@@ -558,11 +665,168 @@ export function SiteHeader() {
           .brand-name {
             font-size: 0.85rem;
           }
+
+          .quote-modal {
+            margin: 1rem;
+            padding: 1rem;
+            border-radius: 20px;
+          }
+
+          .quote-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .quote-modal-title {
+            margin-right: 2rem;
+            font-size: 1.25rem;
+          }
+        }
+
+        .quote-modal-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 220;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1.5rem;
+          background: rgba(3, 8, 20, 0.72);
+          backdrop-filter: blur(12px);
+        }
+
+        .quote-modal {
+          position: relative;
+          width: min(720px, 100%);
+          border-radius: 28px;
+          background: #ffffff;
+          box-shadow: 0 36px 90px rgba(0, 0, 0, 0.35);
+          padding: 2rem;
+        }
+
+        .quote-modal-close {
+          position: absolute;
+          top: 14px;
+          right: 16px;
+          width: 38px;
+          height: 38px;
+          border: 0;
+          border-radius: 999px;
+          background: rgba(15, 23, 42, 0.08);
+          color: #0f172a;
+          font-size: 24px;
+          line-height: 1;
+          cursor: pointer;
+        }
+
+        .quote-form {
+          display: grid;
+          gap: 1rem;
+          margin-top: 0.25rem;
+        }
+
+        .quote-modal-title {
+          margin: 0 2.5rem 0.75rem 0;
+          font-size: clamp(1.4rem, 2.5vw, 2rem);
+          line-height: 1.1;
+          letter-spacing: -0.04em;
+          font-weight: 800;
+          color: #0f172a;
+        }
+
+        .quote-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 1rem;
+        }
+
+        .quote-field {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+        }
+
+        .quote-field > span,
+        .quote-field--message > label {
+          font-size: 0.78rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: rgba(15, 23, 42, 0.7);
+        }
+
+        .quote-field input,
+        .quote-field textarea {
+          width: 100%;
+          border: 0;
+          border-bottom: 1px solid rgba(15, 23, 42, 0.14);
+          background: transparent;
+          padding: 0.7rem 0;
+          font: inherit;
+          color: #0f172a;
+          outline: none;
+          resize: none;
+        }
+
+        .quote-field textarea {
+          min-height: 120px;
+        }
+
+        .quote-field input::placeholder,
+        .quote-field textarea::placeholder {
+          color: rgba(15, 23, 42, 0.45);
+        }
+
+        .quote-submit {
+          margin-top: 0.35rem;
+          min-height: 54px;
+          border: 0;
+          border-radius: 16px;
+          background: #b6f000;
+          color: #0f172a;
+          font-size: 1rem;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .quote-status {
+          margin: 0.25rem 0 0;
+          padding: 0.85rem 1rem;
+          border-radius: 14px;
+          background: rgba(182, 240, 0, 0.12);
+          color: #0f172a;
+          font-size: 0.95rem;
+          font-weight: 600;
         }
       `}</style>
     </>
   );
 }
+
+function Field({
+  name,
+  label,
+  placeholder,
+  type = "text",
+  required = false,
+}: {
+  name: string;
+  label: string;
+  placeholder: string;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <label className="quote-field" htmlFor={name}>
+      <span>{label}</span>
+      <input id={name} name={name} type={type} placeholder={placeholder} required={required} />
+    </label>
+  );
+}
+
+
+
+
+
 
 
 

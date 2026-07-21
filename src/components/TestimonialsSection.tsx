@@ -1,38 +1,78 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import PixelTransition from "./PixelTransition";
 import { DotField } from "./DotField";
 
 const CARD_W = 340;
-const ASPECT = "148%";   // ≈ 503 px tall
+const ASPECT = "128%";   // ~ 435 px tall
 const GAP = 22;
 const SPEED = 0.65;
 
 const TESTIMONIALS = [
   {
-    quote: "Deliveries always on time. Expedited Transport never lets us down — our entire supply chain depends on them.",
+    quote: "Deliveries always on time. Expedited Transport never lets us down - our entire supply chain depends on them.",
     name: "Nora Elkind",
     company: "Tri-State Parts",
     photo: "https://img.magnific.com/free-photo/cheerful-entrepreneur_1098-17978.jpg?semt=ais_hybrid&w=740&q=80",
+    photoPosition: "center top",
+    photoScale: 1,
   },
   {
     quote: "Best freight partner we've had in 15 years of retail operations. Wouldn't consider switching.",
     name: "Leo Hartmann",
     company: "Tynker Retail",
     photo: "https://img.magnific.com/premium-photo/happy-mid-aged-business-man-ceo-standing-office-arms-crossed-smiling-mature-confident-professional-executive-manager-proud-l-ai-generated-illustration_866663-25746.jpg?semt=ais_hybrid&w=740&q=80",
+    photoPosition: "center top",
+    photoScale: 1,
   },
   {
     quote: "We moved our entire Connecticut distribution through them. Flawless execution every single time.",
     name: "Amira Benali",
     company: "Paloma CT",
     photo: "https://img.magnific.com/free-photo/woman-showing-ok-sign_23-2148990150.jpg?semt=ais_hybrid&w=740&q=80",
+    photoPosition: "center top",
+    photoScale: 1,
   },
   {
     quote: "Our perishables reach customers fresh because these drivers understand what urgency actually means.",
     name: "Priya Sharma",
     company: "NE Supply Co.",
     photo: "https://img.magnific.com/premium-photo/portrait-young-indian-woman-happy-with-internship-human-resources-opportunity-mission-vision-company-values-goals-face-headshot-gen-z-person-with-hr-job-about-us-faq_590464-134290.jpg",
+    photoPosition: "center top",
+    photoScale: 1,
+  },
+  {
+    quote: "The team stayed responsive from pickup to delivery and kept the whole move simple.",
+    name: "Darnell Brooks",
+    company: "North Harbor Logistics",
+    photo: "/images/black.jpg",
+    photoPosition: "center 26%",
+    photoScale: 1.18,
+  },
+  {
+    quote: "Their communication is clear, and they always handle freight with care.",
+    name: "Ethan Keller",
+    company: "Blue Ridge Supply",
+    photo: "/images/chik.webp",
+    photoPosition: "center 26%",
+    photoScale: 1.18,
+  },
+  {
+    quote: "We trust them with time-sensitive deliveries because they show up prepared.",
+    name: "Maya Ahmed",
+    company: "Prime Distribution Co.",
+    photo: "/images/chike.jpg",
+    photoPosition: "center 26%",
+    photoScale: 1.18,
+  },
+  {
+    quote: "Reliable service, fast updates, and a smooth process from start to finish.",
+    name: "Sofia Martin",
+    company: "Summit Wholesale",
+    photo: "/images/chike2.jpg",
+    photoPosition: "center 26%",
+    photoScale: 1.18,
   },
 ];
 
@@ -95,7 +135,7 @@ function TestimonialBack({
       {/* Stars */}
       <div style={{ display: "flex", gap: 3, marginBottom: "1.1rem" }}>
         {[1,2,3,4,5].map(s => (
-          <span key={s} style={{ color: "#f59e0b", fontSize: "1.05rem", lineHeight: 1 }}>★</span>
+          <span key={s} style={{ color: "#f59e0b", fontSize: "1.05rem", lineHeight: 1 }}>*</span>
         ))}
       </div>
 
@@ -115,7 +155,7 @@ function TestimonialBack({
   );
 }
 
-/* Pop wrapper — lifts & scales the card on hover with a spring overshoot */
+/* Pop wrapper â€” lifts & scales the card on hover with a spring overshoot */
 function PopCard({ children, onEnter, onLeave }: {
   children: React.ReactNode;
   onEnter: () => void;
@@ -237,7 +277,7 @@ export function TestimonialsSection() {
                     <img
                       src={t.photo}
                       alt={t.name}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: t.photoPosition ?? "center top", transform: `scale(${t.photoScale ?? 1})`, transformOrigin: "center top" }}
                     />
                   }
                   secondContent={
@@ -263,3 +303,8 @@ export function TestimonialsSection() {
     </section>
   );
 }
+
+
+
+
+

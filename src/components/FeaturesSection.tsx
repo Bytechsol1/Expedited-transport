@@ -5,12 +5,6 @@ import { ArrowLeftIcon, ArrowRightIcon } from "./icons";
 
 const FEATURES = [
   {
-    id: 1,
-    text: "Hotshot Trucking Services.",
-    desc: "Fast and reliable transportation service specializing in urgent, time-sensitive deliveries with dedicated trucks for smaller, high-priority loads.",
-    video: "/videos/feature-1.mp4",
-  },
-  {
     id: 2,
     text: "LTL trucking.",
     desc: "Cost-effective freight transportation service that ships smaller loads by combining multiple shipments in one truck, ensuring efficient and reliable delivery.",
@@ -42,7 +36,7 @@ const FEATURES = [
   },
 ];
 
-const TOTAL = FEATURES.length; // 6
+const TOTAL = FEATURES.length; // 5
 
 function OdometerDigit({ value }: { value: number }) {
   const H = 18;
@@ -92,7 +86,7 @@ export function FeaturesSection() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Avoid hydration mismatch — detect mobile only on client
+  // Avoid hydration mismatch ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â detect mobile only on client
   useEffect(() => {
     setMounted(true);
     const check = () => setIsMobile(window.innerWidth < 1024);
@@ -109,7 +103,7 @@ export function FeaturesSection() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // Measure the text grid container height via ResizeObserver — fires after fonts load too
+  // Measure the text grid container height via ResizeObserver ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â fires after fonts load too
   useEffect(() => {
     const el = textContainerRef.current;
     if (!el) return;
@@ -130,7 +124,7 @@ export function FeaturesSection() {
       if (!el) return;
       const { top, height } = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Same formula as HeroSection: progress 0→1 through the sticky travel range
+      // Same formula as HeroSection: progress 0ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢1 through the sticky travel range
       const progress = Math.max(0, Math.min(1, -top / (height - vh)));
       setCurrentItem(Math.min(TOTAL - 1, Math.floor(progress * TOTAL)));
     };
@@ -161,18 +155,18 @@ export function FeaturesSection() {
 
   return (
     <div>
-      {/* SVG clip-path definition — rounded notch corners via quadratic beziers.
+      {/* SVG clip-path definition ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â rounded notch corners via quadratic beziers.
           objectBoundingBox maps coords 0-1 to element width/height, so it's fully responsive. */}
       <svg width="0" height="0" style={{ position: "absolute", overflow: "hidden" }}>
         <defs>
           <clipPath id="features-video-clip" clipPathUnits="objectBoundingBox">
             {/*
               Original polygon points (normalized):
-              0,0 → 0.72,0 → 0.80,0.05 → 1,0.05 → 1,1 → 0,1 → 0,0.65 → 0.05,0.60 → 0.05,0.22 → 0,0.18 → 0,0
+              0,0 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.72,0 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.80,0.05 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 1,0.05 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 1,1 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,1 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,0.65 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.05,0.60 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.05,0.22 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,0.18 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,0
 
               Each notch vertex replaced with:
                 L <approach>  Q <vertex-control> <departure>
-              radius ≈ 0.025 (objectBoundingBox units)
+              radius ÃƒÂ¢Ã¢â‚¬Â°Ã‹â€  0.025 (objectBoundingBox units)
             */}
             <path d="
               M 0.025,0
@@ -202,7 +196,7 @@ export function FeaturesSection() {
         </defs>
       </svg>
 
-      {/* ── Intro paragraph ── */}
+      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Intro paragraph ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
       {/* <section
         style={{
           backgroundColor: "var(--c-white)",
@@ -227,10 +221,10 @@ export function FeaturesSection() {
       </section> */}
 
       {/*
-       * ── Scroll driver ──
+       * ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Scroll driver ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬
        * Height = (TOTAL + 1) * 100svh = 700svh, NO padding.
-       * Sticky inner = 100svh → sticky travel = 700svh - 100svh = 600svh.
-       * 6 features × 100svh each.
+       * Sticky inner = 100svh ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ sticky travel = 700svh - 100svh = 600svh.
+       * 6 features ÃƒÆ’Ã¢â‚¬â€ 100svh each.
        *
        * On mobile: height:auto, no sticky.
        */}
@@ -239,7 +233,7 @@ export function FeaturesSection() {
         className="features-scroll-driver"
         style={{ backgroundColor: "var(--c-white)", position: "relative" }}
       >
-        {/* ── Desktop: sticky panel ── */}
+        {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Desktop: sticky panel ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
         <div className="features-sticky-panel">
           <div
             style={{
@@ -283,7 +277,7 @@ export function FeaturesSection() {
                 <OdometerDigit value={units} />
               </div>
 
-              {/* Feature texts — CSS grid stack, each item occupies the same cell,
+              {/* Feature texts ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â CSS grid stack, each item occupies the same cell,
                   translateY by measured slot height drives the vertical slide */}
               <div
                 ref={textContainerRef}
@@ -343,7 +337,7 @@ export function FeaturesSection() {
                 ))}
               </div>
 
-              {/* Feature descriptions — same grid-stack + translateY pattern as titles */}
+              {/* Feature descriptions ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â same grid-stack + translateY pattern as titles */}
               <div style={{ display: "grid", overflow: "hidden", marginTop: "0.75rem" }}>
                 {FEATURES.map((feature, idx) => (
                   <p
@@ -433,7 +427,7 @@ export function FeaturesSection() {
           </div>
         </div>
 
-        {/* ── Mobile: click-based layout ── */}
+        {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Mobile: click-based layout ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
         <div className="features-mobile-panel">
           {/* Counter dots */}
           <div
@@ -584,7 +578,7 @@ export function FeaturesSection() {
       </section>
 
       <style>{`
-        /* Arrow — hidden by default, fades in and rotates northeast on hover */
+        /* Arrow ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â hidden by default, fades in and rotates northeast on hover */
         .feature-arrow {
           opacity: 0;
           transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);

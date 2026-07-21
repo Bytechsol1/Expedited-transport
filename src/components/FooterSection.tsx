@@ -1,81 +1,43 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import SplitText from "./SplitText";
 
-/* ── Payment badge shell ─────────────────────────────────────── */
-function PayBadge({ bg, border, children }: { bg: string; border?: string; children: React.ReactNode }) {
+/* Payment logos */
+function PaymentLogo({
+  src,
+  alt,
+  width,
+  height,
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}) {
   return (
-    <div style={{
-      width: 62, height: 38, borderRadius: 6,
-      background: bg,
-      border: border ?? "1px solid rgba(255,255,255,0.1)",
-      display: "flex", alignItems: "center", justifyContent: "center", gap: 1,
-      flexShrink: 0,
-    }}>
-      {children}
-    </div>
+    <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", flex: `0 0 ${width}px`, width: `${width}px`, height: `${height}px` }}>
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        style={{
+          display: "block",
+          maxWidth: "100%",
+          maxHeight: "100%",
+          width: "auto",
+          height: "auto",
+          objectFit: "contain",
+          objectPosition: "center",
+          flexShrink: 0,
+        }}
+      />
+    </span>
   );
 }
-
-/* ── Individual payment icons ────────────────────────────────── */
-function VisaIcon() {
-  return (
-    <PayBadge bg="#1A1F71">
-      <svg width="40" height="15" viewBox="0 0 40 15" aria-label="Visa">
-        <text x="1" y="13" fill="white" fontFamily="Arial, sans-serif" fontSize="15" fontWeight="bold" fontStyle="italic">VISA</text>
-      </svg>
-    </PayBadge>
-  );
-}
-
-function MastercardIcon() {
-  return (
-    <PayBadge bg="#1c1c1c">
-      <svg width="36" height="22" viewBox="0 0 36 22" aria-label="Mastercard">
-        <circle cx="13" cy="11" r="10" fill="#EB001B" opacity="0.95"/>
-        <circle cx="23" cy="11" r="10" fill="#F79E1B" opacity="0.95"/>
-        <path d="M18 2.7a10 10 0 0 1 0 16.6A10 10 0 0 1 18 2.7z" fill="#FF5F00"/>
-      </svg>
-    </PayBadge>
-  );
-}
-
-function AmexIcon() {
-  return (
-    <PayBadge bg="#2E77BC">
-      <svg width="40" height="15" viewBox="0 0 40 15" aria-label="American Express">
-        <text x="1" y="11" fill="white" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="bold" letterSpacing="1">AMEX</text>
-      </svg>
-    </PayBadge>
-  );
-}
-
-function DiscoverIcon() {
-  return (
-    <PayBadge bg="#ffffff" border="1px solid rgba(0,0,0,0.12)">
-      <svg width="48" height="20" viewBox="0 0 48 20" aria-label="Discover">
-        <text x="1" y="13" fill="#231F20" fontFamily="Arial, sans-serif" fontSize="7.5" fontWeight="bold">DISCOVER</text>
-        <circle cx="42" cy="10" r="7" fill="#f76f20"/>
-      </svg>
-    </PayBadge>
-  );
-}
-
-function DebitIcon() {
-  return (
-    <PayBadge bg="#1a1f3c">
-      <svg width="44" height="16" viewBox="0 0 44 16" fill="none" aria-label="Debit">
-        <rect x="0.5" y="0.5" width="43" height="15" rx="2.5" stroke="rgba(255,255,255,0.25)" strokeWidth="1"/>
-        <rect x="1" y="4" width="42" height="4" fill="rgba(255,255,255,0.1)"/>
-        <text x="4" y="13.5" fill="rgba(255,255,255,0.75)" fontFamily="Arial, sans-serif" fontSize="6.5" fontWeight="bold" letterSpacing="0.5">DEBIT</text>
-      </svg>
-    </PayBadge>
-  );
-}
-
 const HOURS = [
-  { day: "Mon – Sun", time: "24 Hours" },
+  { day: "Mon â€“ Sun", time: "24 Hours" },
   { day: "Emergency Services", time: "Available" },
 ];
 
@@ -94,7 +56,7 @@ const SECTION_LABEL: React.CSSProperties = {
   marginBottom: "1.2rem",
 };
 
-/* ── Footer ─────────────────────────────────────────────────── */
+/* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 export function FooterSection() {
   return (
     <footer style={{
@@ -104,7 +66,7 @@ export function FooterSection() {
       paddingTop: "5rem",
     }}>
 
-      {/* ── Main info grid ── */}
+      {/* â”€â”€ Main info grid â”€â”€ */}
       <div className="footer-grid">
 
         {/* Contact */}
@@ -177,22 +139,32 @@ export function FooterSection() {
         {/* Payment */}
         <div>
           <span style={SECTION_LABEL}>Payment Methods</span>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
-            <VisaIcon />
-            <MastercardIcon />
-            <AmexIcon />
-            <DiscoverIcon />
-            <DebitIcon />
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "nowrap",
+              alignItems: "center",
+              gap: "0",
+              overflowX: "auto",
+              overflowY: "hidden",
+              whiteSpace: "nowrap",
+              paddingBottom: "0",
+            }}
+          >
+            <PaymentLogo src="/images/icons8-visa-48.png" alt="Visa" width={90} height={48} />
+            <PaymentLogo src="/images/master.png" alt="Mastercard" width={78} height={42} />
+            <PaymentLogo src="/images/amex.png" alt="American Express" width={90} height={48} />
+            <PaymentLogo src="/images/discover.png" alt="Discover" width={78} height={42} />
           </div>
         </div>
       </div>
 
       <hr style={DIVIDER} />
 
-      {/* ── Bottom meta ── */}
+      {/* â”€â”€ Bottom meta â”€â”€ */}
       <div className="footer-meta">
         <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.78rem" }}>
-          ©2024–26 Expedited Transport Services. All rights reserved.
+          Â©2024â€“26 Expedited Transport Services. All rights reserved.
         </span>
         <div style={{ display: "flex", gap: "2rem" }}>
           {["Terms of Use", "Privacy Policy"].map(item => (
@@ -209,7 +181,7 @@ export function FooterSection() {
         </div>
       </div>
 
-      {/* ── Big SplitText brand name — links to home ── */}
+      {/* â”€â”€ Big SplitText brand name â€” links to home â”€â”€ */}
       <Link href="/" style={{ display: "block", overflow: "hidden", padding: "0 0 2.5rem", textDecoration: "none", cursor: "pointer" }}>
         <SplitText
           text="EXPEDITED"
@@ -228,7 +200,7 @@ export function FooterSection() {
       </Link>
 
       <style>{`
-        /* ── Desktop grid ── */
+        /* â”€â”€ Desktop grid â”€â”€ */
         .footer-grid {
           display: grid;
           grid-template-columns: 1.2fr 1fr 0.8fr 1fr;
@@ -242,7 +214,7 @@ export function FooterSection() {
           padding: 1.4rem 4rem;
         }
 
-        /* ── Tablet ── */
+        /* â”€â”€ Tablet â”€â”€ */
         @media (max-width: 900px) {
           .footer-grid {
             grid-template-columns: 1fr 1fr;
@@ -254,7 +226,7 @@ export function FooterSection() {
           }
         }
 
-        /* ── Mobile ── */
+        /* â”€â”€ Mobile â”€â”€ */
         @media (max-width: 600px) {
           .footer-grid {
             grid-template-columns: 1fr;
@@ -288,3 +260,12 @@ export function FooterSection() {
     </footer>
   );
 }
+
+
+
+
+
+
+
+
+

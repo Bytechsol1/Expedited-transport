@@ -75,33 +75,11 @@ export function AboutUsSection() {
             </div>
             
             <h1 style={{ fontSize: "clamp(56px, 8vw, 88px)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.05, marginBottom: "40px", color: "#0f172a" }}>
-              The Premier Local <br/>
-              <span style={{ 
-                display: "inline-block",
-                position: "relative",
-                padding: "0 16px",
-                marginTop: "12px",
-                color: "#0f172a",
-                zIndex: 1
-              }}>
-                Trucking Company.
-                <span style={{
-                  content: '""',
-                  position: "absolute",
-                  bottom: "8px",
-                  left: 0,
-                  right: 0,
-                  height: "30%",
-                  backgroundColor: "#b6f000",
-                  zIndex: -1,
-                  transform: "rotate(-1deg)",
-                  borderRadius: "4px"
-                }} />
-              </span>
+              Trucking Company
             </h1>
 
-            <p style={{ fontSize: "22px", color: "#475569", lineHeight: 1.7, maxWidth: "760px", margin: "0 auto 56px", fontWeight: 400 }}>
-              Here at Expedited Transport Services, we aim to be the easy choice for all your shipping needs. We provide a wide range of dependable trucking services that will help you keep your business moving. We take pride in being a top trucking company, having gained a reputation for timely, secure, and affordable deliveries.
+            <p style={{ fontSize: "22px", color: "#475569", lineHeight: 1.7, maxWidth: "900px", margin: "0 auto 56px", fontWeight: 400 }}>
+              Here at Expedited Transport Services, we aim to be the easy choice for all your shipping needs. We provide a wide range of dependable trucking services that will help you keep your business moving. We take pride in being a top trucking company, having gained a reputation for timely, secure, and affordable deliveries. We are always happy to answer any questions you have about our services, so give us a call at (860) 988-3887.
             </p>
 
             <a href="tel:+18609883887" style={{ 
@@ -114,7 +92,7 @@ export function AboutUsSection() {
             onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.backgroundColor = "#b6f000"; e.currentTarget.style.color = "#000000"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(182, 240, 0, 0.3)"; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.backgroundColor = "#0f172a"; e.currentTarget.style.color = "#ffffff"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(15, 23, 42, 0.2)"; }}
             >
-              Speak With Us Today <ArrowRight size={20} />
+              Call Us Today <ArrowRight size={20} />
             </a>
           </div>
         </section>
@@ -134,45 +112,21 @@ export function AboutUsSection() {
                     </span>
                   </div>
 
-                  <h2 style={{ margin: 0, fontSize: "clamp(42px, 4.6vw, 72px)", lineHeight: 0.94, letterSpacing: "-0.05em", fontWeight: 900, fontStyle: "italic", color: "#0f172a", textTransform: "uppercase" }}>
-                    A Trucking Company with a
+                  <h2 style={{ margin: 0, maxWidth: "12ch", fontSize: "clamp(42px, 4.6vw, 72px)", lineHeight: 0.94, letterSpacing: "-0.05em", fontWeight: 900, fontStyle: "italic", color: "#0f172a", textTransform: "uppercase" }}>
+                    Your New Go-To
                   </h2>
-                  <h2 style={{ margin: "6px 0", fontSize: "clamp(64px, 6.6vw, 100px)", lineHeight: 0.9, letterSpacing: "-0.06em", fontWeight: 900, fontStyle: "italic", color: "#f5bf12", textTransform: "uppercase" }}>
-                    Great
-                  </h2>
-                  <h2 style={{ margin: 0, fontSize: "clamp(42px, 4.6vw, 72px)", lineHeight: 0.94, letterSpacing: "-0.05em", fontWeight: 900, fontStyle: "italic", color: "#0f172a", textTransform: "uppercase" }}>
-                    Track Record
+                  <h2 style={{ margin: "6px 0", maxWidth: "12ch", fontSize: "clamp(42px, 4.6vw, 72px)", lineHeight: 0.94, letterSpacing: "-0.05em", fontWeight: 900, fontStyle: "italic", color: "#0f172a", textTransform: "uppercase" }}>
+                    Trucking Company
                   </h2>
 
-                  <p style={{ marginTop: "24px", marginBottom: 0, maxWidth: "640px", fontSize: "18px", lineHeight: 1.7, color: "#475569" }}>
-                    When trusting a company to keep your supply chain moving, it always helps to go with one that has a measurable history of success. Our entire trucking company strives for consistency with every job we take, meaning that you can always feel confident in the budget and time frame estimates that we provide you with.
+                  <p style={{ marginTop: "24px", marginBottom: 0, maxWidth: "700px", fontSize: "18px", lineHeight: 1.7, color: "#475569" }}>
+                    We have never been satisfied with being second best, so if you have been searching for a local trucking company that will put your shipment above all else, then you have come to the right place. We pay close attention to all aspects of the service we offer, meaning that we are always guaranteed to impress.
                   </p>
 
-                  <div style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "18px",
-                    marginTop: "32px",
-                    padding: "14px 22px",
-                    background: "#0f172a",
-                    color: "#f5bf12",
-                    borderRadius: "0 8px 8px 0",
-                    width: "fit-content",
-                    clipPath: "polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%)"
-                  }}>
-                    <div style={{ width: "38px", height: "38px", borderRadius: "10px", border: "2px solid #f5bf12", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <Truck size={20} color="#f5bf12" />
-                    </div>
-                    <span style={{ fontSize: "16px", fontWeight: 900, fontStyle: "italic", letterSpacing: "0.03em", textTransform: "uppercase", color: "#f5bf12" }}>
-                      Your Local Trucking Specialists
-                    </span>
-                  </div>
-
-                  <p style={{ marginTop: "28px", marginBottom: 0, maxWidth: "700px", fontSize: "18px", lineHeight: 1.7, color: "#475569" }}>
-                    With countless hauling jobs under our belts, our experienced crew of drivers and logistics experts allow you to forget about your shipping process and focus on other aspects of your business. We would love to get more in-depth about why we will make a valuable addition to your company.
+                  <p style={{ marginTop: "22px", marginBottom: 0, maxWidth: "700px", fontSize: "18px", lineHeight: 1.7, color: "#475569" }}>
+                    Some of the reasons that you should consider us for your next shipment include:
                   </p>
                 </div>
-
                 <div style={{ position: "relative", minHeight: "680px", background: "#e5e7eb", overflow: "hidden", marginTop: "8px" }}>
                   <Image
                     src="/images/truck4.jpg"

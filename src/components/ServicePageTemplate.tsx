@@ -1,6 +1,7 @@
 ﻿import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -20,7 +21,14 @@ export type ServicePageTemplateProps = {
   imageSrc: string;
   imageAlt: string;
   points: string[];
-    cards: ServiceCard[];
+  cards: ServiceCard[];
+  hideHeroAccent?: boolean;
+  hideHeroEyebrow?: boolean;
+  hideHeroNote?: boolean;
+  hideHeroPoints?: boolean;
+  hideLowerSections?: boolean;
+  lowerContent?: ReactNode;
+  heroTitleClassName?: string;
   metadata?: Metadata;
 };
 
@@ -33,6 +41,13 @@ export function ServicePageTemplate({
   imageAlt,
   points,
   cards,
+  hideHeroAccent,
+  hideHeroEyebrow,
+  hideHeroNote,
+  hideHeroPoints,
+  hideLowerSections,
+  lowerContent,
+  heroTitleClassName,
 }: ServicePageTemplateProps) {
   return (
     <>
@@ -79,6 +94,11 @@ export function ServicePageTemplate({
             overflow: hidden;
             box-shadow: 0 28px 60px rgba(15, 23, 42, 0.18);
           }
+          .hero-copy.points-hidden {
+            display: flex;
+            flex-direction: column;
+          }
+
 
           .hero-copy::after {
             content: "";
@@ -87,6 +107,10 @@ export function ServicePageTemplate({
             width: 10px;
             border-radius: 999px;
             background: linear-gradient(180deg, #b6f000 0%, #b6f000 66%, rgba(255,255,255,0.22) 66%, rgba(255,255,255,0.22) 100%);
+          }
+
+          .hero-copy.no-accent::after {
+            display: none;
           }
 
           .eyebrow {
@@ -102,19 +126,33 @@ export function ServicePageTemplate({
             letter-spacing: 0.22em;
             text-transform: uppercase;
           }
-
+          .hero-copy.no-accent .eyebrow {
+            background: transparent;
+            padding-left: 0;
+            padding-right: 0;
+          }
           .service-title {
             margin: 18px 0 0;
-            width: min(100%, 12ch);
-            max-width: 12ch;
-            overflow-wrap: anywhere;
-            hyphens: auto;
+            width: min(100%, 18ch);
+            max-width: 18ch;
+            overflow-wrap: normal;
+            word-break: normal;
+            hyphens: none;
+            white-space: pre-line;
             font-size: clamp(38px, 5vw, 80px);
             line-height: 0.92;
             letter-spacing: -0.07em;
             font-weight: 900;
             text-transform: uppercase;
           }
+
+          .service-title.freight-title {
+            width: min(100%, 14ch);
+            max-width: 14ch;
+            font-size: clamp(30px, 4vw, 62px);
+            line-height: 0.9;
+          }
+
 
           .service-title span {
             color: #b6f000;
@@ -152,6 +190,11 @@ export function ServicePageTemplate({
             gap: 14px;
             margin-top: 28px;
           }
+          .hero-copy.points-hidden .service-actions {
+            margin-top: auto;
+            padding-top: 28px;
+          }
+
 
           .service-button,
           .service-button-alt {
@@ -525,17 +568,19 @@ export function ServicePageTemplate({
 
         <section className="service-shell">
           <div className="hero-grid">
-            <div className="hero-copy">
-              <div className="eyebrow">{eyebrow}</div>
-              <h1 className="service-title">{title}</h1>
+            <div className={`hero-copy${hideHeroAccent ? " no-accent" : ""}${hideHeroPoints ? " points-hidden" : ""}`}>
+              {!hideHeroEyebrow ? <div className="eyebrow">{eyebrow}</div> : null}
+              <h1 className={`service-title${heroTitleClassName ? ` ${heroTitleClassName}` : ""}`}>{title}</h1>
               <p className="summary">{summary}</p>
-              <div className="points">
-                {points.map((point) => (
-                  <div className="point" key={point}>
-                    {point}
-                  </div>
-                ))}
-              </div>
+              {!hideHeroPoints ? (
+                <div className="points">
+                  {points.map((point) => (
+                    <div className="point" key={point}>
+                      {point}
+                    </div>
+                  ))}
+                </div>
+              ) : null}
               <div className="service-actions">
                 <Link className="service-button" href="/request-a-quote">
                   Request a Quote
@@ -556,92 +601,115 @@ export function ServicePageTemplate({
                 sizes="(max-width: 1100px) 100vw, 46vw"
                 className="service-image"
               />
-              <div className="service-note">
-                Reliable support, straightforward communication, and freight handling that stays on schedule.
-              </div>
+              {!hideHeroNote ? (
+                <div className="service-note">
+                  Reliable support, straightforward communication, and freight handling that stays on schedule.
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
 
-        <section className="section-shell">
-          <div className="detail-grid">
-            <article className="detail-card">
-              <div className="section-kicker">Overview</div>
-              <h2>{title} built around your timeline.</h2>
-              <p>{summary}</p>
-              <p>{body}</p>
-              <div className="check-list">
-                {points.map((point) => (
-                  <div className="check-item" key={point}>
-                    <CheckCircle2 size={18} />
-                    <div>
-                      <strong>{point}</strong>
-                      <span>Dummy supporting copy for this service route. Replace with final marketing text later if needed.</span>
-                    </div>
+        {hideLowerSections ? null : (
+          lowerContent ?? (
+          <>
+            <section className="section-shell">
+              <div className="detail-grid">
+                <article className="detail-card">
+                  <div className="section-kicker">Overview</div>
+                  <h2>{title} built around your timeline.</h2>
+                  <p>{summary}</p>
+                  <p>{body}</p>
+                  <div className="check-list">
+                    {points.map((point) => (
+                      <div className="check-item" key={point}>
+                        <CheckCircle2 size={18} />
+                        <div>
+                          <strong>{point}</strong>
+                          <span>Dummy supporting copy for this service route. Replace with final marketing text later if needed.</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </article>
-
-            <div className="detail-side">
-              {cards.map((card) => {
-                const Icon = card.icon;
-                return (
-                  <article className="side-tile" key={card.title}>
-                    <strong>{card.title}</strong>
-                    <p>{card.description}</p>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="cards-shell">
-          <div className="section-head">
-            <h2>What this service can cover</h2>
-            <p>
-              A simple dummy section to show the route is live. This can be swapped for real copy whenever you are ready.
-            </p>
-          </div>
-
-          <div className="service-grid">
-            {cards.map((card, index) => {
-              const Icon = card.icon;
-              return (
-                <article className="service-card" key={card.title}>
-                  <span className="service-badge">
-                    <Icon size={22} />
-                  </span>
-                  <h3>{String(index + 1).padStart(2, "0")}. {card.title}</h3>
-                  <p>{card.description}</p>
                 </article>
-              );
-            })}
-          </div>
-        </section>
 
-        <section className="cta-shell">
-          <div className="cta-band">
-            <div className="cta-inner">
-              <div>
-                <h3>Need this service configured differently?</h3>
+                <div className="detail-side">
+                  {cards.map((card) => {
+                    const Icon = card.icon;
+                    return (
+                      <article className="side-tile" key={card.title}>
+                        <strong>{card.title}</strong>
+                        <p>{card.description}</p>
+                      </article>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
+            <section className="cards-shell">
+              <div className="section-head">
+                <h2>What this service can cover</h2>
                 <p>
-                  Reach out and we can adjust the layout, copy, or route structure without touching the rest of the site.
+                  A simple dummy section to show the route is live. This can be swapped for real copy whenever you are ready.
                 </p>
               </div>
-              <div className="cta-actions">
-                <a className="cta-link" href="tel:+18609883887">(860) 988-3887</a>
-                <Link className="cta-link secondary" href="/request-a-quote">Request a Quote</Link>
+
+              <div className="service-grid">
+                {cards.map((card, index) => {
+                  const Icon = card.icon;
+                  return (
+                    <article className="service-card" key={card.title}>
+                      <span className="service-badge">
+                        <Icon size={22} />
+                      </span>
+                      <h3>{String(index + 1).padStart(2, "0")}. {card.title}</h3>
+                      <p>{card.description}</p>
+                    </article>
+                  );
+                })}
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
+
+            <section className="cta-shell">
+              <div className="cta-band">
+                <div className="cta-inner">
+                  <div>
+                    <h3>Need this service configured differently?</h3>
+                    <p>
+                      Reach out and we can adjust the layout, copy, or route structure without touching the rest of the site.
+                    </p>
+                  </div>
+                  <div className="cta-actions">
+                    <a className="cta-link" href="tel:+18609883887">(860) 988-3887</a>
+                    <Link className="cta-link secondary" href="/request-a-quote">Request a Quote</Link>
+                  </div>
+                </div>
+              </div>
+            </section>          </>
+          )
+        )}
       </main>
       <FooterSection />
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
