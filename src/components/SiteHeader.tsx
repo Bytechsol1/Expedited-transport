@@ -278,6 +278,7 @@ export function SiteHeader() {
               <li><Link href="/about-us" className="nav-lnk">About Us</Link></li>
               <li><Link href="/warehousing" className="nav-lnk">Warehousing</Link></li>
               <li><Link href="/careers" className="nav-lnk">Careers</Link></li>
+              <li><Link href="/quote-calculator" className="nav-lnk">Instant Quote</Link></li>
             </ul>
           </nav>
 
@@ -309,6 +310,7 @@ export function SiteHeader() {
           <Link href="/about-us" className="drawer-link" onClick={() => setMobileOpen(false)}>About Us</Link>
           <Link href="/warehousing" className="drawer-link" onClick={() => setMobileOpen(false)}>Warehousing</Link>
           <Link href="/careers" className="drawer-link" onClick={() => setMobileOpen(false)}>Careers</Link>
+          <Link href="/quote-calculator" className="drawer-link" onClick={() => setMobileOpen(false)}>Instant Quote</Link>
           <button type="button" className="drawer-cta" onClick={openQuoteModal}>Get a Quote</button>
         </div>
       </header>
