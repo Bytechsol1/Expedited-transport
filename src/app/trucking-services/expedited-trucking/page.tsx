@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { servicePages } from "@/lib/service-pages";
@@ -402,7 +402,3 @@ export default function ExpeditedTruckingPage() {
     </>
   );
 }
-
-
-
-

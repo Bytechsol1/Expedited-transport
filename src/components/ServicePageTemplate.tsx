@@ -582,7 +582,7 @@ export function ServicePageTemplate({
                 </div>
               ) : null}
               <div className="service-actions">
-                <Link className="service-button" href="/request-a-quote">
+                <Link className="service-button" href="/#contact-section">
                   Request a Quote
                   <ArrowRight size={18} />
                 </Link>
@@ -682,7 +682,7 @@ export function ServicePageTemplate({
                   </div>
                   <div className="cta-actions">
                     <a className="cta-link" href="tel:+18609883887">(860) 988-3887</a>
-                    <Link className="cta-link secondary" href="/request-a-quote">Request a Quote</Link>
+                    <Link className="cta-link secondary" href="/#contact-section">Request a Quote</Link>
                   </div>
                 </div>
               </div>
