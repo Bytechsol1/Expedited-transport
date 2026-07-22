@@ -1,7 +1,9 @@
-import "dotenv/config";
+import { config } from "dotenv";
 import bcrypt from "bcryptjs";
 import { db } from "./client";
 import { adminUsers, pricingSettings, truckTypes } from "./schema";
+
+config({ path: ".env.local", quiet: true });
 
 async function main() {
   console.log("Seeding placeholder data. Update real rates/thresholds from /admin/rates after launch.");
@@ -90,7 +92,7 @@ async function main() {
 
   await db.insert(pricingSettings).values({
     fuelPricePerGallon: "3.75",
-    fuelSurchargePercent: "12",
+    markupPercent: "85",
     minimumCharge: "150",
     updatedBy: "seed",
   });

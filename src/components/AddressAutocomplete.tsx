@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 type Suggestion = { id: string; label: string };
 
@@ -48,34 +49,42 @@ export function AddressAutocomplete({
   };
 
   return (
-    <div ref={containerRef} className="relative flex flex-col gap-1">
-      <label className="text-xs font-semibold uppercase tracking-wide text-slate-600">{label}</label>
+    <div ref={containerRef} className="iq-field">
+      <label className="iq-label">{label}</label>
       <input
         value={value}
         placeholder={placeholder}
         onChange={(e) => handleChange(e.target.value)}
         onFocus={() => suggestions.length > 0 && setOpen(true)}
-        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500"
+        className="iq-input"
         autoComplete="off"
       />
-      {open && suggestions.length > 0 ? (
-        <ul className="absolute top-full z-20 mt-1 w-full rounded-md border border-slate-200 bg-white shadow-lg">
-          {suggestions.map((suggestion) => (
-            <li key={suggestion.id}>
-              <button
-                type="button"
-                onClick={() => {
-                  onChange(suggestion.label);
-                  setOpen(false);
-                }}
-                className="block w-full px-3 py-2 text-left text-sm hover:bg-slate-100"
-              >
-                {suggestion.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <AnimatePresence>
+        {open && suggestions.length > 0 ? (
+          <motion.ul
+            className="iq-suggestions"
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.15 }}
+          >
+            {suggestions.map((suggestion) => (
+              <li key={suggestion.id}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(suggestion.label);
+                    setOpen(false);
+                  }}
+                  className="iq-suggestion"
+                >
+                  {suggestion.label}
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }

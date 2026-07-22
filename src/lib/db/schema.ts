@@ -39,7 +39,7 @@ export const truckTypes = pgTable("truck_types", {
 export const pricingSettings = pgTable("pricing_settings", {
   id: uuid("id").primaryKey().defaultRandom(),
   fuelPricePerGallon: numeric("fuel_price_per_gallon", { precision: 10, scale: 4 }).notNull(),
-  fuelSurchargePercent: numeric("fuel_surcharge_percent", { precision: 6, scale: 3 }).notNull(),
+  markupPercent: numeric("markup_percent", { precision: 6, scale: 3 }).notNull(),
   minimumCharge: numeric("minimum_charge", { precision: 10, scale: 2 }).notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   updatedBy: text("updated_by"),

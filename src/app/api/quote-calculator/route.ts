@@ -97,8 +97,10 @@ export async function POST(request: Request) {
       durationMinutes: route.durationMinutes,
       costPerMile: Number(truckType.costPerMile),
       costPerHour: Number(truckType.costPerHour),
+      avgMpg: Number(truckType.avgMpg),
+      fuelPricePerGallon: Number(settings.fuelPricePerGallon),
+      markupPercent: Number(settings.markupPercent),
       minimumCharge: Number(settings.minimumCharge),
-      fuelSurchargePercent: Number(settings.fuelSurchargePercent),
     });
 
     await db.insert(quoteRequests).values({
@@ -130,7 +132,7 @@ export async function POST(request: Request) {
       durationMinutes: Math.round(route.durationMinutes),
       pickupLabel: pickup.label,
       deliveryLabel: delivery.label,
-      breakdown,
+      price: breakdown.total,
     });
   } catch (error) {
     if (error instanceof GeocodeError || error instanceof TruckRouteError) {

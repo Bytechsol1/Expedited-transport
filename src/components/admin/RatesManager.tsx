@@ -30,7 +30,7 @@ type TruckType = {
 type PricingSettings = {
   id: string;
   fuelPricePerGallon: string;
-  fuelSurchargePercent: string;
+  markupPercent: string;
   minimumCharge: string;
 };
 
@@ -127,7 +127,7 @@ export function RatesManager({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         fuelPricePerGallon: Number(settings.fuelPricePerGallon),
-        fuelSurchargePercent: Number(settings.fuelSurchargePercent),
+        markupPercent: Number(settings.markupPercent),
         minimumCharge: Number(settings.minimumCharge),
       }),
     });
@@ -168,9 +168,9 @@ export function RatesManager({
             onChange={(v) => setSettings({ ...settings, fuelPricePerGallon: v })}
           />
           <Field
-            label="Fuel surcharge %"
-            value={settings.fuelSurchargePercent}
-            onChange={(v) => setSettings({ ...settings, fuelSurchargePercent: v })}
+            label="Markup %"
+            value={settings.markupPercent}
+            onChange={(v) => setSettings({ ...settings, markupPercent: v })}
           />
           <Field
             label="Minimum charge $"

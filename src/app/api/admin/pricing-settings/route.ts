@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 
 const settingsSchema = z.object({
   fuelPricePerGallon: z.number().positive(),
-  fuelSurchargePercent: z.number().min(0),
+  markupPercent: z.number().min(0),
   minimumCharge: z.number().min(0),
 });
 
@@ -28,7 +28,7 @@ export async function PUT(request: Request) {
         .insert(pricingSettings)
         .values({
           fuelPricePerGallon: String(body.fuelPricePerGallon),
-          fuelSurchargePercent: String(body.fuelSurchargePercent),
+          markupPercent: String(body.markupPercent),
           minimumCharge: String(body.minimumCharge),
           updatedBy: session?.user?.email ?? "admin",
         })
@@ -41,7 +41,7 @@ export async function PUT(request: Request) {
       .update(pricingSettings)
       .set({
         fuelPricePerGallon: String(body.fuelPricePerGallon),
-        fuelSurchargePercent: String(body.fuelSurchargePercent),
+        markupPercent: String(body.markupPercent),
         minimumCharge: String(body.minimumCharge),
         updatedAt: new Date(),
         updatedBy: session?.user?.email ?? "admin",

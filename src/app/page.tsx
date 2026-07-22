@@ -7,6 +7,7 @@ import { TruckLogoBar } from "@/components/TruckLogoBar";
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { ScrollFrameSection } from "@/components/ScrollFrameSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { InstantQuoteSection } from "@/components/InstantQuoteSection";
 import { ContactSection } from "@/components/ContactSection";
 import { DotSeparator } from "@/components/DotSeparator";
 import { FooterSection } from "@/components/FooterSection";
@@ -36,6 +37,9 @@ export default function Home() {
         </div>
         <div style={{ position: "relative", zIndex: 3 }}>
           <ScrollFrameSection />
+        </div>
+        <div style={{ position: "relative", zIndex: 4 }}>
+          <InstantQuoteSection />
         </div>
         <div style={{ position: "relative", zIndex: 4, marginBottom: "0" }}>
           <TestimonialsSection />

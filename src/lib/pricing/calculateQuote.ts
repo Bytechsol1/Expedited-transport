@@ -3,33 +3,39 @@ export type QuoteInputs = {
   durationMinutes: number;
   costPerMile: number;
   costPerHour: number;
+  avgMpg: number;
+  fuelPricePerGallon: number;
+  markupPercent: number;
   minimumCharge: number;
-  fuelSurchargePercent: number;
 };
 
 export type QuoteBreakdown = {
   mileageCharge: number;
-  timeCharge: number;
-  subtotalBeforeMinimum: number;
-  subtotalAfterMinimum: number;
-  fuelSurcharge: number;
+  driverCharge: number;
+  fuelCost: number;
+  internalCost: number;
   total: number;
 };
 
+/**
+ * mileage + driver time + fuel = what the job actually costs to run.
+ * That cost is marked up (markupPercent), then floored at minimumCharge —
+ * the minimum never quotes below what the customer sees, not below raw cost.
+ */
 export function calculateQuote(inputs: QuoteInputs): QuoteBreakdown {
   const mileageCharge = inputs.distanceMiles * inputs.costPerMile;
-  const timeCharge = (inputs.durationMinutes / 60) * inputs.costPerHour;
-  const subtotalBeforeMinimum = mileageCharge + timeCharge;
-  const subtotalAfterMinimum = Math.max(subtotalBeforeMinimum, inputs.minimumCharge);
-  const fuelSurcharge = subtotalAfterMinimum * (inputs.fuelSurchargePercent / 100);
-  const total = subtotalAfterMinimum + fuelSurcharge;
+  const driverCharge = (inputs.durationMinutes / 60) * inputs.costPerHour;
+  const fuelCost = (inputs.distanceMiles / inputs.avgMpg) * inputs.fuelPricePerGallon;
+  const internalCost = mileageCharge + driverCharge + fuelCost;
+
+  const customerPrice = internalCost * (1 + inputs.markupPercent / 100);
+  const total = Math.max(customerPrice, inputs.minimumCharge);
 
   return {
     mileageCharge: round2(mileageCharge),
-    timeCharge: round2(timeCharge),
-    subtotalBeforeMinimum: round2(subtotalBeforeMinimum),
-    subtotalAfterMinimum: round2(subtotalAfterMinimum),
-    fuelSurcharge: round2(fuelSurcharge),
+    driverCharge: round2(driverCharge),
+    fuelCost: round2(fuelCost),
+    internalCost: round2(internalCost),
     total: round2(total),
   };
 }

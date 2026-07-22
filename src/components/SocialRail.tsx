@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 
 type SocialItem = {
   href: string;
@@ -119,7 +120,10 @@ const items: SocialItem[] = [
 ];
 
 export function SocialRail() {
+  const pathname = usePathname();
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
+
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <>
