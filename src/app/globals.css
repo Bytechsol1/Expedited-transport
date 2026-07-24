@@ -12,6 +12,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "SuisseIntl";
   src: url("/fonts/SuisseIntl-Medium.woff2") format("woff2");
@@ -56,7 +57,7 @@
   --grid-gutter: min(1.042vw, 26.667px);
   --grid-margin: min(3.646vw, 93.333px);
   --grid-size: 12;
-  --spacing: min(3.646vw, 93.333px);
+
 
   /* shadcn compat */
   --background: oklch(1 0 0);
@@ -110,9 +111,17 @@
 
 /* ─── Terminal color-transition keyframe ─── */
 @keyframes color-transition {
-  0%   { color: var(--c-light-light-gray); }
-  30%  { color: var(--c-lime); }
-  100% { color: var(--c-dark-green); }
+  0% {
+    color: var(--c-light-light-gray);
+  }
+
+  30% {
+    color: var(--c-lime);
+  }
+
+  100% {
+    color: var(--c-dark-green);
+  }
 }
 
 /* ─── Base resets ─── */
@@ -121,6 +130,7 @@
     @apply border-border outline-ring/50;
     box-sizing: border-box;
   }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-primary);
@@ -128,6 +138,7 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
+
   html {
     font-family: var(--font-primary);
   }
@@ -138,6 +149,7 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

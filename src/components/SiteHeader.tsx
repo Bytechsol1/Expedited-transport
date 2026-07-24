@@ -130,7 +130,6 @@ export function SiteHeader() {
   };
 
 
-
   useEffect(() => {
     const onScroll = () => {
       if (isLightPage) {
@@ -206,7 +205,7 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <Link className="cta-contact" href="/#contact-section">Get a Quote</Link>
+          <Link href="/#instant-quote" className="cta-contact">Get a Quote</Link>
 
           <button
             className={`burger${mobileOpen ? " is-open" : ""}`}
@@ -234,7 +233,7 @@ export function SiteHeader() {
           <Link href="/about-us" className="drawer-link" onClick={() => setMobileOpen(false)}>About Us</Link>
           <Link href="/warehousing" className="drawer-link" onClick={() => setMobileOpen(false)}>Warehousing</Link>
           <Link href="/careers" className="drawer-link" onClick={() => setMobileOpen(false)}>Careers</Link>
-          <Link className="drawer-cta" href="/#contact-section" onClick={() => setMobileOpen(false)}>Get a Quote</Link>
+          <Link href="/#instant-quote" className="drawer-cta" onClick={() => setMobileOpen(false)}>Get a Quote</Link>
         </div>
       </header>
       <style>{`
@@ -563,27 +562,6 @@ export function SiteHeader() {
         }
       `}</style>
     </>
-  );
-}
-
-function Field({
-  name,
-  label,
-  placeholder,
-  type = "text",
-  required = false,
-}: {
-  name: string;
-  label: string;
-  placeholder: string;
-  type?: string;
-  required?: boolean;
-}) {
-  return (
-    <label className="quote-field" htmlFor={name}>
-      <span>{label}</span>
-      <input id={name} name={name} type={type} placeholder={placeholder} required={required} />
-    </label>
   );
 }
 

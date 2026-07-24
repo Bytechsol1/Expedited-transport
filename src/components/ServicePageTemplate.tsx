@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
@@ -55,208 +55,109 @@ export function ServicePageTemplate({
       <main className="service-page">
         <style>{`
           .service-page {
-            min-height: 100vh;
-            background:
-              radial-gradient(circle at 15% 0%, rgba(182, 240, 0, 0.12), transparent 26%),
-              radial-gradient(circle at 90% 12%, rgba(15, 23, 42, 0.1), transparent 20%),
-              linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+            background: #fff;
             color: #0f172a;
           }
 
-          .service-shell,
-          .section-shell,
-          .cards-shell,
-          .cta-shell {
-            max-width: 1440px;
-            margin: 0 auto;
-            padding-left: 32px;
-            padding-right: 32px;
-          }
-
-          .service-shell {
-            padding-top: 148px;
-            padding-bottom: 64px;
-          }
-
-          .hero-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-            gap: 36px;
-            align-items: stretch;
-          }
-
-          .hero-copy {
-            padding: 44px;
-            border-radius: 34px;
-            background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
-            color: #fff;
+          /* ── Hero ── */
+          .overlay-hero {
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.18);
-          }
-          .hero-copy.points-hidden {
+            min-height: 120vh;
             display: flex;
             flex-direction: column;
+            justify-content: flex-end;
+            padding: 100px 48px 20px;
+            overflow: hidden;
+            font-family: var(--font-inter), sans-serif;
           }
 
-
-          .hero-copy::after {
-            content: "";
+          /* Giant outline text layer */
+          .bg-text {
             position: absolute;
-            inset: 18px 18px 18px auto;
-            width: 10px;
-            border-radius: 999px;
-            background: linear-gradient(180deg, #b6f000 0%, #b6f000 66%, rgba(255,255,255,0.22) 66%, rgba(255,255,255,0.22) 100%);
+            top: 50vh;
+            left: 50%;
+            transform: translate(-50%, -58%);
+            z-index: 1;
+            pointer-events: none;
+            width: 100%;
+            text-align: center;
+            line-height: 0.88;
+            white-space: nowrap;
           }
 
-          .hero-copy.no-accent::after {
-            display: none;
-          }
-
-          .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 14px;
-            border-radius: 999px;
-            background: rgba(182, 240, 0, 0.12);
-            color: #d8f97a;
-            font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-          }
-          .hero-copy.no-accent .eyebrow {
-            background: transparent;
-            padding-left: 0;
-            padding-right: 0;
-          }
-          .service-title {
-            margin: 18px 0 0;
-            width: min(100%, 18ch);
-            max-width: 18ch;
-            overflow-wrap: normal;
-            word-break: normal;
-            hyphens: none;
-            white-space: pre-line;
-            font-size: clamp(38px, 5vw, 80px);
-            line-height: 0.92;
-            letter-spacing: -0.07em;
+          .bg-text span {
+            display: block;
+            font-size: clamp(50px, 11vw, 200px);
             font-weight: 900;
             text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(15, 23, 42, 0.8);
+            letter-spacing: -0.02em;
+            line-height: 0.95;
+            padding: 0 20px;
           }
 
-          .service-title.freight-title {
-            width: min(100%, 14ch);
-            max-width: 14ch;
-            font-size: clamp(30px, 4vw, 62px);
-            line-height: 0.9;
+          /* Truck image layer – in front of text */
+          .truck-layer {
+            position: absolute;
+            top: 50vh;
+            left: 50%;
+            transform: translate(-50%, -42%);
+            z-index: 2;
+            width: 85%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            pointer-events: none;
           }
 
-
-          .service-title span {
-            color: #b6f000;
+          .truck-layer img {
+            object-fit: contain;
           }
 
-          .summary {
-            max-width: 700px;
-            margin: 24px 0 0;
-            color: rgba(255,255,255,0.8);
-            font-size: 18px;
-            line-height: 1.9;
-          }
-
-          .points {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin-top: 30px;
-          }
-
-          .point {
-            padding: 14px 16px;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.92);
-            font-size: 13px;
-            line-height: 1.45;
-            min-height: 64px;
-          }
-
-          .service-actions {
+          /* Bottom content bar */
+          .hero-footer {
+            position: relative;
+            z-index: 3;
             display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-top: 28px;
-          }
-          .hero-copy.points-hidden .service-actions {
-            margin-top: auto;
-            padding-top: 28px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 48px;
+            max-width: 1440px;
+            width: 100%;
+            margin: 0 auto;
           }
 
+          .hero-footer p {
+            max-width: 580px;
+            font-size: 18px;
+            line-height: 1.65;
+            color: #334155;
+            font-weight: 500;
+            margin: 0;
+          }
 
-          .service-button,
-          .service-button-alt {
+          .hero-cta {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 16px 22px;
-            border-radius: 16px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 900;
-            letter-spacing: 0.12em;
+            gap: 14px;
+            background: #0f172a;
+            color: #fff;
+            padding: 22px 44px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            text-decoration: none;
+            white-space: nowrap;
+            border-radius: 100px;
+            flex-shrink: 0;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
           }
 
-          .service-button {
+          .hero-cta:hover {
             background: #b6f000;
             color: #0f172a;
-            box-shadow: 0 16px 32px rgba(182, 240, 0, 0.16);
-          }
-
-          .service-button-alt {
-            background: rgba(255,255,255,0.08);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.12);
-          }
-
-          .service-button:hover,
-          .service-button-alt:hover {
-            transform: translateY(-2px);
-          }
-
-          .service-media {
-            position: relative;
-            min-height: 680px;
-            border-radius: 34px;
-            overflow: hidden;
-            background: linear-gradient(145deg, #ffffff 0%, #e7ecf4 100%);
-            box-shadow: 0 28px 60px rgba(15, 23, 42, 0.14);
-          }
-
-          .service-image {
-            object-fit: cover;
-            object-position: center 50%;
-          }
-
-          .service-note {
-            position: absolute;
-            left: 20px;
-            bottom: 20px;
-            right: 20px;
-            z-index: 2;
-            padding: 18px 20px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(16px);
-            color: #0f172a;
-            box-shadow: 0 18px 32px rgba(15, 23, 42, 0.18);
-            font-size: 14px;
-            line-height: 1.7;
-            font-weight: 600;
+            transform: translateY(-3px);
           }
 
           .section-shell {
@@ -566,47 +467,102 @@ export function ServicePageTemplate({
           }
         `}</style>
 
-        <section className="service-shell">
-          <div className="hero-grid">
-            <div className={`hero-copy${hideHeroAccent ? " no-accent" : ""}${hideHeroPoints ? " points-hidden" : ""}`}>
-              {!hideHeroEyebrow ? <div className="eyebrow">{eyebrow}</div> : null}
-              <h1 className={`service-title${heroTitleClassName ? ` ${heroTitleClassName}` : ""}`}>{title}</h1>
-              <p className="summary">{summary}</p>
-              {!hideHeroPoints ? (
-                <div className="points">
-                  {points.map((point) => (
-                    <div className="point" key={point}>
-                      {point}
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-              <div className="service-actions">
-                <Link className="service-button" href="/#contact-section">
-                  Request a Quote
-                  <ArrowRight size={18} />
-                </Link>
-                <a className="service-button-alt" href="tel:+18609883887">
-                  Call Us
-                </a>
-              </div>
-            </div>
+        <section className="overlay-hero">
+          {/* Background giant text */}
+          <div className="bg-text">
+            {title.split(' ').map((word, i) => {
+              // Special alignment for "LTL" and "Freight" because they sit on the left, and the second word on the right trailer
+              const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') && i === 0;
+              const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') && i === 1;
+              
+              let customStyle: any = {};
+              if (isFirstWordSpecial) {
+                customStyle = { 
+                  textAlign: 'left', 
+                  paddingLeft: '4vw',
+                  transform: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? 'translateY(-6vh)' : 'none'
+                }; 
+              }
+              if (isSecondWordSpecial) {
+                customStyle = { 
+                  textAlign: 'left', 
+                  paddingLeft: '51vw', 
+                  fontSize: title === 'Freight\nTransportation' ? 'clamp(24px, 4.5vw, 90px)' : 'clamp(40px, 8vw, 140px)',
+                  position: 'relative',
+                  zIndex: 3,
+                  marginTop: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? '4vh' : '-2vh' // Adjust to match the specific truck height
+                };
+              }
 
-            <div className="service-media">
-              <Image
-                src={imageSrc}
-                alt={imageAlt}
-                fill
-                priority
-                sizes="(max-width: 1100px) 100vw, 46vw"
-                className="service-image"
-              />
-              {!hideHeroNote ? (
-                <div className="service-note">
-                  Reliable support, straightforward communication, and freight handling that stays on schedule.
-                </div>
-              ) : null}
-            </div>
+              // Fix specifically for Carrier Services long words
+              if (title === 'Carrier Services') {
+                customStyle = {
+                  fontSize: 'clamp(40px, 9vw, 150px)',
+                  padding: '0 5vw',
+                  lineHeight: '0.95'
+                };
+              }
+
+              // Logistics Services Split Design
+              if (title === 'Logistics Services' && i === 0) {
+                customStyle = { 
+                  textAlign: 'left', 
+                  paddingLeft: '2vw',
+                  fontSize: 'clamp(30px, 6vw, 110px)',
+                  transform: 'translateY(-6vh)'
+                };
+              }
+              if (title === 'Logistics Services' && i === 1) {
+                customStyle = { 
+                  textAlign: 'right', 
+                  paddingRight: '2vw',
+                  fontSize: 'clamp(30px, 6vw, 110px)',
+                  marginTop: '8vh',
+                  position: 'relative',
+                  zIndex: 3
+                };
+              }
+              
+              return (
+                <span 
+                  key={i} 
+                  style={customStyle}
+                >
+                  {word}
+                </span>
+              );
+            })}
+          </div>
+
+          {/* Truck image – overlaps text */}
+          <div 
+            className="truck-layer"
+            style={
+              title === 'LTL Trucking' ? { transform: 'translate(-55%, -42%)' } :
+              (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? { transform: 'translate(-55%, -35%)' } :
+              title === 'Logistics Services' ? { 
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)'
+              } :
+              {}
+            }
+          >
+            <Image
+              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : '/images/truck-user-final.png'}
+              alt={imageAlt || title}
+              fill
+              priority
+              sizes="(max-width: 1024px) 80vw, 62vw"
+            />
+          </div>
+
+          {/* Footer content */}
+          <div className="hero-footer">
+            <p>{summary}</p>
+            <a href="tel:+18609883887" className="hero-cta">
+              Speak With Us Now
+              <ArrowRight size={18} />
+            </a>
           </div>
         </section>
 

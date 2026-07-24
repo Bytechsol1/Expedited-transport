@@ -1,4 +1,4 @@
-﻿import { ServicePageTemplate } from "@/components/ServicePageTemplate";
+import { ServicePageTemplate } from "@/components/ServicePageTemplate";
 import { servicePages } from "@/lib/service-pages";
 
 export const metadata = servicePages.ltlTrucking.metadata;

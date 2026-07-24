@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import type { ServicePageTemplateProps, ServiceCard } from "@/components/ServicePageTemplate";
 import { BarChart3, Boxes, CheckCircle2, Clock3, MapPinned, Package, ShieldCheck, Ship, Truck, Warehouse, Waypoints } from "lucide-react";
 

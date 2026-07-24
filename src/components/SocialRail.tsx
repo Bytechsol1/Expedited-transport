@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 
 type SocialItem = {
   href: string;
   label: string;
   className: string;
   icon: React.ReactNode;
+  wordmark?: { src: string; width: number; height: number };
 };
 
 function FacebookIcon() {
@@ -56,26 +58,14 @@ function PlayStoreIcon() {
 
 function AppStoreIcon() {
   return (
-    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" width="30" height="30">
-      <circle cx="32" cy="32" r="31" fill="#fff" />
-      <path
-        d="M28 18.5 16.5 38.5c-1.5 2.7.4 6 3.5 6h7.2"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="4.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M36 18.5 47.5 38.5c1.5 2.7-.4 6-3.5 6H36.8"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="4.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M23 34.5h18" fill="none" stroke="currentColor" strokeWidth="4.5" strokeLinecap="round" />
-    </svg>
+    <img
+      src="/images/appstore.webp"
+      alt="App Store"
+      width="26"
+      height="26"
+      decoding="async"
+      style={{ width: "26px", height: "26px", objectFit: "contain", display: "block", borderRadius: "6px" }}
+    />
   );
 }
 
@@ -98,24 +88,28 @@ const items: SocialItem[] = [
     label: "Facebook",
     className: "social-rail__item--facebook",
     icon: <FacebookIcon />,
+    wordmark: { src: "/images/brand-facebook-wordmark.svg", width: 112, height: 20 },
   },
   {
     href: "https://www.instagram.com/expeditedtransportservices/",
     label: "Instagram",
     className: "social-rail__item--instagram",
     icon: <InstagramIcon />,
+    wordmark: { src: "/images/brand-instagram-wordmark.svg", width: 89, height: 30 },
   },
   {
     href: "https://play.google.com/store/apps/details?id=net.expeditedtransport.driverapp",
     label: "CMJL App",
     className: "social-rail__item--playstore",
     icon: <PlayStoreIcon />,
+    wordmark: { src: "/images/brand-googleplay-wordmark.svg", width: 102, height: 20 },
   },
   {
     href: "https://apps.apple.com/us/app/cmjl/id6775973879",
     label: "App Store",
     className: "social-rail__item--appstore",
     icon: <AppStoreIcon />,
+    wordmark: { src: "/images/brand-appstore-badge.svg", width: 102, height: 34 },
   },
   {
     href: "https://expeditedtransport.net/register",
@@ -126,7 +120,10 @@ const items: SocialItem[] = [
 ];
 
 export function SocialRail() {
+  const pathname = usePathname();
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
+
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <>
@@ -149,7 +146,20 @@ export function SocialRail() {
               onBlur={() => setActiveLabel(null)}
             >
               <span className="social-rail__icon">{item.icon}</span>
-              <span className="social-rail__label">{item.label}</span>
+              <span className="social-rail__label">
+                {item.wordmark ? (
+                  <img
+                    src={item.wordmark.src}
+                    alt={item.label}
+                    width={item.wordmark.width}
+                    height={item.wordmark.height}
+                    decoding="async"
+                    style={{ display: "block", width: item.wordmark.width, height: item.wordmark.height, objectFit: "contain" }}
+                  />
+                ) : (
+                  item.label
+                )}
+              </span>
             </a>
           );
         })}
@@ -221,11 +231,6 @@ export function SocialRail() {
           height: 22px;
         }
 
-        .social-rail__item--appstore .social-rail__icon svg {
-          width: 30px;
-          height: 30px;
-        }
-
         .social-rail__item--facebook .social-rail__icon {
           color: #1877f2;
         }
@@ -238,13 +243,16 @@ export function SocialRail() {
           color: #111827;
         }
 
-        .social-rail__item--appstore .social-rail__icon {
-          color: #0a84ff;
-        }
-
         .social-rail__item--driver-signup .social-rail__icon {
           background: #ffffff;
           color: #111827;
+        }
+
+        .social-rail__item--driver-signup .social-rail__label {
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.01em;
+          text-transform: none;
         }
 
         .social-rail__label {
