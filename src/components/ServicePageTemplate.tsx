@@ -494,7 +494,7 @@ export function ServicePageTemplate({
                   fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
-                  marginTop: isLTL ? '-4vh' : isSpecialLayout ? '-1vh' : '-2vh'
+                  marginTop: isLTL ? '-4vh' : isSpecialLayout ? '2vh' : '-2vh'
                 };
               }
 
