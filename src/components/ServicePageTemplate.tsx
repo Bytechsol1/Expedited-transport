@@ -471,10 +471,10 @@ export function ServicePageTemplate({
           {/* Background giant text */}
           <div className="bg-text">
             {title.split(' ').map((word, i) => {
-              const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation') && i === 0;
-              const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation') && i === 1;
+              const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services') && i === 0;
+              const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services') && i === 1;
               
-              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Transportation');
+              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Transportation' || title === 'Logistics Services');
               
               let customStyle: any = {};
               if (isFirstWordSpecial) {
@@ -482,18 +482,18 @@ export function ServicePageTemplate({
                   textAlign: 'left', 
                   paddingLeft: '4vw',
                   transform: title === 'Freight Shipping' ? 'translateY(-6vh)' : isSpecialLayout ? 'translateY(-8vh)' : 'none',
-                  fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : undefined
+                  fontSize: (title === 'LTL Trucking' || title === 'Logistics Services') ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : undefined
                 }; 
               }
               if (isSecondWordSpecial) {
                 const isLTL = title === 'LTL Trucking';
                 customStyle = { 
                   textAlign: 'left', 
-                  paddingLeft: isLTL ? '10vw' : isSpecialLayout ? '8vw' : '51vw', 
-                  fontSize: isLTL ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : 'clamp(40px, 8vw, 140px)',
+                  paddingLeft: title === 'LTL Trucking' ? '10vw' : title === 'Logistics Services' ? '15vw' : isSpecialLayout ? '8vw' : '51vw', 
+                  fontSize: (title === 'LTL Trucking' || title === 'Logistics Services') ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
-                  marginTop: title === 'Freight Shipping' ? '4vh' : isLTL ? '-4vh' : isSpecialLayout ? '2vh' : '-2vh'
+                  marginTop: title === 'Freight Shipping' ? '4vh' : (title === 'LTL Trucking' || title === 'Logistics Services') ? '-4vh' : isSpecialLayout ? '2vh' : '-2vh'
                 };
               }
 
@@ -542,7 +542,7 @@ export function ServicePageTemplate({
             className="truck-layer"
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
-              title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
+              (title === 'Freight Transportation' || title === 'Logistics Services') ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
               title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
               {}
             }
