@@ -551,7 +551,7 @@ export function ServicePageTemplate({
             }
           >
             <Image
-              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : '/images/truck-user-final.png'}
+              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : (title === 'Freight Shipping' || title === 'Freight Transportation') ? '/images/freight-new.png' : '/images/truck-user-final.png'}
               alt={imageAlt || title}
               fill
               priority
