@@ -489,7 +489,7 @@ export function ServicePageTemplate({
                 const isLTL = title === 'LTL Trucking';
                 customStyle = { 
                   textAlign: 'left', 
-                  paddingLeft: isLTL ? '10vw' : isSpecialLayout ? '15vw' : '51vw', 
+                  paddingLeft: isLTL ? '10vw' : isSpecialLayout ? '8vw' : '51vw', 
                   fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
