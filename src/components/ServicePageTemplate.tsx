@@ -481,7 +481,7 @@ export function ServicePageTemplate({
                 customStyle = { 
                   textAlign: 'left', 
                   paddingLeft: '4vw',
-                  transform: title === 'Freight Shipping' ? 'translateY(-14vh)' : isSpecialLayout ? 'translateY(-8vh)' : 'none',
+                  transform: title === 'Freight Shipping' ? 'translateY(-6vh)' : isSpecialLayout ? 'translateY(-8vh)' : 'none',
                   fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : undefined
                 }; 
               }
@@ -543,6 +543,7 @@ export function ServicePageTemplate({
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
               title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
+              title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
               title === 'Logistics Services' ? { 
                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)',
                 maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)'
