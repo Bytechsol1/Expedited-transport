@@ -475,23 +475,25 @@ export function ServicePageTemplate({
               const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') && i === 0;
               const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') && i === 1;
               
+              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation');
+              
               let customStyle: any = {};
               if (isFirstWordSpecial) {
                 customStyle = { 
                   textAlign: 'left', 
                   paddingLeft: '4vw',
-                  transform: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? 'translateY(-6vh)' : title === 'LTL Trucking' ? 'translateY(-8vh)' : 'none',
-                  fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : undefined
+                  transform: isSpecialLayout ? 'translateY(-8vh)' : 'none',
+                  fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : undefined
                 }; 
               }
               if (isSecondWordSpecial) {
                 customStyle = { 
                   textAlign: 'left', 
-                  paddingLeft: (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') ? '10vw' : '51vw', 
-                  fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : title === 'Freight\nTransportation' ? 'clamp(24px, 4.5vw, 90px)' : 'clamp(40px, 8vw, 140px)',
+                  paddingLeft: isSpecialLayout ? '10vw' : '51vw', 
+                  fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
-                  marginTop: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? '4vh' : title === 'LTL Trucking' ? '-4vh' : '-2vh'
+                  marginTop: isSpecialLayout ? '-4vh' : '-2vh'
                 };
               }
 
