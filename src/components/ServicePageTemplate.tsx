@@ -544,15 +544,11 @@ export function ServicePageTemplate({
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
               title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
               title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
-              title === 'Logistics Services' ? { 
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)',
-                maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)'
-              } :
               {}
             }
           >
             <Image
-              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : title === 'Freight Transportation' ? '/images/freight-new.png' : '/images/truck-user-final.png'}
+              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : title === 'Freight Transportation' ? '/images/freight-new.png' : title === 'Logistics Services' ? '/images/logistics-new.png' : '/images/truck-user-final.png'}
               alt={imageAlt || title}
               fill
               priority
