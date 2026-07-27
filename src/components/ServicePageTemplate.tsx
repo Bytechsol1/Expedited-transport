@@ -480,14 +480,14 @@ export function ServicePageTemplate({
                 customStyle = { 
                   textAlign: 'left', 
                   paddingLeft: '4vw',
-                  transform: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? 'translateY(-6vh)' : 'none',
+                  transform: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? 'translateY(-6vh)' : title === 'LTL Trucking' ? 'translateY(-8vh)' : 'none',
                   fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : undefined
                 }; 
               }
               if (isSecondWordSpecial) {
                 customStyle = { 
                   textAlign: 'left', 
-                  paddingLeft: title === 'LTL Trucking' ? '12vw' : '51vw', 
+                  paddingLeft: title === 'LTL Trucking' ? '10vw' : '51vw', 
                   fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : title === 'Freight\nTransportation' ? 'clamp(24px, 4.5vw, 90px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
