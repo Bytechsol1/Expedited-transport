@@ -487,7 +487,7 @@ export function ServicePageTemplate({
               if (isSecondWordSpecial) {
                 customStyle = { 
                   textAlign: 'left', 
-                  paddingLeft: title === 'LTL Trucking' ? '10vw' : '51vw', 
+                  paddingLeft: (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') ? '10vw' : '51vw', 
                   fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : title === 'Freight\nTransportation' ? 'clamp(24px, 4.5vw, 90px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
@@ -540,7 +540,7 @@ export function ServicePageTemplate({
             className="truck-layer"
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
-              (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? { transform: 'translate(-55%, -35%)' } :
+              (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
               title === 'Logistics Services' ? { 
                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)',
                 maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)'
