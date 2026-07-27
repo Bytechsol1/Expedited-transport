@@ -474,7 +474,7 @@ export function ServicePageTemplate({
               const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation') && i === 0;
               const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation') && i === 1;
               
-              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation');
+              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Transportation');
               
               let customStyle: any = {};
               if (isFirstWordSpecial) {
@@ -542,7 +542,7 @@ export function ServicePageTemplate({
             className="truck-layer"
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
-              (title === 'Freight Shipping' || title === 'Freight Transportation') ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
+              title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
               title === 'Logistics Services' ? { 
                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)',
                 maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)'
@@ -551,7 +551,7 @@ export function ServicePageTemplate({
             }
           >
             <Image
-              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : (title === 'Freight Shipping' || title === 'Freight Transportation') ? '/images/freight-new.png' : '/images/truck-user-final.png'}
+              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : title === 'Freight Transportation' ? '/images/freight-new.png' : '/images/truck-user-final.png'}
               alt={imageAlt || title}
               fill
               priority
