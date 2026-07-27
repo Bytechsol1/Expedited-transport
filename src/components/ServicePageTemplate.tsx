@@ -478,18 +478,22 @@ export function ServicePageTemplate({
               
               let customStyle: any = {};
               if (isFirstWordSpecial) {
+                const isLogistics = title === 'Logistics Services';
                 customStyle = { 
-                  textAlign: 'left', 
-                  paddingLeft: '4vw',
+                  textAlign: isLogistics ? 'right' : 'left', 
+                  paddingLeft: isLogistics ? '0' : '4vw',
+                  paddingRight: isLogistics ? '4vw' : '0',
                   transform: title === 'Freight Shipping' ? 'translateY(-6vh)' : isSpecialLayout ? 'translateY(-8vh)' : 'none',
                   fontSize: (title === 'LTL Trucking' || title === 'Logistics Services') ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : undefined
                 }; 
               }
               if (isSecondWordSpecial) {
                 const isLTL = title === 'LTL Trucking';
+                const isLogistics = title === 'Logistics Services';
                 customStyle = { 
-                  textAlign: 'left', 
-                  paddingLeft: title === 'LTL Trucking' ? '10vw' : title === 'Logistics Services' ? '15vw' : isSpecialLayout ? '8vw' : '51vw', 
+                  textAlign: isLogistics ? 'right' : 'left', 
+                  paddingLeft: isLogistics ? '0' : isLTL ? '10vw' : isSpecialLayout ? '8vw' : '51vw', 
+                  paddingRight: isLogistics ? '15vw' : '0',
                   fontSize: (title === 'LTL Trucking' || title === 'Logistics Services') ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
@@ -542,7 +546,8 @@ export function ServicePageTemplate({
             className="truck-layer"
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
-              (title === 'Freight Transportation' || title === 'Logistics Services') ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
+              title === 'Logistics Services' ? { left: '30%', width: '70%', transform: 'translate(-50%, -35%)' } :
+              title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
               title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
               {}
             }
