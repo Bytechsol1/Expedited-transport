@@ -480,17 +480,18 @@ export function ServicePageTemplate({
                 customStyle = { 
                   textAlign: 'left', 
                   paddingLeft: '4vw',
-                  transform: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? 'translateY(-6vh)' : 'none'
+                  transform: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? 'translateY(-6vh)' : 'none',
+                  fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : undefined
                 }; 
               }
               if (isSecondWordSpecial) {
                 customStyle = { 
                   textAlign: 'left', 
-                  paddingLeft: '51vw', 
-                  fontSize: title === 'Freight\nTransportation' ? 'clamp(24px, 4.5vw, 90px)' : 'clamp(40px, 8vw, 140px)',
+                  paddingLeft: title === 'LTL Trucking' ? '12vw' : '51vw', 
+                  fontSize: title === 'LTL Trucking' ? 'clamp(30px, 7vw, 120px)' : title === 'Freight\nTransportation' ? 'clamp(24px, 4.5vw, 90px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
-                  marginTop: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? '4vh' : '-2vh' // Adjust to match the specific truck height
+                  marginTop: (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? '4vh' : title === 'LTL Trucking' ? '-4vh' : '-2vh'
                 };
               }
 
@@ -538,7 +539,7 @@ export function ServicePageTemplate({
           <div 
             className="truck-layer"
             style={
-              title === 'LTL Trucking' ? { transform: 'translate(-55%, -42%)' } :
+              title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
               (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? { transform: 'translate(-55%, -35%)' } :
               title === 'Logistics Services' ? { 
                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)',
@@ -553,6 +554,8 @@ export function ServicePageTemplate({
               fill
               priority
               sizes="(max-width: 1024px) 80vw, 62vw"
+              className="object-contain"
+              style={title === 'LTL Trucking' ? { transform: 'scaleX(-1)' } : undefined}
             />
           </div>
 
