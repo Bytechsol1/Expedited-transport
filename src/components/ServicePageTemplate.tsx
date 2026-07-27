@@ -471,11 +471,10 @@ export function ServicePageTemplate({
           {/* Background giant text */}
           <div className="bg-text">
             {title.split(' ').map((word, i) => {
-              // Special alignment for "LTL" and "Freight" because they sit on the left, and the second word on the right trailer
-              const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') && i === 0;
-              const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation') && i === 1;
+              const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation') && i === 0;
+              const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation') && i === 1;
               
-              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight\nTransportation');
+              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation');
               
               let customStyle: any = {};
               if (isFirstWordSpecial) {
@@ -543,7 +542,7 @@ export function ServicePageTemplate({
             className="truck-layer"
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
-              (title === 'Freight Shipping' || title === 'Freight\nTransportation') ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
+              (title === 'Freight Shipping' || title === 'Freight Transportation') ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
               title === 'Logistics Services' ? { 
                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)',
                 maskImage: 'linear-gradient(to right, transparent 0%, black 15%, black 95%, transparent 100%)'

@@ -115,7 +115,7 @@ export const servicePages = {
       description: "Freight transportation services with dependable scheduling, careful handling, and clear communication.",
     },
     eyebrow: "",
-    title: "Freight\nTransportation",
+    title: "Freight Transportation",
     summary:
       "Expedited Transport Services is the name to remember for freight transportation services. Our reliability, professionalism, and transparent pricing have helped us distinguish ourselves as a trustworthy company with many loyal clients. For more information about the benefits of working with us, we invite you to get in touch with us at (860) 988-3887.",
     body: "",
