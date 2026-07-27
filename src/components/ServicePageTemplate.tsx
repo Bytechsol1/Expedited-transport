@@ -481,7 +481,7 @@ export function ServicePageTemplate({
                 customStyle = { 
                   textAlign: 'left', 
                   paddingLeft: '4vw',
-                  transform: isSpecialLayout ? 'translateY(-8vh)' : 'none',
+                  transform: title === 'Freight Shipping' ? 'translateY(-14vh)' : isSpecialLayout ? 'translateY(-8vh)' : 'none',
                   fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : undefined
                 }; 
               }
@@ -493,7 +493,7 @@ export function ServicePageTemplate({
                   fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
-                  marginTop: isLTL ? '-4vh' : isSpecialLayout ? '2vh' : '-2vh'
+                  marginTop: title === 'Freight Shipping' ? '4vh' : isLTL ? '-4vh' : isSpecialLayout ? '2vh' : '-2vh'
                 };
               }
 
