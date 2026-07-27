@@ -487,13 +487,14 @@ export function ServicePageTemplate({
                 }; 
               }
               if (isSecondWordSpecial) {
+                const isLTL = title === 'LTL Trucking';
                 customStyle = { 
                   textAlign: 'left', 
-                  paddingLeft: isSpecialLayout ? '10vw' : '51vw', 
+                  paddingLeft: isLTL ? '10vw' : isSpecialLayout ? '15vw' : '51vw', 
                   fontSize: isSpecialLayout ? 'clamp(30px, 7vw, 120px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
                   zIndex: 3,
-                  marginTop: isSpecialLayout ? '-4vh' : '-2vh'
+                  marginTop: isLTL ? '-4vh' : isSpecialLayout ? '-1vh' : '-2vh'
                 };
               }
 
