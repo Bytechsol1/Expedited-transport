@@ -113,7 +113,6 @@ function ServicesMega({ open }: { open: boolean }) {
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [heroEnded, setHeroEnded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname.startsWith("/trucking-services");
@@ -133,11 +132,9 @@ export function SiteHeader() {
   useEffect(() => {
     const onScroll = () => {
       if (isLightPage) {
-        setHeroEnded(false);
         setIsScrolled(false);
         return;
       }
-      setHeroEnded(window.scrollY > window.innerHeight * 2.8);
       setIsScrolled(window.scrollY > 50);
     };
 
@@ -163,7 +160,7 @@ export function SiteHeader() {
     <>
       <Script src="https://cdn.lordicon.com/lordicon.js" strategy="lazyOnload" />
 
-      <header className={`site-header${!isLightPage && heroEnded ? " hero-ended" : ""}${isLightPage ? " light-page" : ""}`}>
+      <header className={`site-header${isLightPage ? " light-page" : ""}`}>
         <div className={`nav-card ${isScrolled ? "scrolled" : ""}`} ref={navCardRef}>
           <Link href="/" aria-label="Expedited Transport Services" className="brand">
             <span className="logo-wrap">
@@ -245,17 +242,10 @@ export function SiteHeader() {
           z-index: 100;
           padding: 0.875rem 1.5rem 0;
           pointer-events: none;
-          transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
         }
 
         .site-header > * {
           pointer-events: auto;
-        }
-
-        .site-header.hero-ended {
-          transform: translateY(-120%);
-          opacity: 0;
-          pointer-events: none;
         }
 
         .site-header.light-page {
@@ -285,11 +275,6 @@ export function SiteHeader() {
           -webkit-backdrop-filter: blur(16px);
           border-color: rgba(255, 255, 255, 0.1);
           box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .site-header:not(.light-page).hero-ended .nav-card {
-          background: #000;
-          border-color: rgba(255,255,255,0.1);
         }
 
         .site-header.light-page .nav-card,

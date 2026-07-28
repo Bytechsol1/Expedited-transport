@@ -144,11 +144,11 @@ export default function WarehousingPage() {
           .hero-title {
             margin: 4px 0 0;
             max-width: 11ch;
+            font-family: var(--font-primary);
             font-size: clamp(52px, 5.8vw, 96px);
-            line-height: 0.9;
-            letter-spacing: -0.035em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 0.98;
+            letter-spacing: -0.02em;
+            font-weight: 450;
           }
 
           .hero-summary {
@@ -265,11 +265,11 @@ export default function WarehousingPage() {
           .story-intro h2 {
             margin: 16px 0 0;
             max-width: 10ch;
+            font-family: var(--font-primary);
             font-size: clamp(34px, 3.6vw, 60px);
-            line-height: 0.92;
-            letter-spacing: -0.065em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 0.98;
+            letter-spacing: -0.03em;
+            font-weight: 450;
             color: #fff;
             overflow-wrap: anywhere;
           }
@@ -290,9 +290,10 @@ export default function WarehousingPage() {
             background: rgba(255, 255, 255, 0.06);
             border-left: 4px solid #b6f000;
             color: #fff;
+            font-family: var(--font-mono);
             font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 0.03em;
+            font-weight: 700;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
           }
 
@@ -338,9 +339,10 @@ export default function WarehousingPage() {
             border-radius: 24px;
             background: #b6f000;
             color: #0f172a;
+            font-family: var(--font-mono);
             font-size: 13px;
-            font-weight: 900;
-            letter-spacing: 0.18em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
             box-shadow: 0 14px 28px rgba(182, 240, 0, 0.2);
             position: relative;
             z-index: 1;
@@ -383,8 +385,9 @@ export default function WarehousingPage() {
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            font-family: var(--font-mono);
             font-size: 12px;
-            font-weight: 900;
+            font-weight: 700;
             letter-spacing: 0.14em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.68);
@@ -404,11 +407,11 @@ export default function WarehousingPage() {
 
           .story-event__card h3 {
             margin: 0;
+            font-family: var(--font-primary);
             font-size: 18px;
-            line-height: 1.15;
-            letter-spacing: -0.04em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            font-weight: 600;
             overflow-wrap: anywhere;
           }
 
@@ -451,11 +454,11 @@ export default function WarehousingPage() {
           .intro-panel h2 {
             margin: 16px 0 0;
             max-width: 12ch;
+            font-family: var(--font-primary);
             font-size: clamp(30px, 3.2vw, 54px);
-            line-height: 0.96;
-            letter-spacing: -0.06em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            font-weight: 450;
             overflow-wrap: anywhere;
           }
 
@@ -531,18 +534,19 @@ export default function WarehousingPage() {
             border-radius: 12px;
             background: #b6f000;
             color: #0f172a;
+            font-family: var(--font-mono);
             font-size: 12px;
-            font-weight: 900;
+            font-weight: 700;
             margin-bottom: 14px;
           }
 
           .side-card h3 {
             margin: 0;
+            font-family: var(--font-primary);
             font-size: 18px;
             line-height: 1.2;
-            letter-spacing: -0.04em;
-            font-weight: 900;
-            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            font-weight: 600;
             overflow-wrap: anywhere;
           }
 
@@ -569,11 +573,11 @@ export default function WarehousingPage() {
 
           .section-head h2 {
             margin: 12px 0 0;
+            font-family: var(--font-primary);
             font-size: clamp(30px, 3.4vw, 54px);
-            line-height: 0.95;
-            letter-spacing: -0.06em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            font-weight: 450;
             overflow-wrap: anywhere;
           }
 
@@ -628,11 +632,11 @@ export default function WarehousingPage() {
 
           .service-card h3 {
             margin: 0;
+            font-family: var(--font-primary);
             font-size: 17px;
-            line-height: 1.2;
-            letter-spacing: -0.03em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            font-weight: 600;
             overflow-wrap: anywhere;
           }
 
@@ -692,11 +696,11 @@ export default function WarehousingPage() {
           .cta-copy h2 {
             margin: 16px 0 0;
             max-width: 12ch;
+            font-family: var(--font-primary);
             font-size: clamp(30px, 3.4vw, 52px);
-            line-height: 0.96;
-            letter-spacing: -0.06em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            font-weight: 450;
             overflow-wrap: anywhere;
           }
 
@@ -849,7 +853,7 @@ export default function WarehousingPage() {
           <div className="hero-grid">
             <article className="hero-copy">              <h1 className="hero-title">Warehousing Services</h1>
               <p className="hero-summary">
-                Your goods and materials won&apos;t always have to be transported to their final destination as soon as they leave your facilityÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Âand if that&apos;s the case, the warehousing solutions from Expedited Transport Services are a valuable resource. We go above and beyond to provide our clients with convenient warehousing services that will help keep their supply chain organized.
+                Your goods and materials won&apos;t always have to be transported to their final destination as soon as they leave your facility—and if that&apos;s the case, the warehousing solutions from Expedited Transport Services are a valuable resource. We go above and beyond to provide our clients with convenient warehousing services that will help keep their supply chain organized.
               </p>
               <p className="hero-summary" style={{ marginTop: 18, fontSize: 16 }}>
                 Learn more by contacting us today at (860) 988-3887.

@@ -134,7 +134,7 @@ function TestimonialBack({
 
       {/* Stars */}
       <div style={{ display: "flex", gap: 3, marginBottom: "1.1rem" }}>
-        {[1,2,3,4,5].map(s => (
+        {[1, 2, 3, 4, 5].map(s => (
           <span key={s} style={{ color: "#f59e0b", fontSize: "1.05rem", lineHeight: 1 }}>*</span>
         ))}
       </div>
@@ -155,7 +155,7 @@ function TestimonialBack({
   );
 }
 
-/* Pop wrapper â€” lifts & scales the card on hover with a spring overshoot */
+/* Pop wrapper — lifts & scales the card on hover with a spring overshoot */
 function PopCard({ children, onEnter, onLeave }: {
   children: React.ReactNode;
   onEnter: () => void;

@@ -33,19 +33,19 @@ export default function Home() {
           }}
         >
           <TruckLogoBar />
-          <FeaturesSection />
+          <InstantQuoteSection />
         </div>
         <div style={{ position: "relative", zIndex: 3 }}>
           <ScrollFrameSection />
         </div>
         <div style={{ position: "relative", zIndex: 4 }}>
-          <InstantQuoteSection />
+          <FeaturesSection />
         </div>
-        <div style={{ position: "relative", zIndex: 4, marginBottom: "0" }}>
+        <div style={{ position: "relative", zIndex: 5, marginBottom: "0" }}>
           <TestimonialsSection />
         </div>
         <DotSeparator />
-        <div style={{ position: "relative", zIndex: 5 }}>
+        <div style={{ position: "relative", zIndex: 6 }}>
           <ContactSection />
         </div>
       </main>

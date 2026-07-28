@@ -48,12 +48,17 @@ export function HeroSection({ onReady }: { onReady?: () => void }) {
   const scrollProgressRef   = useRef(0);
   const rafRef              = useRef<number | null>(null);
   const lastFrameRef        = useRef(-1);
+  const lastAlphaRef        = useRef(-1);
   const lastTitleIdxRef     = useRef(-1);
   const lastRevealedRef     = useRef(-1);
   const loadedRef           = useRef(false);
   const ctxRef              = useRef<CanvasRenderingContext2D | null>(null);
-  // Cache section bounds to avoid getBoundingClientRect on every scroll event
-  const sectionTopRef       = useRef(0);
+  // Section height is cached (only changes on resize); the top offset is
+  // read live off getBoundingClientRect() in the scroll handler instead of
+  // being cached — caching an absolute page-coordinate top baked in
+  // whatever window.scrollY happened to be at the moment this ran, which
+  // broke after a client-side navigation away and back (scroll position
+  // hadn't necessarily settled to 0 yet when this remounted).
   const sectionHeightRef    = useRef(0);
 
   // titleSpansRef[titleIdx][charIdx] — updated directly in tick, no setState
@@ -82,6 +87,21 @@ export function HeroSection({ onReady }: { onReady?: () => void }) {
     ctx.drawImage(img, dx, dy, dw, dh);
   }, []);
 
+  // Cross-fades frame idxLow into idxHigh by `alpha` — with only ~240 stills
+  // covering the whole scroll range, snapping straight to the nearest frame
+  // reads as a slideshow; blending the two frames either side of the exact
+  // scroll position fakes the missing in-between motion and reads as smooth.
+  const drawBlended = useCallback((idxLow: number, idxHigh: number, alpha: number) => {
+    const ctx = ctxRef.current;
+    if (!ctx) return;
+    drawFrame(idxLow);
+    if (idxHigh !== idxLow && alpha > 0.001) {
+      ctx.globalAlpha = alpha;
+      drawFrame(idxHigh);
+      ctx.globalAlpha = 1;
+    }
+  }, [drawFrame]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -100,17 +120,21 @@ export function HeroSection({ onReady }: { onReady?: () => void }) {
         ctxRef.current.imageSmoothingEnabled = true;
         ctxRef.current.imageSmoothingQuality = "medium";
       }
-      if (loadedRef.current && lastFrameRef.current >= 0) drawFrame(lastFrameRef.current);
+      if (loadedRef.current && lastFrameRef.current >= 0) {
+        const idxHigh = Math.min(FRAME_COUNT - 1, lastFrameRef.current + 1);
+        drawBlended(lastFrameRef.current, idxHigh, Math.max(0, lastAlphaRef.current));
+      }
     };
     sync();
     const ro = new ResizeObserver(sync);
     ro.observe(canvas);
     return () => ro.disconnect();
-  }, [drawFrame]);
+  }, [drawFrame, drawBlended]);
 
   useEffect(() => {
     if (loaded && lastFrameRef.current < 0) {
       lastFrameRef.current = 0;
+      lastAlphaRef.current = 0;
       drawFrame(0);
     }
   }, [loaded, drawFrame]);
@@ -119,11 +143,16 @@ export function HeroSection({ onReady }: { onReady?: () => void }) {
     rafRef.current = null;
     const p = scrollProgressRef.current;
 
-    // Canvas frame
-    const frameIdx = Math.min(FRAME_COUNT - 1, Math.max(0, Math.round(p * (FRAME_COUNT - 1))));
-    if (frameIdx !== lastFrameRef.current && loadedRef.current) {
-      lastFrameRef.current = frameIdx;
-      drawFrame(frameIdx);
+    // Canvas frame — blend the two frames straddling the exact scroll
+    // position instead of snapping to the nearest integer frame.
+    const raw    = Math.max(0, Math.min(FRAME_COUNT - 1, p * (FRAME_COUNT - 1)));
+    const idxLow = Math.floor(raw);
+    const idxHigh = Math.min(FRAME_COUNT - 1, idxLow + 1);
+    const alpha  = raw - idxLow;
+    if (loadedRef.current && (idxLow !== lastFrameRef.current || Math.abs(alpha - lastAlphaRef.current) > 0.004)) {
+      lastFrameRef.current = idxLow;
+      lastAlphaRef.current = alpha;
+      drawBlended(idxLow, idxHigh, alpha);
     }
 
     // Dusk — direct DOM write
@@ -161,27 +190,30 @@ export function HeroSection({ onReady }: { onReady?: () => void }) {
         }
       }
     }
-  }, [drawFrame]);
+  }, [drawBlended]);
 
-  // Cache section bounds — recompute only on resize, not on every scroll event
+  // Cache section height — recompute only on resize, not on every scroll event
   useEffect(() => {
-    const updateBounds = () => {
+    const updateHeight = () => {
       const el = sectionRef.current;
       if (!el) return;
-      sectionTopRef.current    = el.getBoundingClientRect().top + window.scrollY;
       sectionHeightRef.current = el.offsetHeight;
     };
-    updateBounds();
-    window.addEventListener("resize", updateBounds, { passive: true });
-    return () => window.removeEventListener("resize", updateBounds);
+    updateHeight();
+    window.addEventListener("resize", updateHeight, { passive: true });
+    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
   useEffect(() => {
     const onScroll = () => {
-      const sTop = sectionTopRef.current;
+      const el = sectionRef.current;
+      if (!el) return;
+      // Read live rather than caching an absolute scrollY-based offset —
+      // see the note on sectionHeightRef above.
+      const sTop = el.getBoundingClientRect().top;
       const sH   = sectionHeightRef.current;
       const vh   = window.innerHeight;
-      const scrolled = window.scrollY - sTop;
+      const scrolled = -sTop;
       scrollProgressRef.current = Math.max(0, Math.min(1, scrolled / (sH - vh)));
       if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
     };
@@ -190,7 +222,23 @@ export function HeroSection({ onReady }: { onReady?: () => void }) {
     onScroll();
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      // Cancelling a pending rAF does not clear the stored id — if this
+      // effect's cleanup fires before tick() runs (e.g. a navigate-away
+      // that unmounts this section mid-frame), rafRef.current is left
+      // holding a dead, already-cancelled id. Since onScroll only
+      // schedules a new frame when rafRef.current is falsy, that stale
+      // id permanently blocks all future scheduling — the hero freezes
+      // the next time this component becomes active. Null it out here,
+      // and reset the "last drawn" trackers so the next tick can't
+      // mistake a stale value for "already up to date" and skip drawing.
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
+      lastFrameRef.current = -1;
+      lastAlphaRef.current = -1;
+      lastTitleIdxRef.current = -1;
+      lastRevealedRef.current = -1;
     };
   }, [tick]);
 

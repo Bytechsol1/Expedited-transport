@@ -15,6 +15,13 @@
       "when": 1784749896653,
       "tag": "0001_rename_fuel_surcharge_to_markup",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1785259288908,
+      "tag": "0002_pale_wither",
+      "breakpoints": true
     }
   ]
 }

@@ -49,7 +49,7 @@ export function HotshotFaqSection() {
     <section style={{ padding: "120px 0", backgroundColor: WHITE_BG, color: DARK_GREEN, position: "relative", overflow: "hidden", fontFamily: "'Inter', sans-serif" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 10 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "64px" }}>
-          
+
           {/* Left Column: Title & Contact Card */}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
             <div style={{ position: "sticky", top: "120px" }}>
@@ -59,7 +59,7 @@ export function HotshotFaqSection() {
                 Asked <br />
                 <span style={{ background: "linear-gradient(135deg, #b6f000 0%, #8cae00 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Questions</span>
               </h2>
-              
+
             </div>
           </div>
 
@@ -67,10 +67,10 @@ export function HotshotFaqSection() {
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
-              
+
               return (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   id={`faq-${index}`}
                   style={{
                     borderRadius: "24px", transition: "background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease", overflow: "hidden",
@@ -81,28 +81,28 @@ export function HotshotFaqSection() {
                 >
                   <div
                     style={{
-                      width: "100%", display: "flex", alignItems: "flex-start", justifyContent: "space-between", 
+                      width: "100%", display: "flex", alignItems: "flex-start", justifyContent: "space-between",
                       padding: "28px 36px", textAlign: "left", position: "relative"
                     }}
                   >
-                    <div 
+                    <div
                       style={{ flex: 1, cursor: "pointer", display: "flex", alignItems: "center" }}
                       onClick={() => toggleFaq(index)}
                     >
-                      <span style={{ 
-                        fontSize: "clamp(18px, 2vw, 20px)", fontWeight: "600", paddingRight: "32px", 
+                      <span style={{
+                        fontSize: "clamp(18px, 2vw, 20px)", fontWeight: "600", paddingRight: "32px",
                         transition: "color 0.3s ease", color: isOpen ? DARK_GREEN : "#2d3748"
                       }}>
                         {faq.question}
                       </span>
                     </div>
-                    
+
                     <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
                       {/* Expand/Collapse Icon */}
-                      <button 
+                      <button
                         onClick={() => toggleFaq(index)}
-                        style={{ 
-                          marginTop: "2px", width: "40px", height: "40px", borderRadius: "50%", 
+                        style={{
+                          marginTop: "2px", width: "40px", height: "40px", borderRadius: "50%",
                           display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease",
                           backgroundColor: isOpen ? LIME : "#f1f5f9",
                           color: isOpen ? "#000" : DARK_GREEN,
@@ -114,8 +114,8 @@ export function HotshotFaqSection() {
                       </button>
                     </div>
                   </div>
-                  
-                  <div 
+
+                  <div
                     style={{
                       display: "grid",
                       gridTemplateRows: isOpen ? "1fr" : "0fr",

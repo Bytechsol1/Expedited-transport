@@ -66,6 +66,10 @@ export const quoteRequests = pgTable("quote_requests", {
   durationMinutes: numeric("duration_minutes", { precision: 10, scale: 2 }),
   price: numeric("price", { precision: 10, scale: 2 }),
   status: text("status").notNull(), // "quoted" | "oversized" | "error"
+  paymentStatus: text("payment_status").notNull().default("unpaid"), // "unpaid" | "pending" | "paid" | "failed"
+  stripeSessionId: text("stripe_session_id"),
+  stripePaymentIntentId: text("stripe_payment_intent_id"),
+  paidAt: timestamp("paid_at", { withTimezone: true }),
 });
 
 export const adminUsers = pgTable("admin_users", {

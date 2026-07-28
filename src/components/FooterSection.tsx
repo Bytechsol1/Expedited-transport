@@ -3,41 +3,18 @@
 import Link from "next/link";
 import SplitText from "./SplitText";
 
-/* Payment logos */
-function PaymentLogo({
-  src,
-  alt,
-  width,
-  height,
-}: {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-}) {
-  return (
-    <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", flex: `0 0 ${width}px`, width: `${width}px`, height: `${height}px` }}>
-      <img
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        style={{
-          display: "block",
-          maxWidth: "100%",
-          maxHeight: "100%",
-          width: "auto",
-          height: "auto",
-          objectFit: "contain",
-          objectPosition: "center",
-          flexShrink: 0,
-        }}
-      />
-    </span>
-  );
-}
+/* Payment logos -- all four SVGs (from datatrans/payment-logos, CC BY-SA
+   4.0) share the same 120x80 card-frame viewBox with the rounded
+   background baked in, so a single uniform height keeps them perfectly
+   aligned without any per-logo padding correction. */
+const PAYMENT_LOGO_STYLE: React.CSSProperties = {
+  height: "36px",
+  width: "auto",
+  flexShrink: 0,
+  display: "block",
+};
 const HOURS = [
-  { day: "Mon â€“ Sun", time: "24 Hours" },
+  { day: "Mon – Sun", time: "24 Hours" },
   { day: "Emergency Services", time: "Available" },
 ];
 
@@ -56,17 +33,18 @@ const SECTION_LABEL: React.CSSProperties = {
   marginBottom: "1.2rem",
 };
 
-/* â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── Footer ─────────────────────────────────────────────────── */
 export function FooterSection() {
   return (
     <footer style={{
+      position: "relative",
       background: "#000",
       color: "#fff",
       fontFamily: "var(--font-primary, 'Inter', sans-serif)",
       paddingTop: "5rem",
     }}>
 
-      {/* â”€â”€ Main info grid â”€â”€ */}
+      {/* ── Main info grid ── */}
       <div className="footer-grid">
 
         {/* Contact */}
@@ -119,9 +97,9 @@ export function FooterSection() {
           <span style={SECTION_LABEL}>Quick Links</span>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
             {[
-              { label: "Services",  href: "/trucking-services/expedited-trucking" },
-              { label: "About Us",  href: "/about-us" },
-              { label: "Careers",   href: "/careers" },
+              { label: "Services", href: "/trucking-services/expedited-trucking" },
+              { label: "About Us", href: "/about-us" },
+              { label: "Careers", href: "/careers" },
             ].map(({ label, href }) => (
               <Link
                 key={label}
@@ -144,27 +122,31 @@ export function FooterSection() {
               display: "flex",
               flexWrap: "nowrap",
               alignItems: "center",
-              gap: "0",
+              gap: "0.625rem",
               overflowX: "auto",
               overflowY: "hidden",
               whiteSpace: "nowrap",
               paddingBottom: "0",
             }}
           >
-            <PaymentLogo src="/images/icons8-visa-48.png" alt="Visa" width={90} height={48} />
-            <PaymentLogo src="/images/master.png" alt="Mastercard" width={78} height={42} />
-            <PaymentLogo src="/images/amex.png" alt="American Express" width={90} height={48} />
-            <PaymentLogo src="/images/discover.png" alt="Discover" width={78} height={42} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/payment/visa.svg" alt="Visa" style={PAYMENT_LOGO_STYLE} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/payment/mastercard.svg" alt="Mastercard" style={PAYMENT_LOGO_STYLE} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/payment/amex-badge.svg" alt="American Express" style={PAYMENT_LOGO_STYLE} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/payment/discover.svg" alt="Discover" style={PAYMENT_LOGO_STYLE} />
           </div>
         </div>
       </div>
 
       <hr style={DIVIDER} />
 
-      {/* â”€â”€ Bottom meta â”€â”€ */}
+      {/* ── Bottom meta ── */}
       <div className="footer-meta">
         <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.78rem" }}>
-          Â©2024â€“26 Expedited Transport Services. All rights reserved.
+          ©2024–26 Expedited Transport Services. All rights reserved.
         </span>
         <div style={{ display: "flex", gap: "2rem" }}>
           {["Terms of Use", "Privacy Policy"].map(item => (
@@ -181,7 +163,7 @@ export function FooterSection() {
         </div>
       </div>
 
-      {/* â”€â”€ Big SplitText brand name â€” links to home â”€â”€ */}
+      {/* ── Big SplitText brand name — links to home ── */}
       <Link href="/" style={{ display: "block", overflow: "hidden", padding: "0 0 2.5rem", textDecoration: "none", cursor: "pointer" }}>
         <SplitText
           text="EXPEDITED"
@@ -199,8 +181,21 @@ export function FooterSection() {
         />
       </Link>
 
+      <div className="back-to-top-wrap">
+        <button
+          type="button"
+          aria-label="Back to top"
+          className="back-to-top-btn"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <svg className="back-to-top-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 13V3M8 3L3.5 7.5M8 3l4.5 4.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+
       <style>{`
-        /* â”€â”€ Desktop grid â”€â”€ */
+        /* ── Desktop grid ── */
         .footer-grid {
           display: grid;
           grid-template-columns: 1.2fr 1fr 0.8fr 1fr;
@@ -214,7 +209,54 @@ export function FooterSection() {
           padding: 1.4rem 4rem;
         }
 
-        /* â”€â”€ Tablet â”€â”€ */
+        /* Sits at the true bottom-right corner of the footer, over the
+           watermark. The button's own hit-box stays perfectly still --
+           only the arrow icon inside it bounces -- so the continuous
+           motion never makes the click target harder to hit. */
+        .back-to-top-wrap {
+          position: absolute;
+          right: 2.5rem;
+          bottom: 2.5rem;
+          z-index: 90;
+        }
+
+        .back-to-top-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.14);
+          color: rgba(255,255,255,0.75);
+          cursor: pointer;
+          padding: 0;
+          transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        }
+
+        .back-to-top-btn:hover {
+          background: #b6f000;
+          border-color: #b6f000;
+          color: #0a0f00;
+          transform: scale(1.1);
+        }
+
+        .back-to-top-btn:active {
+          transform: scale(0.96);
+        }
+
+        .back-to-top-arrow {
+          animation: backToTopFloat 1.6s ease-in-out infinite;
+        }
+
+        @keyframes backToTopFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+
+        /* ── Tablet ── */
         @media (max-width: 900px) {
           .footer-grid {
             grid-template-columns: 1fr 1fr;
@@ -224,9 +266,13 @@ export function FooterSection() {
           .footer-meta {
             padding: 1.2rem 2rem;
           }
+          .back-to-top-wrap {
+            right: 1.5rem;
+            bottom: 1.5rem;
+          }
         }
 
-        /* â”€â”€ Mobile â”€â”€ */
+        /* ── Mobile ── */
         @media (max-width: 600px) {
           .footer-grid {
             grid-template-columns: 1fr;
@@ -238,6 +284,10 @@ export function FooterSection() {
             align-items: flex-start;
             gap: 0.75rem;
             padding: 1.2rem 1.25rem;
+          }
+          .back-to-top-wrap {
+            right: 1rem;
+            bottom: 1rem;
           }
         }
 

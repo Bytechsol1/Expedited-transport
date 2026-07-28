@@ -188,19 +188,20 @@ export function ServicePageTemplate({
             border-radius: 999px;
             background: rgba(15, 23, 42, 0.06);
             color: #64748b;
+            font-family: var(--font-mono);
             font-size: 11px;
-            font-weight: 900;
-            letter-spacing: 0.22em;
+            font-weight: 700;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
           }
 
           .detail-card h2 {
             margin: 16px 0 0;
+            font-family: var(--font-primary);
             font-size: clamp(28px, 3vw, 48px);
-            line-height: 1;
-            letter-spacing: -0.05em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            font-weight: 450;
           }
 
           .detail-card p {
@@ -235,8 +236,9 @@ export function ServicePageTemplate({
           .check-item strong {
             display: block;
             margin-bottom: 4px;
+            font-family: var(--font-mono);
             font-size: 14px;
-            font-weight: 900;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
           }
@@ -262,8 +264,9 @@ export function ServicePageTemplate({
           .side-tile strong {
             display: block;
             margin-bottom: 8px;
+            font-family: var(--font-mono);
             font-size: 15px;
-            font-weight: 900;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
           }
@@ -289,11 +292,11 @@ export function ServicePageTemplate({
 
           .section-head h2 {
             margin: 0;
+            font-family: var(--font-primary);
             font-size: clamp(28px, 3vw, 46px);
-            line-height: 1;
-            letter-spacing: -0.05em;
-            font-weight: 900;
-            text-transform: uppercase;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            font-weight: 450;
           }
 
           .section-head p {
@@ -342,10 +345,11 @@ export function ServicePageTemplate({
 
           .service-card h3 {
             margin: 0 0 10px;
+            font-family: var(--font-primary);
             font-size: 18px;
-            line-height: 1.15;
-            letter-spacing: -0.03em;
-            font-weight: 900;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            font-weight: 600;
           }
 
           .service-card p {
@@ -375,9 +379,11 @@ export function ServicePageTemplate({
 
           .cta-inner h3 {
             margin: 0 0 8px;
+            font-family: var(--font-primary);
             font-size: clamp(24px, 2.6vw, 36px);
-            letter-spacing: -0.04em;
-            line-height: 1.05;
+            font-weight: 450;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
           }
 
           .cta-inner p {
@@ -473,26 +479,26 @@ export function ServicePageTemplate({
             {title.split(' ').map((word, i) => {
               const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services') && i === 0;
               const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services') && i === 1;
-              
+
               const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Transportation' || title === 'Logistics Services');
-              
+
               let customStyle: any = {};
               if (isFirstWordSpecial) {
                 const isLogistics = title === 'Logistics Services';
-                customStyle = { 
-                  textAlign: isLogistics ? 'right' : 'left', 
+                customStyle = {
+                  textAlign: isLogistics ? 'right' : 'left',
                   paddingLeft: isLogistics ? '0' : '4vw',
                   paddingRight: isLogistics ? '4vw' : '0',
                   transform: title === 'Freight Shipping' ? 'translateY(-6vh)' : isSpecialLayout ? 'translateY(-8vh)' : 'none',
                   fontSize: (title === 'LTL Trucking' || title === 'Logistics Services') ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : undefined
-                }; 
+                };
               }
               if (isSecondWordSpecial) {
                 const isLTL = title === 'LTL Trucking';
                 const isLogistics = title === 'Logistics Services';
-                customStyle = { 
-                  textAlign: isLogistics ? 'right' : 'left', 
-                  paddingLeft: isLogistics ? '0' : isLTL ? '10vw' : isSpecialLayout ? '8vw' : '51vw', 
+                customStyle = {
+                  textAlign: isLogistics ? 'right' : 'left',
+                  paddingLeft: isLogistics ? '0' : isLTL ? '10vw' : isSpecialLayout ? '8vw' : '51vw',
                   paddingRight: isLogistics ? '12vw' : '0',
                   fontSize: (title === 'LTL Trucking' || title === 'Logistics Services') ? 'clamp(30px, 7vw, 120px)' : title === 'Freight Transportation' ? 'clamp(24px, 5vw, 95px)' : 'clamp(40px, 8vw, 140px)',
                   position: 'relative',
@@ -512,16 +518,16 @@ export function ServicePageTemplate({
 
               // Logistics Services Split Design
               if (title === 'Logistics Services' && i === 0) {
-                customStyle = { 
-                  textAlign: 'left', 
+                customStyle = {
+                  textAlign: 'left',
                   paddingLeft: '2vw',
                   fontSize: 'clamp(30px, 6vw, 110px)',
                   transform: 'translateY(-6vh)'
                 };
               }
               if (title === 'Logistics Services' && i === 1) {
-                customStyle = { 
-                  textAlign: 'right', 
+                customStyle = {
+                  textAlign: 'right',
                   paddingRight: '2vw',
                   fontSize: 'clamp(30px, 6vw, 110px)',
                   marginTop: '8vh',
@@ -529,10 +535,10 @@ export function ServicePageTemplate({
                   zIndex: 3
                 };
               }
-              
+
               return (
-                <span 
-                  key={i} 
+                <span
+                  key={i}
                   style={customStyle}
                 >
                   {word}
@@ -542,14 +548,14 @@ export function ServicePageTemplate({
           </div>
 
           {/* Truck image – overlaps text */}
-          <div 
+          <div
             className="truck-layer"
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
-              title === 'Logistics Services' ? { left: '30%', width: '70%', transform: 'translate(-50%, -35%)' } :
-              title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
-              title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
-              {}
+                title === 'Logistics Services' ? { left: '30%', width: '70%', transform: 'translate(-50%, -35%)' } :
+                  title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
+                    title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
+                      {}
             }
           >
             <Image
@@ -575,81 +581,81 @@ export function ServicePageTemplate({
 
         {hideLowerSections ? null : (
           lowerContent ?? (
-          <>
-            <section className="section-shell">
-              <div className="detail-grid">
-                <article className="detail-card">
-                  <div className="section-kicker">Overview</div>
-                  <h2>{title} built around your timeline.</h2>
-                  <p>{summary}</p>
-                  <p>{body}</p>
-                  <div className="check-list">
-                    {points.map((point) => (
-                      <div className="check-item" key={point}>
-                        <CheckCircle2 size={18} />
-                        <div>
-                          <strong>{point}</strong>
-                          <span>Dummy supporting copy for this service route. Replace with final marketing text later if needed.</span>
+            <>
+              <section className="section-shell">
+                <div className="detail-grid">
+                  <article className="detail-card">
+                    <div className="section-kicker">Overview</div>
+                    <h2>{title} built around your timeline.</h2>
+                    <p>{summary}</p>
+                    <p>{body}</p>
+                    <div className="check-list">
+                      {points.map((point) => (
+                        <div className="check-item" key={point}>
+                          <CheckCircle2 size={18} />
+                          <div>
+                            <strong>{point}</strong>
+                            <span>Dummy supporting copy for this service route. Replace with final marketing text later if needed.</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </article>
+                      ))}
+                    </div>
+                  </article>
 
-                <div className="detail-side">
-                  {cards.map((card) => {
+                  <div className="detail-side">
+                    {cards.map((card) => {
+                      const Icon = card.icon;
+                      return (
+                        <article className="side-tile" key={card.title}>
+                          <strong>{card.title}</strong>
+                          <p>{card.description}</p>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              </section>
+
+              <section className="cards-shell">
+                <div className="section-head">
+                  <h2>What this service can cover</h2>
+                  <p>
+                    A simple dummy section to show the route is live. This can be swapped for real copy whenever you are ready.
+                  </p>
+                </div>
+
+                <div className="service-grid">
+                  {cards.map((card, index) => {
                     const Icon = card.icon;
                     return (
-                      <article className="side-tile" key={card.title}>
-                        <strong>{card.title}</strong>
+                      <article className="service-card" key={card.title}>
+                        <span className="service-badge">
+                          <Icon size={22} />
+                        </span>
+                        <h3>{String(index + 1).padStart(2, "0")}. {card.title}</h3>
                         <p>{card.description}</p>
                       </article>
                     );
                   })}
                 </div>
-              </div>
-            </section>
+              </section>
 
-            <section className="cards-shell">
-              <div className="section-head">
-                <h2>What this service can cover</h2>
-                <p>
-                  A simple dummy section to show the route is live. This can be swapped for real copy whenever you are ready.
-                </p>
-              </div>
-
-              <div className="service-grid">
-                {cards.map((card, index) => {
-                  const Icon = card.icon;
-                  return (
-                    <article className="service-card" key={card.title}>
-                      <span className="service-badge">
-                        <Icon size={22} />
-                      </span>
-                      <h3>{String(index + 1).padStart(2, "0")}. {card.title}</h3>
-                      <p>{card.description}</p>
-                    </article>
-                  );
-                })}
-              </div>
-            </section>
-
-            <section className="cta-shell">
-              <div className="cta-band">
-                <div className="cta-inner">
-                  <div>
-                    <h3>Need this service configured differently?</h3>
-                    <p>
-                      Reach out and we can adjust the layout, copy, or route structure without touching the rest of the site.
-                    </p>
-                  </div>
-                  <div className="cta-actions">
-                    <a className="cta-link" href="tel:+18609883887">(860) 988-3887</a>
-                    <Link className="cta-link secondary" href="/#contact-section">Request a Quote</Link>
+              <section className="cta-shell">
+                <div className="cta-band">
+                  <div className="cta-inner">
+                    <div>
+                      <h3>Need this service configured differently?</h3>
+                      <p>
+                        Reach out and we can adjust the layout, copy, or route structure without touching the rest of the site.
+                      </p>
+                    </div>
+                    <div className="cta-actions">
+                      <a className="cta-link" href="tel:+18609883887">(860) 988-3887</a>
+                      <Link className="cta-link secondary" href="/#contact-section">Request a Quote</Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>          </>
+              </section>          </>
           )
         )}
       </main>

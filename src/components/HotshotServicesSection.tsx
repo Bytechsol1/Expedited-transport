@@ -102,7 +102,7 @@ export function HotshotServicesSection() {
         {/* ── HERO SECTION ──────────────────────────────────────────── */}
         <section style={{ paddingTop: "200px", paddingBottom: "100px", position: "relative" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }}>
-            
+
             {/* Left Content */}
             <div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: "10px", padding: "8px 16px", borderRadius: "100px", background: "#111111", border: "1px solid #333", marginBottom: "32px" }}>
@@ -111,7 +111,7 @@ export function HotshotServicesSection() {
                   Premium Services
                 </span>
               </div>
-              
+
               <h1 style={{ fontSize: "64px", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: "32px" }}>
                 Expedited Trucking
               </h1>
@@ -121,14 +121,14 @@ export function HotshotServicesSection() {
               </p>
 
               <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
-                <a href="tel:+18609883887" style={{ 
-                  display: "inline-flex", alignItems: "center", gap: "12px", 
-                  backgroundColor: "#b6f000", color: "#000", 
+                <a href="tel:+18609883887" style={{
+                  display: "inline-flex", alignItems: "center", gap: "12px",
+                  backgroundColor: "#b6f000", color: "#000",
                   padding: "16px 32px", fontSize: "15px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700,
                   borderRadius: "8px", textDecoration: "none", transition: "opacity 0.2s"
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.opacity = "0.9"}
-                onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
+                  onMouseEnter={(e) => e.currentTarget.style.opacity = "0.9"}
+                  onMouseLeave={(e) => e.currentTarget.style.opacity = "1"}
                 >
                   Speak with us now <ArrowRight size={18} />
                 </a>
@@ -270,12 +270,12 @@ export function HotshotServicesSection() {
 
         {/* -- FEATURES SECTION -------------------------------------------- */}        <section style={{ padding: "120px 0", backgroundColor: "#ffffff", position: "relative" }}>
           <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px" }}>
-            
+
             <div style={{ textAlign: "center", marginBottom: "80px" }}>
               <h2 style={{ fontSize: "40px", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24" }}>Expedited Freight Hauling That You Can Depend On</h2>
               <div style={{ width: "60px", height: "4px", backgroundColor: "#b6f000", margin: "24px auto 0", borderRadius: "2px" }} />
             </div>
-            
+
             <div style={{ display: "flex", flexDirection: "column", gap: "100px" }}>
               {[
                 {
@@ -298,13 +298,13 @@ export function HotshotServicesSection() {
                 }
               ].map((card, idx) => {
                 const isEven = idx % 2 !== 0;
-                
+
                 return (
-                  <div key={idx} style={{ 
-                    display: "flex", 
-                    flexDirection: isEven ? "row-reverse" : "row", 
-                    alignItems: "stretch", 
-                    gap: "80px" 
+                  <div key={idx} style={{
+                    display: "flex",
+                    flexDirection: isEven ? "row-reverse" : "row",
+                    alignItems: "stretch",
+                    gap: "80px"
                   }}>
                     {/* Text Side */}
                     <div style={{ flex: "1 1 45%", display: "flex", alignItems: "center" }}>
@@ -322,7 +322,7 @@ export function HotshotServicesSection() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Image Side */}
                     <div style={{ flex: "1 1 55%", position: "relative", minHeight: "450px", filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.1))" }}>
                       <div style={{
@@ -331,11 +331,11 @@ export function HotshotServicesSection() {
                         transform: isEven ? "scaleX(-1)" : "none",
                         backgroundColor: "#f8fafc"
                       }}>
-                        <Image 
-                          src={card.image} 
+                        <Image
+                          src={card.image}
                           alt={card.title}
                           fill
-                          style={{ 
+                          style={{
                             objectFit: "cover",
                             transform: isEven ? "scaleX(-1)" : "none" // Flip image back so it doesn't look mirrored
                           }}
@@ -352,9 +352,9 @@ export function HotshotServicesSection() {
 
         {/* ── CTA SECTION ───────────────────────────────────────────────── */}
         <section style={{ padding: "80px 40px 160px", backgroundColor: "#ffffff" }}>
-          <div style={{ 
-            maxWidth: "1400px", 
-            margin: "0 auto", 
+          <div style={{
+            maxWidth: "1400px",
+            margin: "0 auto",
             background: "#000000",
             borderRadius: "40px",
             padding: "80px",
@@ -365,50 +365,50 @@ export function HotshotServicesSection() {
             {/* Background Graphic/Texture */}
             <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(182, 240, 0, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-20%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-            
+
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "60px", position: "relative", zIndex: 1, flexWrap: "wrap" }}>
-              
+
               <div style={{ flex: "1 1 500px" }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(182, 240, 0, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(182, 240, 0, 0.2)" }}>
                   <MapPin size={18} color="#b6f000" />
                   <span style={{ fontSize: "14px", color: "#b6f000", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700 }}>Initiate Transport</span>
                 </div>
-                
+
                 <h2 style={{ fontSize: "clamp(48px, 5vw, 64px)", fontWeight: 700, letterSpacing: "-0.03em", marginBottom: "24px", color: "#ffffff", lineHeight: 1.05 }}>
-                  <span style={{ color: "#b6f000" }}>G</span>et Started with Our Expedited <br/> Trucking Today<span style={{ color: "#b6f000" }}>.</span>
+                  <span style={{ color: "#b6f000" }}>G</span>et Started with Our Expedited <br /> Trucking Today<span style={{ color: "#b6f000" }}>.</span>
                 </h2>
-                
+
                 <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.7)", marginBottom: "0", lineHeight: 1.6, maxWidth: "540px", fontWeight: 400 }}>
                   Whether you would like to know more about how we can accommodate your situation or would like to schedule our expedited shipping as soon as possible, we are here to help. We believe that our impressive history in the expedited trucking field makes us an easy choice to transport your freight quickly, carefully, and on budget. Speak with our experts today by calling (860) 988-3887.
                 </p>
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "20px", minWidth: "300px", flexShrink: 0 }}>
-                <a href="tel:+18609883887" style={{ 
+                <a href="tel:+18609883887" style={{
                   display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "24px 40px", backgroundColor: "#b6f000", color: "#000000", 
+                  padding: "24px 40px", backgroundColor: "#b6f000", color: "#000000",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
                   boxShadow: "0 20px 40px rgba(182, 240, 0, 0.2)"
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(182, 240, 0, 0.3)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(182, 240, 0, 0.2)"; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(182, 240, 0, 0.3)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(182, 240, 0, 0.2)"; }}
                 >
                   <span>Call Us Now</span>
                   <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(0,0,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <ArrowRight size={20} />
                   </div>
                 </a>
-                
-                <a href="/contact" style={{ 
+
+                <a href="/contact" style={{
                   display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff", 
+                  padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
                   border: "1px solid rgba(255,255,255,0.1)"
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}
                 >
                   <span>Message Us</span>
                   <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -416,7 +416,7 @@ export function HotshotServicesSection() {
                   </div>
                 </a>
               </div>
-              
+
             </div>
           </div>
         </section>

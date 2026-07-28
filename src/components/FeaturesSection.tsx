@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import { ArrowLeftIcon, ArrowRightIcon } from "./icons";
 
 const FEATURES = [
@@ -8,31 +9,31 @@ const FEATURES = [
     id: 2,
     text: "LTL trucking.",
     desc: "Cost-effective freight transportation service that ships smaller loads by combining multiple shipments in one truck, ensuring efficient and reliable delivery.",
-    video: "/videos/feature-2.mp4",
+    image: "/images/truck2.jpg",
   },
   {
     id: 3,
     text: "Logistics Services.",
     desc: "Efficient management of transportation, storage, and delivery processes to ensure goods move smoothly from origin to destination on time.",
-    video: "/videos/feature-3.mp4",
+    image: "/images/truck1.jpg",
   },
   {
     id: 4,
     text: "Dry Van Trucking.",
     desc: "Reliable transportation service for non-temperature-sensitive goods, offering secure and protected shipping for a wide range of freight.",
-    video: "/videos/feature-4.mp4",
+    image: "/images/truck4.jpg",
   },
   {
     id: 5,
     text: "Expedited Trucking.",
     desc: "Fast and priority shipping service designed for time-sensitive deliveries, ensuring urgent freight reaches its destination quickly and safely.",
-    video: "/videos/feature-5.mp4",
+    image: "/images/truck3.jpg",
   },
   {
     id: 6,
     text: "Freight Shipping.",
     desc: "Reliable transportation service for moving goods of all sizes, ensuring safe, efficient, and timely delivery from one location to another.",
-    video: "/videos/feature-6.mp4",
+    image: "/images/ship.jpg",
   },
 ];
 
@@ -78,41 +79,17 @@ function OdometerDigit({ value }: { value: number }) {
 
 export function FeaturesSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const textContainerRef = useRef<HTMLDivElement>(null);
   const [currentItem, setCurrentItem] = useState(0);
-  const [slotHeight, setSlotHeight] = useState(0);
-  const [viewportH, setViewportH] = useState(600);
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Avoid hydration mismatch ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â detect mobile only on client
+  // Avoid hydration mismatch — detect mobile only on client
   useEffect(() => {
     setMounted(true);
     const check = () => setIsMobile(window.innerWidth < 1024);
     check();
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
-  }, []);
-
-  // Track viewport height for dramatic bottom-entry offset
-  useEffect(() => {
-    const update = () => setViewportH(window.innerHeight);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
-  // Measure the text grid container height via ResizeObserver ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â fires after fonts load too
-  useEffect(() => {
-    const el = textContainerRef.current;
-    if (!el) return;
-    const observer = new ResizeObserver((entries) => {
-      const h = entries[0].contentRect.height;
-      if (h > 0) setSlotHeight(h);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
   }, []);
 
   // Desktop: scroll-driven item switching
@@ -124,7 +101,7 @@ export function FeaturesSection() {
       if (!el) return;
       const { top, height } = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Same formula as HeroSection: progress 0ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢1 through the sticky travel range
+      // Same formula as HeroSection: progress 0→1 through the sticky travel range
       const progress = Math.max(0, Math.min(1, -top / (height - vh)));
       setCurrentItem(Math.min(TOTAL - 1, Math.floor(progress * TOTAL)));
     };
@@ -133,18 +110,6 @@ export function FeaturesSection() {
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, [mounted, isMobile]);
-
-  // Manage video playback: only active video plays
-  useEffect(() => {
-    videoRefs.current.forEach((v, idx) => {
-      if (!v) return;
-      if (idx === currentItem) {
-        v.play().catch(() => { });
-      } else {
-        v.pause();
-      }
-    });
-  }, [currentItem]);
 
   const goTo = useCallback((idx: number) => {
     setCurrentItem(Math.max(0, Math.min(TOTAL - 1, idx)));
@@ -155,18 +120,18 @@ export function FeaturesSection() {
 
   return (
     <div>
-      {/* SVG clip-path definition ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â rounded notch corners via quadratic beziers.
+      {/* SVG clip-path definition — rounded notch corners via quadratic beziers.
           objectBoundingBox maps coords 0-1 to element width/height, so it's fully responsive. */}
       <svg width="0" height="0" style={{ position: "absolute", overflow: "hidden" }}>
         <defs>
           <clipPath id="features-video-clip" clipPathUnits="objectBoundingBox">
             {/*
               Original polygon points (normalized):
-              0,0 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.72,0 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.80,0.05 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 1,0.05 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 1,1 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,1 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,0.65 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.05,0.60 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0.05,0.22 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,0.18 ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0,0
+              0,0 → 0.72,0 → 0.80,0.05 → 1,0.05 → 1,1 → 0,1 → 0,0.65 → 0.05,0.60 → 0.05,0.22 → 0,0.18 → 0,0
 
               Each notch vertex replaced with:
                 L <approach>  Q <vertex-control> <departure>
-              radius ÃƒÂ¢Ã¢â‚¬Â°Ã‹â€  0.025 (objectBoundingBox units)
+              radius ≈ 0.025 (objectBoundingBox units)
             */}
             <path d="
               M 0.025,0
@@ -196,7 +161,7 @@ export function FeaturesSection() {
         </defs>
       </svg>
 
-      {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Intro paragraph ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
+      {/* ── Intro paragraph ── */}
       {/* <section
         style={{
           backgroundColor: "var(--c-white)",
@@ -221,10 +186,10 @@ export function FeaturesSection() {
       </section> */}
 
       {/*
-       * ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Scroll driver ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬
+       * ── Scroll driver ──
        * Height = (TOTAL + 1) * 100svh = 700svh, NO padding.
-       * Sticky inner = 100svh ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ sticky travel = 700svh - 100svh = 600svh.
-       * 6 features ÃƒÆ’Ã¢â‚¬â€ 100svh each.
+       * Sticky inner = 100svh → sticky travel = 700svh - 100svh = 600svh.
+       * 6 features × 100svh each.
        *
        * On mobile: height:auto, no sticky.
        */}
@@ -233,7 +198,7 @@ export function FeaturesSection() {
         className="features-scroll-driver"
         style={{ backgroundColor: "var(--c-white)", position: "relative" }}
       >
-        {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Desktop: sticky panel ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
+        {/* ── Desktop: sticky panel ── */}
         <div className="features-sticky-panel">
           <div
             style={{
@@ -277,93 +242,102 @@ export function FeaturesSection() {
                 <OdometerDigit value={units} />
               </div>
 
-              {/* Feature texts ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â CSS grid stack, each item occupies the same cell,
-                  translateY by measured slot height drives the vertical slide */}
-              <div
-                ref={textContainerRef}
-                style={{
-                  display: "grid",
-                  overflow: "hidden",
-                }}
-              >
-                {FEATURES.map((feature, idx) => (
-                  <div
-                    key={idx}
-                    className="feature-text-item"
-                    style={{
-                      gridRow: "1",
-                      gridColumn: "1",
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "0.6rem",
-                      fontFamily: "var(--font-primary)",
-                      fontSize: "clamp(1.5rem, 2.396vw, 3.833rem)",
-                      fontWeight: 450,
-                      lineHeight: 1.2,
-                      letterSpacing: "min(-0.024vw, -0.613px)",
-                      margin: 0,
-                      color: "var(--c-dark-green)",
-                      pointerEvents: idx === currentItem ? "auto" : "none",
-                      /* Before measurement: hide non-active items to avoid flash */
-                      opacity: slotHeight === 0 ? (idx === currentItem ? 1 : 0) : 1,
-                      transform: `translateY(${slotHeight === 0
-                        ? 0
-                        : idx === currentItem
-                          ? 0
-                          : idx < currentItem
-                            ? -(slotHeight + 24)
-                            : viewportH * 0.55
-                        }px)`,
-                      transition: slotHeight > 0
-                        ? "transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
-                        : "none",
-                      willChange: "transform",
-                    }}
-                  >
-                    {feature.text}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="/arrow.svg"
-                      alt=""
-                      className="feature-arrow"
+              {/* Feature titles -- each word is individually masked
+                  (overflow:hidden wrapper + inner translateY) and cascades
+                  up from below the mask with a per-word stagger when its
+                  item becomes active, exits upward when scrolled past, and
+                  waits below the mask when not yet reached. */}
+              <div style={{ display: "grid" }}>
+                {FEATURES.map((feature, idx) => {
+                  const words = feature.text.split(" ");
+                  const state = idx === currentItem ? "active" : idx < currentItem ? "exited" : "pending";
+                  return (
+                    <div
+                      key={idx}
+                      className="feature-text-item"
                       style={{
-                        width: "clamp(1.3rem, 2vw, 2.2rem)",
-                        height: "clamp(1.3rem, 2vw, 2.2rem)",
-                        marginTop: "0.18em",
-                        flexShrink: 0,
+                        gridRow: "1",
+                        gridColumn: "1",
+                        display: "flex",
+                        alignItems: "flex-start",
+                        flexWrap: "wrap",
+                        gap: "0.6rem",
+                        fontFamily: "var(--font-primary)",
+                        fontSize: "clamp(1.5rem, 2.396vw, 3.833rem)",
+                        fontWeight: 450,
+                        lineHeight: 1.2,
+                        letterSpacing: "min(-0.024vw, -0.613px)",
+                        margin: 0,
+                        color: "var(--c-dark-green)",
+                        pointerEvents: idx === currentItem ? "auto" : "none",
                       }}
-                    />
-                  </div>
-                ))}
+                    >
+                      <span>
+                        {words.map((word, wIdx) => (
+                          <span key={wIdx} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top" }}>
+                            <span
+                              style={{
+                                display: "inline-block",
+                                transform: `translateY(${state === "active" ? "0%" : state === "exited" ? "-130%" : "130%"})`,
+                                transitionProperty: "transform",
+                                transitionDuration: state === "active" ? "0.9s" : "0.4s",
+                                transitionTimingFunction: state === "active"
+                                  ? "cubic-bezier(0.19, 1, 0.22, 1)"
+                                  : "cubic-bezier(0.55, 0, 1, 0.45)",
+                                transitionDelay: state === "active" ? `${wIdx * 65}ms` : "0ms",
+                              }}
+                            >
+                              {word}
+                              {wIdx < words.length - 1 ? "\u00A0" : ""}
+                            </span>
+                          </span>
+                        ))}
+                      </span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src="/arrow.svg"
+                        alt=""
+                        className="feature-arrow"
+                        style={{
+                          width: "clamp(1.3rem, 2vw, 2.2rem)",
+                          height: "clamp(1.3rem, 2vw, 2.2rem)",
+                          marginTop: "0.18em",
+                          flexShrink: 0,
+                        }}
+                      />
+                    </div>
+                  );
+                })}
               </div>
 
-              {/* Feature descriptions ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â same grid-stack + translateY pattern as titles */}
-              <div style={{ display: "grid", overflow: "hidden", marginTop: "0.75rem" }}>
+              {/* Feature descriptions -- one masked block per item, sliding
+                  up from below as a whole (no per-word stagger -- keeps the
+                  body copy quick while the title gets the cascade). */}
+              <div style={{ display: "grid", marginTop: "0.75rem" }}>
                 {FEATURES.map((feature, idx) => (
-                  <p
-                    key={idx}
-                    style={{
-                      gridRow: "1",
-                      gridColumn: "1",
-                      margin: 0,
-                      fontFamily: "var(--font-primary)",
-                      fontSize: "clamp(1rem, 1.25vw, 1.25rem)",
-                      fontWeight: 400,
-                      lineHeight: 1.6,
-                      color: "var(--c-dark-green)",
-                      maxWidth: "420px",
-                      opacity: idx === currentItem ? 1 : 0,
-                      transform: `translateY(${idx === currentItem ? 0
-                        : idx < currentItem ? -60
-                          : viewportH * 0.3
-                        }px)`,
-                      transition: "transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease",
-                      willChange: "transform",
-                      pointerEvents: "none",
-                    }}
-                  >
-                    {"desc" in feature ? feature.desc : ""}
-                  </p>
+                  <div key={idx} style={{ gridRow: "1", gridColumn: "1", overflow: "hidden" }}>
+                    <p
+                      style={{
+                        margin: 0,
+                        fontFamily: "var(--font-primary)",
+                        fontSize: "clamp(1rem, 1.25vw, 1.25rem)",
+                        fontWeight: 400,
+                        lineHeight: 1.6,
+                        color: "var(--c-dark-green)",
+                        maxWidth: "420px",
+                        transform: `translateY(${idx === currentItem ? "0%" : idx < currentItem ? "-120%" : "120%"})`,
+                        transitionProperty: "transform",
+                        transitionDuration: idx === currentItem ? "0.6s" : "0.3s",
+                        transitionTimingFunction: idx === currentItem
+                          ? "cubic-bezier(0.19, 1, 0.22, 1)"
+                          : "cubic-bezier(0.55, 0, 1, 0.45)",
+                        transitionDelay: idx === currentItem ? "90ms" : "0ms",
+                        pointerEvents: "none",
+                      }}
+                    >
+                      {"desc" in feature ? feature.desc : ""}
+                    </p>
+                  </div>
                 ))}
               </div>
 
@@ -391,7 +365,11 @@ export function FeaturesSection() {
               </div>
             </div>
 
-            {/* RIGHT: video panel */}
+            {/* RIGHT: stacked image panel — each image slides up from
+                below and covers the previous one, like a card being
+                dealt onto the stack. Higher-index images sit on top via
+                z-index, so once an image has "arrived" it stays put and
+                simply gets covered by the next card sliding in. */}
             <div
               style={{
                 gridColumn: "7 / -1",
@@ -408,18 +386,18 @@ export function FeaturesSection() {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    opacity: idx === currentItem ? 1 : 0,
-                    transition: "opacity 0.5s cubic-bezier(0,0,0.58,1)",
+                    zIndex: idx,
+                    transform: `translateY(${idx <= currentItem ? 0 : 100}%)`,
+                    transition: "transform 1.15s cubic-bezier(0.22, 1, 0.36, 1)",
+                    willChange: "transform",
                   }}
                 >
-                  <video
-                    ref={(el) => { videoRefs.current[idx] = el; }}
-                    src={feature.video}
-                    muted
-                    loop
-                    playsInline
-                    preload="none"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  <Image
+                    src={feature.image}
+                    alt={feature.text.replace(/\.$/, "")}
+                    fill
+                    sizes="(max-width: 1023px) 0px, 50vw"
+                    style={{ objectFit: "cover" }}
                   />
                 </div>
               ))}
@@ -427,7 +405,7 @@ export function FeaturesSection() {
           </div>
         </div>
 
-        {/* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ Mobile: click-based layout ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */}
+        {/* ── Mobile: click-based layout ── */}
         <div className="features-mobile-panel">
           {/* Counter dots */}
           <div
@@ -507,18 +485,18 @@ export function FeaturesSection() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  opacity: idx === currentItem ? 1 : 0,
-                  transition: "opacity 0.5s ease",
+                  zIndex: idx,
+                  transform: `translateY(${idx <= currentItem ? 0 : 100}%)`,
+                  transition: "transform 0.95s cubic-bezier(0.22, 1, 0.36, 1)",
+                  willChange: "transform",
                 }}
               >
-                <video
-                  src={feature.video}
-                  autoPlay={idx === currentItem}
-                  muted
-                  loop
-                  playsInline
-                  preload="none"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                <Image
+                  src={feature.image}
+                  alt={feature.text.replace(/\.$/, "")}
+                  fill
+                  sizes="100vw"
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             ))}
@@ -531,7 +509,7 @@ export function FeaturesSection() {
                 right: "1rem",
                 display: "flex",
                 gap: "0.5rem",
-                zIndex: 2,
+                zIndex: FEATURES.length + 1,
               }}
             >
               <button
@@ -578,7 +556,7 @@ export function FeaturesSection() {
       </section>
 
       <style>{`
-        /* Arrow ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â hidden by default, fades in and rotates northeast on hover */
+        /* Arrow — hidden by default, fades in and rotates northeast on hover */
         .feature-arrow {
           opacity: 0;
           transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);

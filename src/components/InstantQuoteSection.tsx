@@ -1,27 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, animate, motion } from "framer-motion";
 import { PackageSearch } from "lucide-react";
-import CursorGrid from "@/components/CursorGrid";
 import { AddressAutocomplete } from "@/components/AddressAutocomplete";
+
+type Coords = { lat: number; lng: number; label: string };
 
 type QuoteResult = {
   ok: boolean;
   oversized?: boolean;
   error?: string;
+  quoteRequestId?: string;
   truckType?: { name: string };
   distanceMiles?: number;
   durationMinutes?: number;
   price?: number;
+  pickupCoords?: Coords;
+  deliveryCoords?: Coords;
 };
+
+const MAX_WEIGHT_LBS = 45000;
 
 export function InstantQuoteSection() {
   const [pickupAddress, setPickupAddress] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [pieces, setPieces] = useState("1");
   const [pallets, setPallets] = useState("1");
-  const [weightLbs, setWeightLbs] = useState("");
+  const [weightLbs, setWeightLbs] = useState(0);
   const [lengthIn, setLengthIn] = useState("");
   const [widthIn, setWidthIn] = useState("");
   const [heightIn, setHeightIn] = useState("");
@@ -29,186 +35,280 @@ export function InstantQuoteSection() {
 
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<QuoteResult | null>(null);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [paymentBanner, setPaymentBanner] = useState<"success" | "cancelled" | null>(null);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSubmitting(true);
-    setResult(null);
+  const requestSeq = useRef(0);
+  // Caches resolved geocode results by the exact address text that produced
+  // them, so re-submitting after only a quantity/dimension change can skip
+  // the two geocoding calls — the slowest part of each round trip.
+  const geocodeCacheRef = useRef<Map<string, Coords>>(new Map());
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const payment = params.get("payment");
+    if (payment === "success" || payment === "cancelled") {
+      setPaymentBanner(payment);
+      params.delete("payment");
+      const newSearch = params.toString();
+      window.history.replaceState({}, "", `${window.location.pathname}${newSearch ? `?${newSearch}` : ""}#instant-quote`);
+    }
+  }, []);
+
+  // Auto-calculates once every required field is filled in, instead of a
+  // manual submit button — debounced so we don't fire a geocode/route
+  // request on every keystroke.
+  useEffect(() => {
+    const ready =
+      pickupAddress.trim().length > 2 &&
+      deliveryAddress.trim().length > 2 &&
+      weightLbs > 0 &&
+      Number(lengthIn) > 0 &&
+      Number(widthIn) > 0 &&
+      Number(heightIn) > 0;
+
+    if (!ready) {
+      setResult(null);
+      return;
+    }
+
+    const seq = ++requestSeq.current;
+    const timer = setTimeout(async () => {
+      setSubmitting(true);
+      setPaymentBanner(null);
+
+      const cachedPickup = geocodeCacheRef.current.get(pickupAddress);
+      const cachedDelivery = geocodeCacheRef.current.get(deliveryAddress);
+
+      try {
+        const response = await fetch("/api/quote-calculator", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            pickupAddress,
+            deliveryAddress,
+            pickupCoords: cachedPickup,
+            deliveryCoords: cachedDelivery,
+            pieces: Number(pieces),
+            pallets: Number(pallets),
+            weightLbs,
+            lengthIn: Number(lengthIn),
+            widthIn: Number(widthIn),
+            heightIn: Number(heightIn),
+            hazmat,
+          }),
+        });
+
+        const data: QuoteResult = await response.json();
+        if (seq === requestSeq.current) setResult(data);
+
+        if (data.ok && !data.oversized) {
+          if (data.pickupCoords) geocodeCacheRef.current.set(pickupAddress, data.pickupCoords);
+          if (data.deliveryCoords) geocodeCacheRef.current.set(deliveryAddress, data.deliveryCoords);
+        }
+      } catch {
+        if (seq === requestSeq.current) {
+          setResult({ ok: false, error: "Something went wrong. Please try again." });
+        }
+      } finally {
+        if (seq === requestSeq.current) setSubmitting(false);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [pickupAddress, deliveryAddress, pieces, pallets, weightLbs, lengthIn, widthIn, heightIn, hazmat]);
+
+  const handleCheckout = async (quoteRequestId: string) => {
+    setCheckingOut(true);
     try {
-      const response = await fetch("/api/quote-calculator", {
+      const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          pickupAddress,
-          deliveryAddress,
-          pieces: Number(pieces),
-          pallets: Number(pallets),
-          weightLbs: Number(weightLbs),
-          lengthIn: Number(lengthIn),
-          widthIn: Number(widthIn),
-          heightIn: Number(heightIn),
-          hazmat,
-        }),
+        body: JSON.stringify({ quoteRequestId }),
       });
-
-      const data: QuoteResult = await response.json();
-      setResult(data);
+      const data: { ok: boolean; url?: string; error?: string } = await response.json();
+      if (data.ok && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      setResult((prev) => (prev ? { ...prev, error: data.error ?? "Unable to start checkout." } : prev));
     } catch {
-      setResult({ ok: false, error: "Something went wrong. Please try again." });
+      setResult((prev) => (prev ? { ...prev, error: "Unable to start checkout. Please try again." } : prev));
     } finally {
-      setSubmitting(false);
+      setCheckingOut(false);
     }
   };
 
   return (
     <section id="instant-quote" className="iq-section">
-      <div className="iq-grid-bg">
-        <CursorGrid
-          cellSize={64}
-          color="#b6f000"
-          radius={160}
-          falloff="smooth"
-          holdTime={400}
-          fadeDuration={800}
-          lineWidth={1.2}
-          maxOpacity={0.9}
-          fillOpacity={0}
-          gridOpacity={0}
-          cellRadius={4}
-          clickPulse
-          pulseSpeed={600}
-        />
-      </div>
+      {/* Rounded-notch clip path — copied from FeaturesSection's video panel clip so the
+          results card matches the same cut-corner shape used elsewhere on the site. Content
+          padding is generous enough to clear the left-edge notch (see .iq-results-panel). */}
+      <svg width="0" height="0" style={{ position: "absolute", overflow: "hidden" }}>
+        <defs>
+          <clipPath id="quote-card-clip" clipPathUnits="objectBoundingBox">
+            <path d="
+              M 0.025,0
+              L 0.545,0
+              Q 0.57,0 0.5877,0.0177
+              L 0.6023,0.0323
+              Q 0.62,0.05 0.645,0.05
+              L 0.975,0.05
+              Q 1.0,0.05 1.0,0.075
+              L 1.0,0.975
+              Q 1.0,1.0 0.975,1.0
+              L 0.025,1.0
+              Q 0,1.0 0,0.975
+              L 0,0.675
+              Q 0,0.65 0.0177,0.6323
+              L 0.0323,0.6177
+              Q 0.05,0.60 0.05,0.575
+              L 0.05,0.245
+              Q 0.05,0.22 0.0305,0.2044
+              L 0.0195,0.1956
+              Q 0,0.18 0,0.155
+              L 0,0.025
+              Q 0,0 0.025,0
+              Z
+            " />
+          </clipPath>
+        </defs>
+      </svg>
 
-      <div className="iq-container">
+      <motion.div
+        className="iq-head"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <span className="iq-kicker-row">
+          <span className="iq-kicker-line" />
+          Instant Quote
+          <span className="iq-kicker-line" />
+        </span>
+      </motion.div>
+
+      <div className="iq-layout">
         <motion.div
-          className="iq-head"
-          initial={{ opacity: 0, y: 24 }}
+          className="iq-form-col"
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="iq-kicker-row">
-            <span className="iq-kicker-line" />
-            Instant Quote
-            <span className="iq-kicker-line" />
-          </span>
+          <h3 className="iq-form-title">Get a Shipping Quote</h3>
+
+          <div className="iq-form">
+            <span className="iq-section-label">Route</span>
+            <div className="iq-row iq-row-2">
+              <AddressAutocomplete
+                label="Pickup Address"
+                placeholder="City, state or full address"
+                value={pickupAddress}
+                onChange={setPickupAddress}
+              />
+              <AddressAutocomplete
+                label="Delivery Address"
+                placeholder="City, state or full address"
+                value={deliveryAddress}
+                onChange={setDeliveryAddress}
+              />
+            </div>
+
+            <span className="iq-section-label">Shipment</span>
+            <div className="iq-row iq-row-3">
+              <NumberField label="Pieces" value={pieces} onChange={setPieces} />
+              <NumberField label="Pallets" value={pallets} onChange={setPallets} />
+              <label className="iq-hazmat">
+                <input type="checkbox" checked={hazmat} onChange={(e) => setHazmat(e.target.checked)} />
+                Hazmat
+              </label>
+            </div>
+
+            <span className="iq-section-label">Dimensions</span>
+            <div className="iq-row iq-row-3">
+              <NumberField label="Length (in)" value={lengthIn} onChange={setLengthIn} required />
+              <NumberField label="Width (in)" value={widthIn} onChange={setWidthIn} required />
+              <NumberField label="Height (in)" value={heightIn} onChange={setHeightIn} required />
+            </div>
+
+            <div className="iq-row iq-row-1">
+              <SliderField label="Weight" unit="lbs" max={MAX_WEIGHT_LBS} step={50} value={weightLbs} onChange={setWeightLbs} />
+            </div>
+          </div>
         </motion.div>
 
-        <div className="iq-layout">
-          <motion.div
-            className="iq-panel"
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h3 className="iq-panel-title">Get a Shipping Quote</h3>
+        <motion.div
+          className="iq-results-panel"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{ clipPath: "url(#quote-card-clip)" }}
+        >
+          <div className="iq-results-glow" />
 
-            <form onSubmit={handleSubmit} className="iq-form">
-              <span className="iq-section-label">Route</span>
-              <div className="iq-row iq-row-2">
-                <AddressAutocomplete
-                  label="Pickup Address"
-                  placeholder="City, state or full address"
-                  value={pickupAddress}
-                  onChange={setPickupAddress}
-                />
-                <AddressAutocomplete
-                  label="Delivery Address"
-                  placeholder="City, state or full address"
-                  value={deliveryAddress}
-                  onChange={setDeliveryAddress}
-                />
-              </div>
+          {paymentBanner ? (
+            <div className={`iq-payment-banner iq-payment-banner--${paymentBanner}`}>
+              {paymentBanner === "success"
+                ? "Payment received — thank you! We'll be in touch to schedule your pickup."
+                : "Checkout was cancelled. Your quote is still saved below if you'd like to try again."}
+            </div>
+          ) : null}
 
-              <span className="iq-section-label">Shipment</span>
-              <div className="iq-row iq-row-4">
-                <NumberField label="Pieces" value={pieces} onChange={setPieces} />
-                <NumberField label="Pallets" value={pallets} onChange={setPallets} />
-                <NumberField label="Weight (lbs)" value={weightLbs} onChange={setWeightLbs} required />
-                <label className="iq-hazmat">
-                  <input type="checkbox" checked={hazmat} onChange={(e) => setHazmat(e.target.checked)} />
-                  Hazmat
-                </label>
-              </div>
+          <div className="iq-results-head">
+            <h3 className="iq-results-title">Your Quote</h3>
+            <AnimatePresence mode="wait">
+              {result?.ok && !result.oversized ? (
+                <motion.p
+                  key="price"
+                  className="iq-results-price"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                >
+                  $<AnimatedNumber value={result.price ?? 0} />
+                </motion.p>
+              ) : (
+                <p key="placeholder" className="iq-results-price iq-results-price--muted">$—</p>
+              )}
+            </AnimatePresence>
+          </div>
 
-              <span className="iq-section-label">Dimensions</span>
-              <div className="iq-row iq-row-3">
-                <NumberField label="Length (in)" value={lengthIn} onChange={setLengthIn} required />
-                <NumberField label="Width (in)" value={widthIn} onChange={setWidthIn} required />
-                <NumberField label="Height (in)" value={heightIn} onChange={setHeightIn} required />
-              </div>
+          <div className="iq-divider">
+            <span className="iq-divider-dot" />
+          </div>
 
-              <motion.button
-                type="submit"
-                className="iq-submit"
-                disabled={submitting}
-                whileHover={submitting ? undefined : { scale: 1.015, y: -1 }}
-                whileTap={submitting ? undefined : { scale: 0.98 }}
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={submitting ? "loading" : "idle"}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.18 }}
-                    style={{ display: "inline-block" }}
-                  >
-                    {submitting ? "Calculating…" : "Get Instant Quote"}
-                  </motion.span>
-                </AnimatePresence>
-              </motion.button>
-            </form>
-          </motion.div>
-
-          <motion.div
-            className="iq-results-panel"
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h3 className="iq-panel-title">Your Quote</h3>
+          <div className="iq-results-body">
             <AnimatePresence mode="wait">
               {result ? (
-                <ResultPanel key={JSON.stringify(result)} result={result} />
+                <ResultPanel
+                  key={JSON.stringify(result)}
+                  result={result}
+                  checkingOut={checkingOut}
+                  recalculating={submitting}
+                  onCheckout={handleCheckout}
+                />
               ) : (
                 <EmptyResults key="empty" submitting={submitting} />
               )}
             </AnimatePresence>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
 
       <style>{`
         .iq-section {
           position: relative;
+          min-height: 100svh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
           background: var(--c-white);
           padding: 6.25rem var(--grid-margin);
           overflow: hidden;
           scroll-margin-top: 110px;
-        }
-
-        .iq-grid-bg {
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          pointer-events: auto;
-        }
-
-        .iq-container {
-          position: relative;
-          z-index: 1;
-          max-width: 1180px;
-          margin: 0 auto;
-          pointer-events: none;
-        }
-
-        .iq-container > * {
-          pointer-events: auto;
         }
 
         .iq-head {
@@ -220,10 +320,10 @@ export function InstantQuoteSection() {
           display: inline-flex;
           align-items: center;
           gap: 14px;
-          font-family: var(--font-primary);
-          font-size: 0.8125rem;
-          font-weight: 800;
-          letter-spacing: 0.32em;
+          font-family: var(--font-mono);
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.28em;
           text-transform: uppercase;
           color: #7a9900;
         }
@@ -236,48 +336,146 @@ export function InstantQuoteSection() {
 
         .iq-layout {
           display: grid;
-          grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-          gap: 1.75rem;
+          grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+          gap: 3.5rem;
           align-items: start;
         }
 
-        .iq-panel,
-        .iq-results-panel {
-          border: 1px solid var(--c-dark-green-15);
-          border-radius: 24px;
-          padding: 2.25rem;
-          background: rgba(255, 255, 255, 0.92);
-          backdrop-filter: blur(6px);
-          box-shadow: 0 24px 60px rgba(5, 36, 36, 0.08);
+        .iq-form-col {
+          padding: 1.5rem 0;
+        }
+
+        .iq-form-title {
+          margin: 0 0 2.5rem;
+          font-family: var(--font-primary);
+          font-size: clamp(1.5rem, 2.4vw, 2rem);
+          font-weight: 450;
+          letter-spacing: -0.02em;
+          color: var(--c-dark-green);
         }
 
         .iq-results-panel {
           position: sticky;
+          overflow: hidden;
           top: 120px;
-          min-height: 420px;
+          min-height: clamp(460px, 62vh, 660px);
+          display: flex;
+          flex-direction: column;
+          /* Extra left padding clears the clip-path's left-edge notch (5% of the
+             panel's width) — content needs to sit well past that inward cut. */
+          padding: 3rem 2.5rem 3rem 3.5rem;
+          color: #fff;
+          background: #0d1728;
+          box-shadow: 0 32px 72px rgba(15, 23, 42, 0.24);
         }
 
-        .iq-panel-title {
-          margin: 0 0 1.5rem;
+        .iq-results-body {
+          position: relative;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .iq-results-glow {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse 65% 55% at 88% 0%, rgba(182, 240, 0, 0.3), transparent 68%);
+          pointer-events: none;
+        }
+
+        .iq-results-head {
+          position: relative;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        .iq-results-title {
+          margin: 0;
           font-family: var(--font-primary);
           font-size: 1.25rem;
-          font-weight: 800;
+          font-weight: 450;
           letter-spacing: -0.02em;
-          color: var(--c-dark-green);
+          color: #fff;
+        }
+
+        .iq-results-price {
+          margin: 0;
+          font-family: var(--font-primary);
+          font-size: clamp(1.75rem, 3vw, 2.25rem);
+          font-weight: 450;
+          letter-spacing: -0.02em;
+          color: #fff;
+          text-align: right;
+        }
+
+        .iq-results-price--muted {
+          color: rgba(255, 255, 255, 0.25);
+        }
+
+        .iq-divider {
+          position: relative;
+          height: 1px;
+          margin: 1.75rem 0;
+          background: rgba(182, 240, 0, 0.18);
+        }
+
+        .iq-divider-dot {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: #5fbf5f;
+          box-shadow: 0 0 4px 1px rgba(95, 191, 95, 0.6);
+          transform: translateY(-50%);
+          animation: iq-dot-run 3.6s ease-in-out infinite;
+        }
+
+        @keyframes iq-dot-run {
+          0% { left: 0%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { left: 100%; opacity: 0; }
+        }
+
+        .iq-payment-banner {
+          position: relative;
+          margin-bottom: 1.25rem;
+          padding: 0.75rem 1rem;
+          border-radius: 12px;
+          font-family: var(--font-primary);
+          font-size: 0.8125rem;
+          line-height: 1.5;
+        }
+
+        .iq-payment-banner--success {
+          background: rgba(182, 240, 0, 0.14);
+          border: 1px solid rgba(182, 240, 0, 0.3);
+          color: #d4ff5c;
+        }
+
+        .iq-payment-banner--cancelled {
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          color: rgba(255, 255, 255, 0.75);
         }
 
         .iq-form {
           display: flex;
           flex-direction: column;
-          gap: 0.9rem;
+          gap: 1.4rem;
         }
 
         .iq-section-label {
-          margin-top: 0.5rem;
-          font-family: var(--font-primary);
+          margin-top: 1rem;
+          font-family: var(--font-mono);
           font-size: 0.6875rem;
           font-weight: 700;
-          letter-spacing: 0.12em;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
           color: rgba(5, 36, 36, 0.45);
         }
@@ -288,8 +486,12 @@ export function InstantQuoteSection() {
 
         .iq-row {
           display: grid;
-          gap: 1.25rem;
+          gap: 1.75rem;
           margin-bottom: 0.5rem;
+        }
+
+        .iq-row-1 {
+          grid-template-columns: 1fr;
         }
 
         .iq-row-2 {
@@ -298,10 +500,6 @@ export function InstantQuoteSection() {
 
         .iq-row-3 {
           grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .iq-row-4 {
-          grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
         .iq-field {
@@ -383,29 +581,89 @@ export function InstantQuoteSection() {
           color: var(--c-gray);
         }
 
-        .iq-submit {
-          margin-top: 0.75rem;
-          padding: 0.9rem 1.5rem;
-          background: var(--c-lime);
-          color: #0a0f00;
-          border: none;
-          border-radius: 12px;
+        .iq-slider-field {
+          display: flex;
+          flex-direction: column;
+          gap: 0.6rem;
+        }
+
+        .iq-slider-header {
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+        }
+
+        .iq-slider-value {
           font-family: var(--font-primary);
-          font-size: 0.95rem;
-          font-weight: 700;
-          letter-spacing: -0.01em;
+          font-size: 1.125rem;
+          font-weight: 800;
+          color: var(--c-dark-green);
+        }
+
+        .iq-slider-value span {
+          margin-left: 0.25rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--c-gray);
+        }
+
+        .iq-slider-input {
+          width: 100%;
+          margin: 0;
+          appearance: none;
+          -webkit-appearance: none;
+          border-radius: 999px;
+          height: 4px;
+          outline: none;
+        }
+
+        .iq-slider-input::-webkit-slider-runnable-track {
+          height: 4px;
+          border-radius: 999px;
+        }
+
+        .iq-slider-input::-moz-range-track {
+          height: 4px;
+          border-radius: 999px;
+          background: var(--c-dark-green-15);
+        }
+
+        .iq-slider-input::-moz-range-progress {
+          height: 4px;
+          border-radius: 999px;
+          background: var(--c-lime);
+        }
+
+        .iq-slider-input::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 18px;
+          height: 18px;
+          margin-top: -10px;
+          border-radius: 50%;
+          background: #fff;
+          border: 3px solid var(--c-lime);
+          box-shadow: 0 2px 8px rgba(5, 36, 36, 0.25);
           cursor: pointer;
-          transition: background 0.15s ease, transform 0.15s ease;
         }
 
-        .iq-submit:hover:not(:disabled) {
-          background: #cbff1a;
-          transform: translateY(-1px);
+        .iq-slider-input::-moz-range-thumb {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #fff;
+          border: 3px solid var(--c-lime);
+          box-shadow: 0 2px 8px rgba(5, 36, 36, 0.25);
+          cursor: pointer;
         }
 
-        .iq-submit:disabled {
-          opacity: 0.6;
-          cursor: default;
+        .iq-slider-scale {
+          display: flex;
+          justify-content: space-between;
+          font-family: var(--font-primary);
+          font-size: 0.6875rem;
+          font-weight: 600;
+          letter-spacing: 0.04em;
+          color: var(--c-gray);
         }
 
         .iq-empty {
@@ -415,12 +673,12 @@ export function InstantQuoteSection() {
           justify-content: center;
           text-align: center;
           gap: 0.75rem;
-          min-height: 300px;
-          color: var(--c-gray);
+          min-height: 220px;
+          color: rgba(255, 255, 255, 0.55);
         }
 
         .iq-empty svg {
-          color: rgba(5, 36, 36, 0.2);
+          color: rgba(255, 255, 255, 0.25);
         }
 
         .iq-empty p {
@@ -431,65 +689,35 @@ export function InstantQuoteSection() {
           line-height: 1.6;
         }
 
-        .iq-result-label {
-          font-family: var(--font-mono);
-          font-size: 0.75rem;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--c-gray);
-        }
-
-        .iq-result-price {
-          margin: 0.5rem 0 0;
-          font-family: var(--font-primary);
-          font-size: clamp(2.25rem, 4vw, 2.75rem);
-          font-weight: 450;
-          letter-spacing: -0.02em;
-          color: var(--c-dark-green);
-        }
-
-        .iq-result-price em {
-          font-style: italic;
-          color: #7a9900;
-        }
-
         .iq-result-meta {
-          margin-top: 1.25rem;
           display: grid;
-          gap: 0.6rem;
+          gap: 0.85rem;
         }
 
         .iq-result-meta-item {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0.75rem 1rem;
-          border-radius: 12px;
-          background: var(--c-dirty-white);
         }
 
         .iq-result-meta-item .label {
-          font-family: var(--font-mono);
-          font-size: 0.6875rem;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: var(--c-gray);
+          font-family: var(--font-primary);
+          font-size: 0.875rem;
+          color: rgba(255, 255, 255, 0.55);
         }
 
         .iq-result-meta-item .value {
           font-family: var(--font-primary);
           font-size: 0.9375rem;
           font-weight: 700;
-          color: var(--c-dark-green);
+          color: #fff;
         }
 
         .iq-result-note {
-          margin: 1.25rem 0 0;
+          margin: 1.5rem 0 0;
           font-family: var(--font-primary);
           font-size: 0.8125rem;
-          color: var(--c-gray);
+          color: rgba(255, 255, 255, 0.4);
         }
 
         .iq-result-warn,
@@ -497,17 +725,63 @@ export function InstantQuoteSection() {
           font-family: var(--font-primary);
           font-size: 0.9375rem;
           line-height: 1.7;
-          color: var(--c-dark-green);
+          color: rgba(255, 255, 255, 0.75);
         }
 
         .iq-result-warn a,
         .iq-result-error a {
-          color: #7a9900;
+          color: var(--c-lime);
           font-weight: 700;
           text-decoration: underline;
         }
 
-        @media (max-width: 900px) {
+        .iq-confirm-box {
+          margin-top: 1.75rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .iq-confirm-box h4 {
+          margin: 0;
+          font-family: var(--font-primary);
+          font-size: 1rem;
+          font-weight: 600;
+          color: #fff;
+        }
+
+        .iq-confirm-box p {
+          margin: 0.4rem 0 1.1rem;
+          font-family: var(--font-primary);
+          font-size: 0.8125rem;
+          color: rgba(255, 255, 255, 0.55);
+        }
+
+        .iq-pay-btn {
+          width: 100%;
+          padding: 0.9rem 1.5rem;
+          background: var(--c-lime);
+          color: #0a0f00;
+          border: none;
+          border-radius: 12px;
+          font-family: var(--font-primary);
+          font-size: 0.9375rem;
+          font-weight: 800;
+          letter-spacing: -0.01em;
+          cursor: pointer;
+          transition: background 0.15s ease, transform 0.15s ease;
+        }
+
+        .iq-pay-btn:hover:not(:disabled) {
+          background: #cbff1a;
+          transform: translateY(-1px);
+        }
+
+        .iq-pay-btn:disabled {
+          opacity: 0.6;
+          cursor: default;
+        }
+
+        @media (max-width: 1100px) {
           .iq-layout {
             grid-template-columns: 1fr;
           }
@@ -515,6 +789,8 @@ export function InstantQuoteSection() {
           .iq-results-panel {
             position: static;
             min-height: 0;
+            clip-path: none !important;
+            border-radius: 24px;
           }
         }
 
@@ -523,15 +799,12 @@ export function InstantQuoteSection() {
             padding: 4rem 1.25rem;
           }
 
-          .iq-panel,
           .iq-results-panel {
             padding: 1.5rem;
-            border-radius: 20px;
           }
 
           .iq-row-2,
-          .iq-row-3,
-          .iq-row-4 {
+          .iq-row-3 {
             grid-template-columns: 1fr;
           }
         }
@@ -562,7 +835,17 @@ const resultMotion = {
   transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const },
 };
 
-function ResultPanel({ result }: { result: QuoteResult }) {
+function ResultPanel({
+  result,
+  checkingOut,
+  recalculating,
+  onCheckout,
+}: {
+  result: QuoteResult;
+  checkingOut: boolean;
+  recalculating: boolean;
+  onCheckout: (quoteRequestId: string) => void;
+}) {
   if (!result.ok) {
     return (
       <motion.div {...resultMotion}>
@@ -584,18 +867,12 @@ function ResultPanel({ result }: { result: QuoteResult }) {
 
   return (
     <motion.div {...resultMotion}>
-      <span className="iq-result-label">Estimated Price</span>
-      <p className="iq-result-price">
-        <em>
-          $<AnimatedNumber value={result.price ?? 0} />
-        </em>
-      </p>
       <div className="iq-result-meta">
         <motion.div
           className="iq-result-meta-item"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
+          transition={{ delay: 0.1 }}
         >
           <span className="label">Truck</span>
           <span className="value">{result.truckType?.name}</span>
@@ -604,7 +881,7 @@ function ResultPanel({ result }: { result: QuoteResult }) {
           className="iq-result-meta-item"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.22 }}
+          transition={{ delay: 0.17 }}
         >
           <span className="label">Distance</span>
           <span className="value">{result.distanceMiles} mi</span>
@@ -613,13 +890,30 @@ function ResultPanel({ result }: { result: QuoteResult }) {
           className="iq-result-meta-item"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.29 }}
+          transition={{ delay: 0.24 }}
         >
           <span className="label">Drive time</span>
           <span className="value">{result.durationMinutes} min</span>
         </motion.div>
       </div>
       <p className="iq-result-note">This is an automated estimate. Final pricing is confirmed when we schedule your pickup.</p>
+
+      {result.quoteRequestId ? (
+        <div className="iq-confirm-box">
+          <h4>Ready to book?</h4>
+          <p>Confirm this quote and pay now to lock in your price and schedule pickup.</p>
+          <motion.button
+            type="button"
+            className="iq-pay-btn"
+            disabled={checkingOut || recalculating}
+            onClick={() => onCheckout(result.quoteRequestId!)}
+            whileHover={checkingOut || recalculating ? undefined : { scale: 1.015, y: -1 }}
+            whileTap={checkingOut || recalculating ? undefined : { scale: 0.98 }}
+          >
+            {checkingOut ? "Redirecting…" : recalculating ? "Updating price…" : "Confirm Order — Pay Now"}
+          </motion.button>
+        </div>
+      ) : null}
     </motion.div>
   );
 }
@@ -661,6 +955,50 @@ function NumberField({
         onChange={(e) => onChange(e.target.value)}
         className="iq-input"
       />
+    </div>
+  );
+}
+
+function SliderField({
+  label,
+  unit,
+  max,
+  step,
+  value,
+  onChange,
+}: {
+  label: string;
+  unit: string;
+  max: number;
+  step: number;
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  const percent = (value / max) * 100;
+
+  return (
+    <div className="iq-slider-field">
+      <div className="iq-slider-header">
+        <label className="iq-label">{label}</label>
+        <span className="iq-slider-value">
+          {value.toLocaleString()}
+          <span>{unit}</span>
+        </span>
+      </div>
+      <input
+        type="range"
+        min={0}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="iq-slider-input"
+        style={{ background: `linear-gradient(to right, var(--c-lime) ${percent}%, rgba(5, 36, 36, 0.15) ${percent}%)` }}
+      />
+      <div className="iq-slider-scale">
+        <span>0 {unit}</span>
+        <span>{max.toLocaleString()} {unit}</span>
+      </div>
     </div>
   );
 }
