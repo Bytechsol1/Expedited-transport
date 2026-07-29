@@ -26,7 +26,7 @@ const DIVIDER: React.CSSProperties = {
 const SECTION_LABEL: React.CSSProperties = {
   display: "block",
   color: "#ffffff",
-  fontSize: "0.65rem",
+  fontSize: "0.72rem",
   fontWeight: 700,
   letterSpacing: "0.22em",
   textTransform: "uppercase",
@@ -50,12 +50,12 @@ export function FooterSection() {
         {/* Contact */}
         <div>
           <span style={SECTION_LABEL}>Contact</span>
-          <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.65)", margin: "0 0 0.5rem" }}>
+          <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.65)", margin: "0 0 0.5rem" }}>
             West Hartford, CT 06110
           </p>
           <a
             href="tel:+18609883887"
-            style={{ display: "block", color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.86rem", marginBottom: "0.4rem" }}
+            style={{ display: "block", color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.93rem", marginBottom: "0.4rem" }}
             onMouseEnter={e => (e.currentTarget.style.color = "#b6f000")}
             onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.52)")}
           >
@@ -63,13 +63,13 @@ export function FooterSection() {
           </a>
           <a
             href="mailto:info@expeditedtransportservices.net"
-            style={{ display: "block", color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.86rem", marginBottom: "0.9rem", wordBreak: "break-all" }}
+            style={{ display: "block", color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.93rem", marginBottom: "0.9rem", wordBreak: "break-all" }}
             onMouseEnter={e => (e.currentTarget.style.color = "#b6f000")}
             onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.52)")}
           >
             info@expeditedtransportservices.net
           </a>
-          <p style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.8rem", margin: 0 }}>
+          <p style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.87rem", margin: 0 }}>
             License #: DOT 2566125
           </p>
         </div>
@@ -81,7 +81,7 @@ export function FooterSection() {
             {HOURS.map(({ day, time }) => (
               <div
                 key={day}
-                style={{ display: "flex", justifyContent: "space-between", maxWidth: 260, fontSize: "0.86rem" }}
+                style={{ display: "flex", justifyContent: "space-between", maxWidth: 260, fontSize: "0.93rem" }}
               >
                 <span style={{ color: "rgba(255,255,255,0.45)" }}>{day}</span>
                 <span style={{ color: time === "Available" ? "#b6f000" : "#fff", fontWeight: time === "24 Hours" ? 600 : 400 }}>
@@ -104,7 +104,7 @@ export function FooterSection() {
               <Link
                 key={label}
                 href={href}
-                style={{ color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.86rem" }}
+                style={{ color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.93rem" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "#b6f000")}
                 onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.52)")}
               >
@@ -228,17 +228,17 @@ export function FooterSection() {
           width: 44px;
           height: 44px;
           border-radius: 50%;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.14);
-          color: rgba(255,255,255,0.75);
+          background: #b6f000;
+          border: 1px solid #b6f000;
+          color: #0a0f00;
           cursor: pointer;
           padding: 0;
           transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
 
         .back-to-top-btn:hover {
-          background: #b6f000;
-          border-color: #b6f000;
+          background: #cbff1a;
+          border-color: #cbff1a;
           color: #0a0f00;
           transform: scale(1.1);
         }

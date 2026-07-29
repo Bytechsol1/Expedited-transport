@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
+import { HotshotFaqSection } from "@/components/HotshotFaqSection";
 import { FooterSection } from "@/components/FooterSection";
 
 export type ServiceCard = {
@@ -659,6 +660,7 @@ export function ServicePageTemplate({
           )
         )}
       </main>
+      <HotshotFaqSection />
       <FooterSection />
     </>
   );

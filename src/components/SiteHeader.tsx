@@ -240,7 +240,7 @@ export function SiteHeader() {
           left: 0;
           right: 0;
           z-index: 100;
-          padding: 0.875rem 1.5rem 0;
+          padding: 1.5rem 1.5rem 0;
           pointer-events: none;
         }
 
@@ -262,7 +262,7 @@ export function SiteHeader() {
           padding: 0.9rem 0.9rem 0.9rem 1.5rem;
           background: transparent;
           border: 1px solid rgba(255,255,255,0.15);
-          border-radius: 20px;
+          border-radius: 12px;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           text-rendering: optimizeLegibility;
@@ -538,7 +538,7 @@ export function SiteHeader() {
 
         @media (max-width: 480px) {
           .site-header {
-            padding: 0.625rem 0.75rem 0;
+            padding: 1rem 0.75rem 0;
           }
 
           .brand-name {

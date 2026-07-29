@@ -10,6 +10,7 @@ import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { InstantQuoteSection } from "@/components/InstantQuoteSection";
 import { ContactSection } from "@/components/ContactSection";
 import { DotSeparator } from "@/components/DotSeparator";
+import { HotshotFaqSection } from "@/components/HotshotFaqSection";
 import { FooterSection } from "@/components/FooterSection";
 import { IntroAnimation } from "@/components/IntroAnimation";
 
@@ -47,6 +48,9 @@ export default function Home() {
         <DotSeparator />
         <div style={{ position: "relative", zIndex: 6 }}>
           <ContactSection />
+        </div>
+        <div style={{ position: "relative", zIndex: 7 }}>
+          <HotshotFaqSection />
         </div>
       </main>
       <FooterSection />

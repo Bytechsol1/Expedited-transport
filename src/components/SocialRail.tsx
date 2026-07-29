@@ -174,7 +174,14 @@ export function SocialRail() {
           height: 410px;
           transform: translateY(-50%);
           z-index: 80;
-          pointer-events: auto;
+          /* The rail's own box reserves 236x410px for the hover-expanded
+             state, but each collapsed icon only occupies a 70px circle
+             within it. Without this, the empty space in that reserved
+             box (to the left of each icon, and between icons vertically)
+             still swallows clicks meant for whatever page content sits
+             underneath -- e.g. FAQ accordion rows near the right edge.
+             Pointer-events is re-enabled per-icon below. */
+          pointer-events: none;
         }
 
         .social-rail__item {
@@ -191,6 +198,7 @@ export function SocialRail() {
           box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
           text-decoration: none;
           color: #6b5531;
+          pointer-events: auto;
           transition: width 0.25s ease, transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
           will-change: width, transform;
         }
