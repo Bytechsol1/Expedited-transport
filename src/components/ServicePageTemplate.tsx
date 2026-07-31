@@ -6,6 +6,8 @@ import type { LucideIcon } from "lucide-react";
 import { ArrowRight, CheckCircle2, Shield } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
+import { HotshotFaqSection } from "@/components/HotshotFaqSection";
+import { ContactSection } from "@/components/ContactSection";
 
 export type ServiceCard = {
   title: string;
@@ -883,6 +885,8 @@ export function ServicePageTemplate({
           )
         )}
       </main>
+      <HotshotFaqSection />
+      <ContactSection />
       <FooterSection />
     </>
   );
