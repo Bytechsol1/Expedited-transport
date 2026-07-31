@@ -199,7 +199,7 @@ export function ContactSection() {
                 boxShadow: "0 4px 14px rgba(182, 240, 0, 0.25)",
               }}
             >
-              <Phone size={18} style={{ marginRight: "8px" }} /> Call Us Now
+              Call Us Now <Phone size={18} style={{ marginLeft: "8px" }} />
             </a>
             <a
               href="mailto:info@expeditedtransportservices.net"
