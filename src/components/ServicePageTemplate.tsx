@@ -27,6 +27,8 @@ export type ServicePageTemplateProps = {
   hideHeroNote?: boolean;
   hideHeroPoints?: boolean;
   hideLowerSections?: boolean;
+  accordionTitle?: string;
+  accordionDescription?: string;
   lowerContent?: ReactNode;
   heroTitleClassName?: string;
   metadata?: Metadata;
@@ -46,6 +48,8 @@ export function ServicePageTemplate({
   hideHeroNote,
   hideHeroPoints,
   hideLowerSections,
+  accordionTitle,
+  accordionDescription,
   lowerContent,
   heroTitleClassName,
 }: ServicePageTemplateProps) {
@@ -745,10 +749,10 @@ export function ServicePageTemplate({
                   <div style={{ textAlign: "center", marginBottom: "60px", maxWidth: "800px", margin: "0 auto 60px" }}>
 
                     <h2 style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "24px", lineHeight: 1.1, color: "#0f172a", fontFamily: "var(--font-primary)" }}>
-                      {title} Company for Any Job
+                      {accordionTitle || `${title} Company for Any Job`}
                     </h2>
                     <p style={{ color: "#475569", lineHeight: 1.8, fontSize: "18px", fontFamily: "var(--font-primary)" }}>
-                      {summary} Some of the additional benefits of hiring our {title.toLowerCase()} carrier for your job include:
+                      {accordionDescription || `${summary} Some of the additional benefits of hiring our ${title.toLowerCase()} carrier for your job include:`}
                     </p>
                   </div>
 

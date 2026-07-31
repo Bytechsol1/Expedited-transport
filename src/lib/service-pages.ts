@@ -56,6 +56,8 @@ export const servicePages = {
       "If you are on the fence about whether to use an LTL trucking company or not, our experts will be happy to help. You are always welcome to get in touch with us for our honest recommendation on the type of shipping you need.",
     imageSrc: "/images/truck1.jpg",
     imageAlt: "LTL trucking support",
+    accordionTitle: "When to Hire an LTL Freight Company",
+    accordionDescription: "If you are on the fence about whether to use an LTL trucking company or not, our experts will be happy to help. You are always welcome to get in touch with us for our honest recommendation on the type of shipping you need. Some of the reasons you might use our LTL services include:",
     points: [
       "You have less than 12 pallets or 15,000 pounds of freight",
       "You want to save on shipping rates",
