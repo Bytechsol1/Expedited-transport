@@ -110,7 +110,6 @@ export default function CarrierServicesPage() {
     <ServicePageTemplate
       {...servicePages.carrierServices}
       hideLowerSections={false}
-      lowerContent={<CarrierLowerContent />}
     />
   );
 }

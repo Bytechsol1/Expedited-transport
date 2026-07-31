@@ -131,7 +131,6 @@ export default function FreightShippingPage() {
       {...servicePages.freightShipping}
       hideHeroEyebrow
       hideLowerSections={false}
-      lowerContent={<FreightShippingLowerContent />}
     />
   );
 }
