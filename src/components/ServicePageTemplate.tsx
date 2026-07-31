@@ -55,6 +55,36 @@ export function ServicePageTemplate({
 }: ServicePageTemplateProps) {
   return (
     <>
+      <svg width="0" height="0" style={{ position: "absolute", overflow: "hidden" }}>
+        <defs>
+          <clipPath id="hotshot-image-clip" clipPathUnits="objectBoundingBox">
+            <path d="
+              M 0.025,0
+              L 0.545,0
+              Q 0.57,0 0.5877,0.0177
+              L 0.6023,0.0323
+              Q 0.62,0.05 0.645,0.05
+              L 0.975,0.05
+              Q 1.0,0.05 1.0,0.075
+              L 1.0,0.975
+              Q 1.0,1.0 0.975,1.0
+              L 0.025,1.0
+              Q 0,1.0 0,0.975
+              L 0,0.675
+              Q 0,0.65 0.0177,0.6323
+              L 0.0323,0.6177
+              Q 0.05,0.60 0.05,0.575
+              L 0.05,0.245
+              Q 0.05,0.22 0.0305,0.2044
+              L 0.0195,0.1956
+              Q 0,0.18 0,0.155
+              L 0,0.025
+              Q 0,0 0.025,0
+              Z
+            " />
+          </clipPath>
+        </defs>
+      </svg>
       <SiteHeader />
       <main className="service-page">
         <style>{`
