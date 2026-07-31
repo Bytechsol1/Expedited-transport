@@ -149,16 +149,40 @@ export const servicePages = {
     body: "",
     imageSrc: "/images/truck2.jpg",
     imageAlt: "Freight transportation support",
-    points: [],
+    accordionTitle: "All the Information You Need on Freight Trucking",
+    accordionDescription: "If you are looking to bring some dependability to your supply chain, then we are here to help. We want all of our prospective clients to feel comfortable working with us, which is why we pride ourselves on our honest and upfront approach. If you have any questions or concerns, all you need to do is reach out to us for a prompt response and detailed answers.",
+    points: [
+      "LTL trucking",
+      "Dry van trucking",
+      "Logistics services",
+      "Warehousing services",
+      "Or any other trucking services"
+    ],
     hideHeroAccent: true,
     hideHeroEyebrow: true,
     hideHeroNote: true,
     hideHeroPoints: true,
-    hideLowerSections: true,
     cards: makeCards([
-      { title: "Regional coverage", description: "Dummy copy for handling local and regional freight moves with ease.", icon: MapPinned },
-      { title: "Cross-dock support", description: "Placeholder language for faster transfers between inbound and outbound legs.", icon: Warehouse },
-      { title: "Route optimization", description: "Basic notes about selecting the simplest path for freight movement.", icon: Waypoints },
+      {
+        title: "Comprehensive Freight Transportation",
+        description: "Throughout our time in business, we have worked hard to develop connections and improve upon the services we provide. These days, we feel confident saying that we provide a complete offering of valuable transportation services. If you are looking for a freight company that does it all, then you have come to the right place.",
+        icon: Truck,
+      },
+      {
+        title: "Freight Shipping You Never Have to Wait On",
+        description: "Punctuality matters in the trucking industry, and we do everything in our power to ensure our clients never have to worry about late arrivals. With a measurable history of success and a commitment to timely service, your cargo is always in capable hands when you trust it with us. Make sure you never have to worry about missed deadlines or service interruptions by hiring our qualified crew.",
+        icon: Clock3,
+      },
+      {
+        title: "Your Freight Is Safe with Us",
+        description: "When you want to ensure safe and secure transportation for your valuable materials, Expedited Transport Services is the company to hire. We use industry-leading safety measures and plan all of our jobs carefully to ensure that your products reach their destination in perfect condition. If you have any questions about our ability to handle your cargo safely, don’t hesitate to contact us.",
+        icon: ShieldCheck,
+      },
+      {
+        title: "Budget-Conscious Freight Shipping",
+        description: "Hiring the best trucking company available is only worthwhile if it fits into your budget. With that in mind, you can always expect straightforward pricing without any hidden or surprise fees when you choose us for the job. Our services are competitively priced and are part of the reason why so many businesses choose us for all of their hauling.",
+        icon: Waypoints,
+      }
     ]),
   },
   logisticsServices: {
@@ -169,20 +193,45 @@ export const servicePages = {
     eyebrow: "",
     title: "Logistics Services",
     summary:
-      "Could your supply chain benefit from some added efficiency? The transportation and logistics services from Expedited Transport Services are everything you need to make that happen. Our attentive staff utilizes in-depth industry knowledge and advanced software to ensure that all of your deliveries are completed on time and according to budget.",
-    body: "Speak with our experts today by calling (860) 988-3887.",
+      "Could your supply chain benefit from some added efficiency? The transportation and logistics services from Expedited Transport Services are everything you need to make that happen. Our attentive staff utilizes in-depth industry knowledge and advanced software to ensure that all of your deliveries are completed on time and according to budget. Speak with our experts today by calling (860) 988-3887.",
+    body: "",
     imageSrc: "/images/truck3.jpg",
     imageAlt: "Logistics services support",
-    points: [],
+    accordionTitle: "Work with a Top Logistics Company",
+    accordionDescription: "The purpose of transport logistics is to oversee your entire supply chain and make intelligent decisions that will help optimize your freight shipments. If you are tired of the headache that comes along with organizing your deliveries, then you are guaranteed to find value in our services. We are proud to be a logistics company trusted by many organizations who count on us to make sure their shipments reach their destination in the smoothest way possible. No matter the size of your business, you can count on us to scale with you and stay on top of all of your transportation needs.",
+    points: [
+      "Planning and optimizing routes",
+      "Order management",
+      "Freight auditing",
+      "Selecting transportation carriers",
+      "Warehousing and inventory management",
+      "Customs management"
+    ],
     hideHeroAccent: true,
     hideHeroEyebrow: true,
     hideHeroNote: true,
     hideHeroPoints: true,
-    hideLowerSections: true,
     cards: makeCards([
-      { title: "Load planning", description: "Placeholder workflow notes for preparing shipments before they move.", icon: Boxes },
-      { title: "Shipment visibility", description: "Dummy details for keeping stakeholders informed at every step.", icon: MapPinned },
-      { title: "Communication", description: "A simple stand-in for keeping everyone on the same page.", icon: BarChart3 },
+      {
+        title: "Minimize Your Costs with Freight Logistics",
+        description: "One clear benefit of using our logistic services is the cost-saving benefits. Not only will our professional management help reduce some of the unnecessary spendings within your supply chain, but it will also allow you and your staff to be more productive during your workday. On top of this, we provide our services at honest and affordable rates, so you can truly maximize your budget.",
+        icon: Boxes,
+      },
+      {
+        title: "Open Communication with Your Logistics Company",
+        description: "Here at Expedited Transport Services, we do everything we can to ensure a pleasant and worthwhile experience for our clients. We make sure to provide you with all of the relevant details regarding your transportation process and are always available to answer questions that come to you along the way. You never have to be left in the dark regarding your shipments again with our qualified logistics.",
+        icon: MapPinned,
+      },
+      {
+        title: "The Only Logistics Company You Need",
+        description: "A lot of time and effort goes into managing your supply chain. Constantly researching, contacting, and dealing with transportation companies takes time out of your day and requires a lot of energy. With that in mind, our goal is to be the only point of contact you need to ensure all of your shipments go smoothly. Stop spreading yourself thin and let our industry experts handle everything for you.",
+        icon: BarChart3,
+      },
+      {
+        title: "Highly Recommended Logistics Experts",
+        description: "Throughout our time in business, we have earned a reputation as a reliable resource for any business that relies on the transportation of goods. We have been honored to establish partnerships with many fantastic companies who rely on us to keep them running smoothly, and we hope to count you among them soon.",
+        icon: CheckCircle2,
+      }
     ]),
   },
   carrierServices: {
@@ -193,20 +242,49 @@ export const servicePages = {
     eyebrow: "",
     title: "Carrier Services",
     summary:
-      "When you need to transport large shipments, hiring a carrier service is the most secure and cost-effective way to do so. Here at Expedited Transport Services, we specialize in all types of freight shipping and pride ourselves on our dependable service.",
-    body: "If you would like to discuss the products you need to be shipped and how we can accommodate them, please get in touch with us at (860) 988-3887.",
+      "When you need to transport large shipments, hiring a carrier service is the most secure and cost-effective way to do so. Here at Expedited Transport Services, we specialize in all types of freight shipping and pride ourselves on our dependable service. If you would like to discuss the products you need to be shipped and how we can accommodate them, please get in touch with us at (860) 988-3887.",
+    body: "",
     imageSrc: "/images/truck4.jpg",
     imageAlt: "Carrier services support",
-    points: [],
+    accordionTitle: "Reliable Shipping Estimates",
+    accordionDescription: "Having a trustworthy overview of your shipping rates makes it much easier to feel confident when hiring a carrier service, which is something we strive to provide for all of our prospective clients. Our time in the industry, combined with our dedication to our clients, ensures that you never have to worry about hurting your bottom line when using our trucking services.",
+    points: [
+      "Cost-effective shipping rates",
+      "Accommodating freight services",
+      "FTL, LTL, and PTL options",
+      "Dependable communication",
+      "Professional shipping equipment"
+    ],
     hideHeroAccent: true,
     hideHeroEyebrow: true,
     hideHeroNote: true,
     hideHeroPoints: true,
-    hideLowerSections: true,
     cards: makeCards([
-      { title: "Capacity matching", description: "Dummy copy for pairing the right truck with the right shipment.", icon: Truck },
-      { title: "Driver coordination", description: "Placeholder note for communication before, during, and after the load.", icon: Waypoints },
-      { title: "Delivery proof", description: "A simple stand-in for completed delivery confirmation.", icon: CheckCircle2 },
+      {
+        title: "Accommodating Freight Shippers",
+        description: "With our shipping services, you only pay for the space you need. No matter the size of your load, you can count on us to pick it up and transport it in the most budget-friendly way. We aim to provide all of our clients with the most convenient options to keep their supply chain moving when it needs to be.",
+        icon: Truck,
+      },
+      {
+        title: "Full Truckload (FTL) Shipping",
+        description: "This option is for when you know that you will be able to fill up an entire shipping container with your product and materials. This is typically the quickest option, as no other pickups or drop-offs will need to be conducted on the way to the destination.",
+        icon: Waypoints,
+      },
+      {
+        title: "Less Than Truckload (LTL) Shipping",
+        description: "LTL freight shipping is ideal for when you only have a small size load that needs to be transported. If your shipment exceeds 150lbs but is still much smaller than a full freight container, we are the ideal shipping carrier. We plan the logistics carefully and coordinate your shipment with other deliveries so that you do not have to pay for a full truckload when you don’t need it.",
+        icon: Warehouse,
+      },
+      {
+        title: "Partial Truckload (PTL) Shipping",
+        description: "In between FTL and LTL shipping, partial truckload shipping takes up about half of a standard freight container. This allows you to receive the cost-saving benefits of grouping your shipment while also minimizing the handling required, which means your products will reach their destination faster.",
+        icon: MapPinned,
+      },
+      {
+        title: "Your Shipments Are Safe with Our Carrier Services",
+        description: "With a great deal of experience on the road and professional shipping equipment, you can always feel secure when you use our carrier services. We will carefully load and secure your materials to ensure that they will be kept safe throughout transit. Thanks to our careful approach, you can breathe easy knowing that we will help you eliminate damage and get your products to their location in perfect condition.",
+        icon: ShieldCheck,
+      }
     ]),
   },
   localTruckingCompany: {
@@ -215,22 +293,47 @@ export const servicePages = {
       description: "Local trucking services with honest rates, direct coordination, and reliable nearby freight support.",
     },
     eyebrow: "",
-    title: "Local Trucking\nCompany",
+    title: "Local Trucking Company",
     summary:
-      "When you want to ensure that you are hiring a reputable trucking company, it always helps to go local. Here at Expedited Transport Services, we take pride in providing the surrounding area with valuable trucking services at honest rates.",
-    body: "Keep your business running smoothly without taking a gamble with a faraway freight carrier by contacting us at (860) 988-3887.",
+      "When you want to ensure that you are hiring a reputable trucking company, it always helps to go local. Here at Expedited Transport Services, we take pride in providing the surrounding area with valuable trucking services at honest rates. Keep your business running smoothly without taking a gamble with a faraway freight carrier by contacting us at (860) 988-3887.",
+    body: "",
     imageSrc: "/images/truck1.jpg",
     imageAlt: "Local trucking support",
-    points: [],
+    accordionTitle: "The Leading Local Trucking Company",
+    accordionDescription: "Here at Expedited Transport Services, we are driven by constant improvement and success. Providing our valued clients with exceptional service is very important to us, which has helped us earn a solid reputation both locally and nationwide. Some of the things that help us stand out as a local trucking service include:",
+    points: [
+      "Transparent and competitive pricing",
+      "Experienced drivers",
+      "Knowledgeable local logistics experts",
+      "Dedicated customer service",
+      "Punctual deliveries",
+      "Well-maintained vehicles"
+    ],
     hideHeroAccent: true,
     hideHeroEyebrow: true,
     hideHeroNote: true,
     hideHeroPoints: true,
-    hideLowerSections: true,
     cards: makeCards([
-      { title: "Nearby routes", description: "Dummy copy for short-distance moves and local delivery support.", icon: MapPinned },
-      { title: "Flexible pickups", description: "Placeholder text for adapting to changing pickup windows.", icon: Clock3 },
-      { title: "Simple dispatch", description: "A basic note for getting local freight moving quickly.", icon: Truck },
+      {
+        title: "Top-Notch Service from Local Freight Carriers",
+        description: "With our vast knowledge of the local area and a strong commitment to our clients, you can always expect a positive experience when you work with us. We put a strong emphasis on open communication and do everything we can to ensure that one-time customers become repeat customers. We encourage you to give us a call if you have any questions about our ability to meet your needs.",
+        icon: MapPinned,
+      },
+      {
+        title: "Feel Secure with Our Local Trucking Service",
+        description: "When you trust a third party to transport cargo for your business, you always want to feel confident that it will arrive in the same condition it leaves in. To ensure that our clients have nothing to worry about, we are dedicated to taking all of the appropriate measures to guarantee safe transit. Our vehicles are frequently inspected and serviced, and we pay careful attention during the loading and unloading process to make sure that there is never any room for error.",
+        icon: ShieldCheck,
+      },
+      {
+        title: "Local Hauling That’s Completed on Time",
+        description: "We know how important it is for our clients to receive their shipments on time, which is why we plan carefully and utilize all of our resources to provide exactly that. Our familiarity with the local area and time in the industry means that we never make promises we can’t keep. When we are behind your trucking, you can relax knowing that we will reach your destination on time.",
+        icon: Clock3,
+      },
+      {
+        title: "Save Money with Our Local Freight Company",
+        description: "We are loyal to our customers here at Expedited Transport Services, and this includes a promise always to charge fair and straightforward prices for our transportation services. When you want to know exactly where your budget is going, you can always trust the rates we charge. If you would like to discuss the hauling you need and get an estimate on the expected costs, we encourage you to get in touch.",
+        icon: Waypoints,
+      }
     ]),
   },
 } satisfies Record<string, ServicePageData>;
