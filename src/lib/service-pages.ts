@@ -97,20 +97,44 @@ export const servicePages = {
     eyebrow: "Freight Shipping",
     title: "Freight Shipping",
     summary:
-      "Take the stress out of your shipping process with the services from Expedited Transport Services. As a trusted freight company with a history of success, we allow you to focus on more important things while we get your materials to their destination on time.",
-    body:
-      "Don\'t hesitate to contact us if you would like to learn more about what we have to offer. Reach us at (860) 988-3887 today.",
+      "Take the stress out of your shipping process with the services from Expedited Transport Services. As a trusted freight company with a history of success, we allow you to focus on more important things while we get your materials to their destination on time. Don’t hesitate to contact us if you would like to learn more about what we have to offer. Reach us at (860) 988-3887 today.",
+    body: "",
     imageSrc: "/images/ship.jpg",
     imageAlt: "Freight shipping support",
-    points: ["On-time deliveries", "Clear communication", "Careful freight handling"],
+    accordionTitle: "A Dedicated Freight Company",
+    accordionDescription: "With so many carriers to choose from, it isn’t always easy to make the right choice for your business. With that in mind, we here at Expedited Transport Services work hard to provide our clients with first-rate shipping solutions that they can feel confident in. If you have been searching for a transportation company that will go the extra mile for you, then you have come to the right place. Some of the benefits of choosing us for your next shipment include:",
+    points: [
+      "Straightforward and competitive pricing",
+      "On-time deliveries",
+      "Industry-leading safety measures",
+      "Accommodating customer support",
+      "Measurable history of success",
+      "Experienced and qualified drivers"
+    ],
     hideHeroAccent: true,
     hideHeroNote: true,
     hideHeroPoints: true,
-    hideLowerSections: true,
     cards: makeCards([
-      { title: "Dock coordination", description: "Keep freight lined up for the next step with clear pickup and loading coordination.", icon: Ship },
-      { title: "Transit tracking", description: "Stay informed on where your freight is during the trip with simple visibility.", icon: MapPinned },
-      { title: "Arrival planning", description: "Plan delivery timing with a process built around predictability and direct updates.", icon: Clock3 },
+      {
+        title: "Upgrade Your Business with Our Freight Shipping",
+        description: "Our transportation services are exactly what you need to take your business to the next level. No matter where you need to transport your products or materials, you can count on us to get it there on time and in perfect condition. As you continue to scale up your organization, you can count on us to accommodate your shipping needs at every stage of your growth.",
+        icon: Ship,
+      },
+      {
+        title: "Experienced Freight Company",
+        description: "We have a wealth of experience in all stages of the shipping process, making us a valuable resource for your operation. Whether you have some burning questions about optimizing your shipments or just want to ensure you are hiring a reputable company, you can’t go wrong when you work with us.",
+        icon: MapPinned,
+      },
+      {
+        title: "Consistency Matters with Freight Shipping",
+        description: "Having confidence in your freight carrier is important, which is why we strive for excellence with every job that we take. We are proud to have maintained a solid history of punctual and damage-free deliveries, which has helped us become the go-to shipping company for many organizations. When you want to eliminate the chance for errors with your shipping, then we are the team for the job.",
+        icon: Clock3,
+      },
+      {
+        title: "Great Customer Service from Your Freight Company",
+        description: "We work hard to provide all of our clients with an exceptional experience. We treat everyone who contacts us with the courtesy and respect they deserve, and we are always happy to address any questions or concerns. We also emphasize open communication throughout the entire shipping process, so you never have to worry about being left in the dark on the status of your deliveries.",
+        icon: Warehouse,
+      }
     ]),
   },
   freightTransportation: {
