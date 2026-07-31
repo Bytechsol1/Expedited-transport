@@ -46,10 +46,10 @@ export function ScrollFrameSection() {
   const scrollProgressRef  = useRef(0);
   const rafRef             = useRef<number | null>(null);
   const lastFrameRef       = useRef(-1);
-  const lastAlphaRef       = useRef(-1);
   const lastCaptionIdxRef  = useRef(-1);
   const loadedRef          = useRef(false);
   const ctxRef             = useRef<CanvasRenderingContext2D | null>(null);
+  const sectionTopRef      = useRef(0);
   const sectionHeightRef   = useRef(0);
 
   // Only discrete JSX-driving values need state
@@ -77,21 +77,6 @@ export function ScrollFrameSection() {
     ctx.drawImage(img, dx, dy, dw, dh);
   }, []);
 
-  // Cross-fades frame idxLow into idxHigh by `alpha` — with only ~230 stills
-  // covering the whole scroll range, snapping straight to the nearest frame
-  // reads as a slideshow; blending the two frames either side of the exact
-  // scroll position fakes the missing in-between motion and reads as smooth.
-  const drawBlended = useCallback((idxLow: number, idxHigh: number, alpha: number) => {
-    const ctx = ctxRef.current;
-    if (!ctx) return;
-    drawFrame(idxLow);
-    if (idxHigh !== idxLow && alpha > 0.001) {
-      ctx.globalAlpha = alpha;
-      drawFrame(idxHigh);
-      ctx.globalAlpha = 1;
-    }
-  }, [drawFrame]);
-
   // Sync canvas resolution
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -111,21 +96,17 @@ export function ScrollFrameSection() {
         ctxRef.current.imageSmoothingEnabled = true;
         ctxRef.current.imageSmoothingQuality = "medium";
       }
-      if (loadedRef.current && lastFrameRef.current >= 0) {
-        const idxHigh = Math.min(FRAME_COUNT - 1, lastFrameRef.current + 1);
-        drawBlended(lastFrameRef.current, idxHigh, Math.max(0, lastAlphaRef.current));
-      }
+      if (loadedRef.current && lastFrameRef.current >= 0) drawFrame(lastFrameRef.current);
     };
     sync();
     const ro = new ResizeObserver(sync);
     ro.observe(canvas);
     return () => ro.disconnect();
-  }, [drawFrame, drawBlended]);
+  }, [drawFrame]);
 
   useEffect(() => {
     if (loaded && lastFrameRef.current < 0) {
       lastFrameRef.current = 0;
-      lastAlphaRef.current = 0;
       drawFrame(0);
     }
   }, [loaded, drawFrame]);
@@ -135,16 +116,11 @@ export function ScrollFrameSection() {
     rafRef.current = null;
     const p = scrollProgressRef.current;
 
-    // Canvas frame — blend the two frames straddling the exact scroll
-    // position instead of snapping to the nearest integer frame.
-    const raw     = Math.max(0, Math.min(FRAME_COUNT - 1, p * (FRAME_COUNT - 1)));
-    const idxLow  = Math.floor(raw);
-    const idxHigh = Math.min(FRAME_COUNT - 1, idxLow + 1);
-    const alpha   = raw - idxLow;
-    if (loadedRef.current && (idxLow !== lastFrameRef.current || Math.abs(alpha - lastAlphaRef.current) > 0.004)) {
-      lastFrameRef.current = idxLow;
-      lastAlphaRef.current = alpha;
-      drawBlended(idxLow, idxHigh, alpha);
+    // Canvas frame
+    const frameIdx = Math.min(FRAME_COUNT - 1, Math.max(0, Math.round(p * (FRAME_COUNT - 1))));
+    if (frameIdx !== lastFrameRef.current && loadedRef.current) {
+      lastFrameRef.current = frameIdx;
+      drawFrame(frameIdx);
     }
 
     // Progress bar — direct DOM write
@@ -166,31 +142,28 @@ export function ScrollFrameSection() {
       lastCaptionVisibleRef.current = newVisible;
       setCaptionVisible(newVisible);
     }
-  }, [drawBlended]);
+  }, [drawFrame]);
 
-  // Cache section height — recompute only on resize, not on every scroll event
+  // Cache section bounds — recompute only on resize, not on every scroll event
   useEffect(() => {
-    const updateHeight = () => {
+    const updateBounds = () => {
       const el = sectionRef.current;
       if (!el) return;
+      sectionTopRef.current    = el.getBoundingClientRect().top + window.scrollY;
       sectionHeightRef.current = el.offsetHeight;
     };
-    updateHeight();
-    window.addEventListener("resize", updateHeight, { passive: true });
-    return () => window.removeEventListener("resize", updateHeight);
+    updateBounds();
+    window.addEventListener("resize", updateBounds, { passive: true });
+    return () => window.removeEventListener("resize", updateBounds);
   }, []);
 
   // Passive scroll listener → RAF scheduled
   useEffect(() => {
     const onScroll = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      // Read live rather than caching an absolute scrollY-based offset —
-      // see the matching note in HeroSection.tsx.
-      const sTop = el.getBoundingClientRect().top;
+      const sTop = sectionTopRef.current;
       const sH   = sectionHeightRef.current;
       const vh   = window.innerHeight;
-      const scrolled = -sTop;
+      const scrolled = window.scrollY - sTop;
       scrollProgressRef.current = Math.max(0, Math.min(1, scrolled / (sH - vh)));
       if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
     };
@@ -199,19 +172,7 @@ export function ScrollFrameSection() {
     onScroll();
     return () => {
       window.removeEventListener("scroll", onScroll);
-      // See the matching note in HeroSection.tsx: cancelling a pending rAF
-      // does not clear the stored id, so it must be nulled here or a
-      // navigate-away that unmounts mid-frame permanently blocks future
-      // scheduling. Reset the "last drawn" trackers too so the next tick
-      // can't mistake a stale value for "already up to date."
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
-      lastFrameRef.current = -1;
-      lastAlphaRef.current = -1;
-      lastCaptionIdxRef.current = -1;
-      lastCaptionVisibleRef.current = false;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [tick]);
 
