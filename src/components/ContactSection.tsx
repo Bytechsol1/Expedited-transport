@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { Phone } from "lucide-react";
 
 const SideRays = dynamic(() => import("./SideRays"), { ssr: false });
 
@@ -198,7 +199,7 @@ export function ContactSection() {
                 boxShadow: "0 4px 14px rgba(182, 240, 0, 0.25)",
               }}
             >
-              Call Us Now
+              <Phone size={18} style={{ marginRight: "8px" }} /> Call Us Now
             </a>
             <a
               href="mailto:info@expeditedtransportservices.net"
