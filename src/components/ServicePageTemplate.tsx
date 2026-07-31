@@ -477,11 +477,11 @@ export function ServicePageTemplate({
         <section className="overlay-hero">
           {/* Background giant text */}
           <div className="bg-text">
-            {title.split(' ').map((word, i) => {
-              const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services') && i === 0;
-              const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services') && i === 1;
+            {title.split(/[\s\n]+/).map((word, i) => {
+              const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services' || title === 'Carrier Services' || title.includes('Local Trucking')) && i === 0;
+              const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services' || title === 'Carrier Services' || title.includes('Local Trucking')) && i === 1;
 
-              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Transportation' || title === 'Logistics Services');
+              const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Transportation' || title === 'Logistics Services' || title === 'Carrier Services' || title.includes('Local Trucking'));
 
               let customStyle: any = {};
               if (isFirstWordSpecial) {
@@ -508,20 +508,61 @@ export function ServicePageTemplate({
                 };
               }
 
-              // Fix specifically for Carrier Services long words
-              if (title === 'Carrier Services') {
+              // Carrier Services Split Design
+              if (title === 'Carrier Services' && i === 0) {
                 customStyle = {
-                  fontSize: 'clamp(40px, 9vw, 150px)',
-                  padding: '0 5vw',
-                  lineHeight: '0.95'
+                  textAlign: 'left',
+                  paddingLeft: '4vw',
+                  fontSize: 'clamp(40px, 8vw, 130px)',
+                  transform: 'translateY(-8vh)'
+                };
+              }
+              if (title === 'Carrier Services' && i === 1) {
+                customStyle = {
+                  textAlign: 'left',
+                  paddingLeft: '14vw',
+                  fontSize: 'clamp(40px, 8vw, 130px)',
+                  marginTop: '6vh',
+                  position: 'relative',
+                  zIndex: 3
+                };
+              }
+
+              // Local Trucking Split Design
+              if (title.includes('Local Trucking') && i === 0) {
+                customStyle = {
+                  textAlign: 'left',
+                  paddingLeft: '5vw',
+                  fontSize: 'clamp(35px, 7vw, 120px)',
+                  transform: 'translateY(0vh)'
+                };
+              }
+              if (title.includes('Local Trucking') && i === 1) {
+                customStyle = {
+                  textAlign: 'left',
+                  paddingLeft: '12vw',
+                  fontSize: 'clamp(35px, 7vw, 120px)',
+                  marginTop: '2vh',
+                  position: 'relative',
+                  zIndex: 3
+                };
+              }
+              if (title.includes('Local Trucking') && i === 2) {
+                customStyle = {
+                  textAlign: 'left',
+                  paddingLeft: '19vw',
+                  fontSize: 'clamp(35px, 7vw, 120px)',
+                  marginTop: '2vh',
+                  position: 'relative',
+                  zIndex: 3
                 };
               }
 
               // Logistics Services Split Design
               if (title === 'Logistics Services' && i === 0) {
                 customStyle = {
-                  textAlign: 'left',
-                  paddingLeft: '2vw',
+                  textAlign: 'right',
+                  paddingRight: '12vw',
                   fontSize: 'clamp(30px, 6vw, 110px)',
                   transform: 'translateY(-6vh)'
                 };
@@ -529,7 +570,7 @@ export function ServicePageTemplate({
               if (title === 'Logistics Services' && i === 1) {
                 customStyle = {
                   textAlign: 'right',
-                  paddingRight: '2vw',
+                  paddingRight: '8vw',
                   fontSize: 'clamp(30px, 6vw, 110px)',
                   marginTop: '8vh',
                   position: 'relative',
@@ -553,14 +594,16 @@ export function ServicePageTemplate({
             className="truck-layer"
             style={
               title === 'LTL Trucking' ? { left: '70%', width: '70%', transform: 'translate(-50%, -42%)' } :
-                title === 'Logistics Services' ? { left: '30%', width: '70%', transform: 'translate(-50%, -35%)' } :
+                title === 'Logistics Services' ? { left: '30%', width: '70%', transform: 'translate(-50%, -45%)' } :
                   title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
-                    title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
-                      {}
+                    title === 'Carrier Services' ? { left: '75%', width: '70%', transform: 'translate(-50%, -38%)', mixBlendMode: 'multiply' } :
+                      title.includes('Local Trucking') ? { left: '75%', width: '70%', transform: 'translate(-50%, -35%)', mixBlendMode: 'multiply' } :
+                        title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
+                          {}
             }
           >
             <Image
-              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : title === 'Freight Transportation' ? '/images/freight-new.png' : title === 'Logistics Services' ? '/images/logistics-new.png' : '/images/truck-user-final.png'}
+              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : title === 'Freight Transportation' ? '/images/freight-new.png' : title === 'Logistics Services' ? '/images/logistics-new.png' : title === 'Carrier Services' ? '/images/carrier-new.png' : title.includes('Local Trucking') ? '/images/local-trucking.png' : '/images/truck-user-final.png'}
               alt={imageAlt || title}
               fill
               priority
