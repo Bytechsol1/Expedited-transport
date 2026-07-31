@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
@@ -177,16 +177,28 @@ export function ContactSection() {
           <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
             <a
               href="tel:8609883887"
+              className="contact-call-btn"
               style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
                 fontFamily: "var(--font-primary, 'Inter', sans-serif)",
                 fontSize: "1rem",
                 fontWeight: 700,
-                color: "#fff",
+                color: "#0a1628",
+                background: "#b6f000",
                 textDecoration: "none",
                 letterSpacing: "-0.01em",
+                padding: "0.75rem 1.75rem",
+                borderRadius: "50px",
+                width: "fit-content",
+                marginTop: "0.5rem",
+                marginBottom: "1rem",
+                transition: "all 0.2s ease",
+                boxShadow: "0 4px 14px rgba(182, 240, 0, 0.25)",
               }}
             >
-              (860) 988-3887
+              Call Us Now
             </a>
             <a
               href="mailto:info@expeditedtransportservices.net"
@@ -315,6 +327,12 @@ export function ContactSection() {
         .contact-form-card input,
         .contact-form-card textarea {
           color: #0a1628;
+        }
+
+        .contact-call-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(182, 240, 0, 0.4) !important;
+          background: #cbff1a !important;
         }
 
         .contact-section { flex-direction: row; }
