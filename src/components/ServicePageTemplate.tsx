@@ -3,9 +3,8 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Shield } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
-import { HotshotFaqSection } from "@/components/HotshotFaqSection";
 import { FooterSection } from "@/components/FooterSection";
 
 export type ServiceCard = {
@@ -28,6 +27,8 @@ export type ServicePageTemplateProps = {
   hideHeroNote?: boolean;
   hideHeroPoints?: boolean;
   hideLowerSections?: boolean;
+  accordionTitle?: string;
+  accordionDescription?: string;
   lowerContent?: ReactNode;
   heroTitleClassName?: string;
   metadata?: Metadata;
@@ -47,6 +48,8 @@ export function ServicePageTemplate({
   hideHeroNote,
   hideHeroPoints,
   hideLowerSections,
+  accordionTitle,
+  accordionDescription,
   lowerContent,
   heroTitleClassName,
 }: ServicePageTemplateProps) {
@@ -472,7 +475,118 @@ export function ServicePageTemplate({
               min-height: 380px;
             }
           }
+
+          /* Interactive Pillar Accordion */
+          .pillar-container {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+            height: 480px;
+          }
+          .pillar {
+            flex: 1;
+            border-radius: 32px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+            position: relative;
+            cursor: default;
+          }
+          .pillar:hover {
+            flex: 2.2;
+            border-color: #0f172a;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+          }
+          .pillar-bg {
+            opacity: 0.5;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+            transform: scale(1.1);
+            filter: grayscale(80%);
+          }
+          .pillar:hover .pillar-bg {
+            opacity: 1;
+            transform: scale(1);
+            filter: grayscale(0%);
+          }
+          .pillar-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15,23,42,0.3) 0%, rgba(15,23,42,0.95) 100%);
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 1;
+          }
+          .pillar:hover .pillar-overlay {
+            background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,0.85) 100%);
+          }
+          .pillar-inner {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .pillar-num {
+            font-size: 40px;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: rgba(255,255,255,0.4);
+            transition: color 0.6s;
+          }
+          .pillar:hover .pillar-num {
+            color: #b6f000;
+          }
+          .pillar-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+          }
+          .pillar-text {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.3;
+            margin: 0;
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+          }
+          .pillar:hover .pillar-text {
+            color: #ffffff;
+            font-size: 26px;
+          }
+          .pillar-icon {
+            opacity: 0;
+            transform: translateX(-20px);
+            color: #b6f000;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+          }
+          .pillar:hover .pillar-icon {
+            opacity: 1;
+            transform: translateX(0);
+          }
+          @media (max-width: 900px) {
+            .pillar-container {
+              flex-direction: column;
+              height: auto;
+            }
+            .pillar { height: 140px; }
+            .pillar-inner { padding: 24px; }
+            .pillar:hover { flex: 1; height: 200px; }
+            .pillar-text { font-size: 18px; }
+            .pillar:hover .pillar-text { font-size: 20px; }
+          }
         `}</style>
+        
+        {/* SVG clip-path definition for perfectly rounded notches */}
+        <svg style={{ width: 0, height: 0, position: "absolute", pointerEvents: "none" }}>
+          <defs>
+            <clipPath id="hotshot-image-clip" clipPathUnits="objectBoundingBox">
+              <path d="M 0,0.06 C 0,0.026 0.02,0 0.045,0 L 0.955,0 C 0.98,0 1,0.026 1,0.06 L 1,0.67 C 1,0.704 0.98,0.73 0.955,0.73 L 0.88,0.73 C 0.865,0.73 0.85,0.74 0.84,0.75 L 0.8,0.8 C 0.79,0.81 0.775,0.82 0.76,0.82 L 0.045,0.82 C 0.02,0.82 0,0.794 0,0.76 Z" />
+            </clipPath>
+          </defs>
+        </svg>
 
         <section className="overlay-hero">
           {/* Background giant text */}
@@ -625,85 +739,120 @@ export function ServicePageTemplate({
 
         {hideLowerSections ? null : (
           lowerContent ?? (
-            <>
-              <section className="section-shell">
-                <div className="detail-grid">
-                  <article className="detail-card">
-                    <div className="section-kicker">Overview</div>
-                    <h2>{title} built around your timeline.</h2>
-                    <p>{summary}</p>
-                    <p>{body}</p>
-                    <div className="check-list">
-                      {points.map((point) => (
-                        <div className="check-item" key={point}>
-                          <CheckCircle2 size={18} />
-                          <div>
-                            <strong>{point}</strong>
-                            <span>Dummy supporting copy for this service route. Replace with final marketing text later if needed.</span>
+            <section style={{ backgroundColor: "#ffffff", position: "relative", zIndex: 1 }}>
+              {/* Top Separator */}
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent)" }} />
+
+              {/* Interactive Pillar Accordion (Using `points`) */}
+              {points && points.length > 0 && (
+                <div style={{ padding: "80px 40px 140px", maxWidth: "1400px", margin: "0 auto" }}>
+                  <div style={{ textAlign: "center", marginBottom: "60px", maxWidth: "800px", margin: "0 auto 60px" }}>
+
+                    <h2 style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "24px", lineHeight: 1.1, color: "#0f172a", fontFamily: "var(--font-primary)" }}>
+                      {accordionTitle || `${title} Company for Any Job`}
+                    </h2>
+                    <p style={{ color: "#475569", lineHeight: 1.8, fontSize: "18px", fontFamily: "var(--font-primary)" }}>
+                      {accordionDescription || `${summary} Some of the additional benefits of hiring our ${title.toLowerCase()} carrier for your job include:`}
+                    </p>
+                  </div>
+
+                  <div className="pillar-container">
+                    {points.slice(0, 6).map((item, i) => {
+                      const images = ["/images/truck3.jpg", "/images/truck2.jpg", "/images/truck1.jpg", "/images/truck4.jpg", "/images/ware.jpg", "/images/ship.jpg"];
+                      return (
+                        <div key={i} className="pillar">
+                          <Image 
+                            src={images[i % images.length]} 
+                            alt={item} 
+                            fill 
+                            className="pillar-bg"
+                            style={{ objectFit: "cover" }} 
+                          />
+                          <div className="pillar-overlay" />
+                          
+                          <div className="pillar-inner">
+                            <div className="pillar-num">0{i + 1}</div>
+                            <div className="pillar-content">
+                              <h3 className="pillar-text">{item}</h3>
+                              <div className="pillar-icon">
+                                <ArrowRight size={24} />
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </article>
-
-                  <div className="detail-side">
-                    {cards.map((card) => {
-                      const Icon = card.icon;
-                      return (
-                        <article className="side-tile" key={card.title}>
-                          <strong>{card.title}</strong>
-                          <p>{card.description}</p>
-                        </article>
                       );
                     })}
                   </div>
                 </div>
-              </section>
+              )}
 
-              <section className="cards-shell">
-                <div className="section-head">
-                  <h2>What this service can cover</h2>
-                  <p>
-                    A simple dummy section to show the route is live. This can be swapped for real copy whenever you are ready.
-                  </p>
-                </div>
-
-                <div className="service-grid">
-                  {cards.map((card, index) => {
-                    const Icon = card.icon;
-                    return (
-                      <article className="service-card" key={card.title}>
-                        <span className="service-badge">
-                          <Icon size={22} />
-                        </span>
-                        <h3>{String(index + 1).padStart(2, "0")}. {card.title}</h3>
-                        <p>{card.description}</p>
-                      </article>
-                    );
-                  })}
-                </div>
-              </section>
-
-              <section className="cta-shell">
-                <div className="cta-band">
-                  <div className="cta-inner">
-                    <div>
-                      <h3>Need this service configured differently?</h3>
-                      <p>
-                        Reach out and we can adjust the layout, copy, or route structure without touching the rest of the site.
-                      </p>
+              {/* Notched Image Cards (Using `cards`) */}
+              {cards && cards.length > 0 && (
+                <section style={{ padding: "120px 0", backgroundColor: "#ffffff", position: "relative" }}>
+                  <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px" }}>
+                    <div style={{ textAlign: "center", marginBottom: "80px" }}>
+                      <h2 style={{ fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24", fontFamily: "var(--font-primary)" }}>{title} That You Can Depend On</h2>
+                      <div style={{ width: "60px", height: "4px", backgroundColor: "#b6f000", margin: "24px auto 0", borderRadius: "2px" }} />
                     </div>
-                    <div className="cta-actions">
-                      <a className="cta-link" href="tel:+18609883887">(860) 988-3887</a>
-                      <Link className="cta-link secondary" href="/#contact-section">Request a Quote</Link>
+
+                    <div style={{ display: "flex", flexDirection: "column", gap: "100px" }}>
+                      {cards.map((card, idx) => {
+                        const isEven = idx % 2 !== 0;
+                        const images = ["/images/truck3.jpg", "/images/truck4.jpg", "/images/truck2.jpg", "/images/truck1.jpg"];
+                        const cardImage = images[idx % images.length];
+
+                        return (
+                          <div key={idx} style={{
+                            display: "flex",
+                            flexDirection: isEven ? "row-reverse" : "row",
+                            alignItems: "stretch",
+                            gap: "80px"
+                          }}>
+                            <div style={{ flex: "1 1 45%", display: "flex", alignItems: "center" }}>
+                              <div style={{ display: "flex", alignItems: "flex-start", gap: "24px" }}>
+                                <div style={{ fontSize: "13px", color: "#8b9ba5", fontWeight: 600, fontFamily: "var(--font-mono)", marginTop: "12px", letterSpacing: "1px" }}>
+                                  0{idx + 1}
+                                </div>
+                                <div>
+                                  <h3 style={{ fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 600, color: "#061d26", marginBottom: "24px", letterSpacing: "-0.02em", lineHeight: 1.1, fontFamily: "var(--font-primary)" }}>
+                                    {card.title}
+                                  </h3>
+                                  <p style={{ color: "#4a5568", fontSize: "17px", lineHeight: 1.8, fontFamily: "var(--font-primary)" }}>
+                                    {card.description}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div style={{ flex: "1 1 55%", position: "relative", minHeight: "450px", filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.1))" }}>
+                              <div style={{
+                                position: "absolute", inset: 0,
+                                clipPath: "url(#hotshot-image-clip)",
+                                transform: isEven ? "scaleX(-1)" : "none",
+                                backgroundColor: "#f8fafc"
+                              }}>
+                                <Image
+                                  src={cardImage}
+                                  alt={card.title}
+                                  fill
+                                  style={{
+                                    objectFit: "cover",
+                                    transform: isEven ? "scaleX(-1)" : "none"
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
-                </div>
-              </section>          </>
+                </section>
+              )}
+            </section>
           )
         )}
       </main>
-      <HotshotFaqSection />
       <FooterSection />
     </>
   );

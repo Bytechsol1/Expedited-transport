@@ -117,7 +117,6 @@ export default function LogisticsServicesPage() {
     <ServicePageTemplate
       {...servicePages.logisticsServices}
       hideLowerSections={false}
-      lowerContent={<LogisticsLowerContent />}
     />
   );
 }

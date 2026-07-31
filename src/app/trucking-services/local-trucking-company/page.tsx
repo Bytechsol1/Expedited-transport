@@ -117,7 +117,6 @@ export default function LocalTruckingCompanyPage() {
     <ServicePageTemplate
       {...servicePages.localTruckingCompany}
       hideLowerSections={false}
-      lowerContent={<LocalTruckingLowerContent />}
     />
   );
 }

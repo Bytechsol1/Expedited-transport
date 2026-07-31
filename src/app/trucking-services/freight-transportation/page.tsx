@@ -120,7 +120,6 @@ export default function FreightTransportationPage() {
       hideHeroPoints
       hideLowerSections={false}
       heroTitleClassName="freight-title"
-      lowerContent={<FreightTransportationLowerContent />}
     />
   );
 }
