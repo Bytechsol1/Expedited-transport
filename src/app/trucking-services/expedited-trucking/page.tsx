@@ -329,7 +329,7 @@ export default function ExpeditedTruckingPage() {
           {/* Footer content */}
           <div className="hero-footer">
             <p>
-              Experience unmatched reliability in time-critical delivery. Our premium semi-truck fleet, featuring high-capacity cargo bays and powerful engines, is built for speed and security. We guarantee your most urgent shipments reach their destination on schedule. Contact us to optimize your high-priority cargo logistics.
+              If you are on a tight deadline and need freight delivered quickly, then Expedited Transport Services is the company to call. We are proud to offer expedited trucking services that you can rely on. Not only that, but we provide our dependable transportation services at great rates and alongside exceptional client care. Reach us today at (860) 988-3887 for a prompt response.
             </p>
             <a href="tel:+18609883887" className="hero-cta">
               Speak With Us Now
@@ -379,15 +379,14 @@ export default function ExpeditedTruckingPage() {
             
             {/* Section Header */}
             <div style={{ textAlign: "center", marginBottom: "60px", maxWidth: "800px", margin: "0 auto 60px" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "8px 16px", backgroundColor: "#f0faeb", border: "1px solid #d4f0c2", borderRadius: "100px", marginBottom: "24px" }}>
-                <Shield size={16} color="#7a9900" />
-                <span style={{ fontSize: "13px", color: "#5c7500", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700, fontFamily: "var(--font-mono)" }}>System Capabilities</span>
-              </div>
               <h2 style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "24px", lineHeight: 1.1, color: "#0f172a", fontFamily: "var(--font-primary)" }}>
                 The Expedited Trucking Company for Any Job
               </h2>
+              <p style={{ color: "#475569", lineHeight: 1.8, fontSize: "18px", marginBottom: "24px", fontFamily: "var(--font-primary)" }}>
+                Unlike some hotshot trucking companies, which can only accommodate smaller loads, we are happy to help you with cargo of all shapes and sizes. From single pallets to entire truckloads, our qualified team of trucking experts works hard to get your shipments delivered on time, no matter the distance.
+              </p>
               <p style={{ color: "#475569", lineHeight: 1.8, fontSize: "18px", fontFamily: "var(--font-primary)" }}>
-                Unlike some hotshot trucking companies, which can only accommodate smaller loads, we are happy to help you with cargo of all shapes and sizes. Some of the additional benefits of hiring our expedited freight carrier for your job include:
+                Some of the additional benefits of hiring our expedited freight carrier for your job include:
               </p>
             </div>
 
