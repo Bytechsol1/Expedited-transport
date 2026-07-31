@@ -466,6 +466,50 @@ export function ServicePageTemplate({
             }
           }
 
+          @media (max-width: 900px) {
+            .overlay-hero {
+              min-height: auto !important;
+              padding-top: 140px !important;
+              padding-bottom: 60px !important;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: flex-start;
+              gap: 20px;
+            }
+            .bg-text {
+              position: relative !important;
+              top: auto !important;
+              left: auto !important;
+              transform: none !important;
+              white-space: normal !important;
+              line-height: 1.1 !important;
+            }
+            .bg-text span {
+              display: block !important;
+              padding-left: 0 !important;
+              padding-right: 0 !important;
+              margin-top: 0 !important;
+              transform: none !important;
+              text-align: center !important;
+              font-size: clamp(40px, 11vw, 80px) !important;
+            }
+            .truck-layer {
+              position: relative !important;
+              top: auto !important;
+              left: auto !important;
+              transform: none !important;
+              width: 100% !important;
+              margin-top: 20px !important;
+              margin-bottom: 20px !important;
+            }
+            .hero-footer {
+              flex-direction: column !important;
+              text-align: center !important;
+              gap: 24px !important;
+            }
+          }
+
           @media (max-width: 720px) {
             .service-shell,
             .section-shell,
