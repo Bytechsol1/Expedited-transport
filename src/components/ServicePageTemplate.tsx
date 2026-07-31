@@ -753,8 +753,8 @@ export function ServicePageTemplate({
                   </div>
 
                   <div className="pillar-container">
-                    {points.slice(0, 5).map((item, i) => {
-                      const images = ["/images/truck3.jpg", "/images/truck2.jpg", "/images/truck1.jpg", "/images/truck4.jpg", "/images/ware.jpg"];
+                    {points.slice(0, 6).map((item, i) => {
+                      const images = ["/images/truck3.jpg", "/images/truck2.jpg", "/images/truck1.jpg", "/images/truck4.jpg", "/images/ware.jpg", "/images/ship.jpg"];
                       return (
                         <div key={i} className="pillar">
                           <Image 

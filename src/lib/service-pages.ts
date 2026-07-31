@@ -62,6 +62,7 @@ export const servicePages = {
       "You want to reduce your warehousing costs",
       "Straightforward tracking information",
       "Additional services, such as liftgates",
+      "Reducing your environmental impact",
     ],
     cards: makeCards([
       {
