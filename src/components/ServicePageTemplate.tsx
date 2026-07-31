@@ -609,6 +609,48 @@ export function ServicePageTemplate({
             .pillar-text { font-size: 18px; }
             .pillar:hover .pillar-text { font-size: 20px; }
           }
+          .notched-card {
+            display: flex;
+            align-items: stretch;
+            gap: 80px;
+          }
+          .notched-card.normal {
+            flex-direction: row;
+          }
+          .notched-card.reverse {
+            flex-direction: row-reverse;
+          }
+          .notched-text-wrapper {
+            flex: 1 1 45%;
+            display: flex;
+            align-items: center;
+          }
+          .notched-img-wrapper {
+            flex: 1 1 55%;
+            position: relative;
+            min-height: 450px;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+          }
+          .notched-section-inner {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px;
+          }
+          @media (max-width: 900px) {
+            .notched-card {
+              flex-direction: column !important;
+              gap: 40px;
+            }
+            .notched-text-wrapper {
+              flex: none;
+            }
+            .notched-img-wrapper {
+              flex: none;
+              min-height: 320px;
+              width: 100%;
+            }
+            .notched-section-inner {
+              padding: 0 20px;
+            }
+          }
         `}</style>
         
         {/* SVG clip-path definition for perfectly rounded notches */}
@@ -820,43 +862,38 @@ export function ServicePageTemplate({
 
               {/* Notched Image Cards (Using `cards`) */}
               {cards && cards.length > 0 && (
-                <section style={{ padding: "120px 0", backgroundColor: "#ffffff", position: "relative" }}>
-                  <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px" }}>
-                    <div style={{ textAlign: "center", marginBottom: "80px" }}>
+                <section style={{ padding: "80px 0", backgroundColor: "#ffffff", position: "relative" }}>
+                  <div className="notched-section-inner">
+                    <div style={{ textAlign: "center", marginBottom: "60px" }}>
                       <h2 style={{ fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24", fontFamily: "var(--font-primary)" }}>{title} That You Can Depend On</h2>
                       <div style={{ width: "60px", height: "4px", backgroundColor: "#b6f000", margin: "24px auto 0", borderRadius: "2px" }} />
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "column", gap: "100px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
                       {cards.map((card, idx) => {
                         const isEven = idx % 2 !== 0;
                         const images = ["/images/truck3.jpg", "/images/truck4.jpg", "/images/truck2.jpg", "/images/truck1.jpg"];
                         const cardImage = images[idx % images.length];
 
                         return (
-                          <div key={idx} style={{
-                            display: "flex",
-                            flexDirection: isEven ? "row-reverse" : "row",
-                            alignItems: "stretch",
-                            gap: "80px"
-                          }}>
-                            <div style={{ flex: "1 1 45%", display: "flex", alignItems: "center" }}>
+                          <div key={idx} className={`notched-card ${isEven ? 'reverse' : 'normal'}`}>
+                            <div className="notched-text-wrapper">
                               <div style={{ display: "flex", alignItems: "flex-start", gap: "24px" }}>
                                 <div style={{ fontSize: "13px", color: "#8b9ba5", fontWeight: 600, fontFamily: "var(--font-mono)", marginTop: "12px", letterSpacing: "1px" }}>
                                   0{idx + 1}
                                 </div>
                                 <div>
-                                  <h3 style={{ fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 600, color: "#061d26", marginBottom: "24px", letterSpacing: "-0.02em", lineHeight: 1.1, fontFamily: "var(--font-primary)" }}>
+                                  <h3 style={{ fontSize: "clamp(26px, 4vw, 44px)", fontWeight: 600, color: "#061d26", marginBottom: "20px", letterSpacing: "-0.02em", lineHeight: 1.1, fontFamily: "var(--font-primary)" }}>
                                     {card.title}
                                   </h3>
-                                  <p style={{ color: "#4a5568", fontSize: "17px", lineHeight: 1.8, fontFamily: "var(--font-primary)" }}>
+                                  <p style={{ color: "#4a5568", fontSize: "16px", lineHeight: 1.8, fontFamily: "var(--font-primary)" }}>
                                     {card.description}
                                   </p>
                                 </div>
                               </div>
                             </div>
 
-                            <div style={{ flex: "1 1 55%", position: "relative", minHeight: "450px", filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.1))" }}>
+                            <div className="notched-img-wrapper">
                               <div style={{
                                 position: "absolute", inset: 0,
                                 clipPath: "url(#hotshot-image-clip)",
