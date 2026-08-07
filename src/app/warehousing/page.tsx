@@ -850,39 +850,127 @@ export default function WarehousingPage() {
           }
         `}</style>
 
-        <section className="hero-section page-shell">
-          <div className="hero-grid">
-            <article className="hero-copy">              <h1 className="hero-title">Warehousing Services</h1>
-              <p className="hero-summary">
-                Your goods and materials won&apos;t always have to be transported to their final destination as soon as they leave your facility—and if that&apos;s the case, the warehousing solutions from Expedited Transport Services are a valuable resource. We go above and beyond to provide our clients with convenient warehousing services that will help keep their supply chain organized.
+        <section className="unique-hero page-shell" style={{ paddingTop: "140px", paddingBottom: "80px", position: "relative" }}>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "40px",
+            alignItems: "center"
+          }}>
+            <article style={{ position: "relative", zIndex: 2 }}>
+
+              <h1 style={{
+                fontFamily: "var(--font-primary)",
+                fontSize: "clamp(48px, 6vw, 84px)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.03em",
+                fontWeight: 450,
+                color: "#0f172a",
+                margin: "0 0 24px 0"
+              }}>
+                Smart <br/>
+                <span style={{ color: "#0f172a" }}>Warehousing</span>
+              </h1>
+              <p style={{
+                fontSize: "18px",
+                lineHeight: 1.8,
+                color: "#475569",
+                maxWidth: "600px",
+                margin: "0 0 36px 0"
+              }}>
+                Your goods and materials won&apos;t always have to be transported to their final destination as soon as they leave your facility. We provide state-of-the-art warehousing solutions to keep your supply chain running without a hitch.
               </p>
-              <p className="hero-summary" style={{ marginTop: 18, fontSize: 16 }}>
-                Learn more by contacting us today at (860) 988-3887.
-              </p>
-              <div className="hero-actions">
-                <a className="cta-button cta-button--primary" href="#contact">
-                  Get in touch
-                  <ArrowRight size={18} />
+              <div>
+                <a href="#contact" className="unique-hero-btn">
+                  Get in Touch <ArrowRight size={18} />
                 </a>
               </div>
             </article>
 
-            <div className="hero-aside">
-              <div className="hero-media">
+            <div className="hero-image-wrapper" style={{ position: "relative", minHeight: "600px", borderRadius: "36px", overflow: "visible", zIndex: 1 }}>
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                borderRadius: "36px",
+                overflow: "hidden",
+                boxShadow: "0 32px 64px rgba(15, 23, 42, 0.15)"
+              }}>
                 <Image
                   src="/images/ware-hires.jpg"
-                  alt="Warehousing support"
-                  className="hero-image"
+                  alt="Warehousing Facility"
                   fill
+                  style={{ objectFit: "cover" }}
                   priority
-                  quality={100}
-                  sizes="(max-width: 1180px) 100vw, 48vw"
                 />
-
-
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 100%)" }} />
               </div>
+              
+              <div className="floating-stat stat-1" style={{
+                position: "absolute",
+                bottom: "40px",
+                left: "-40px",
+                background: "rgba(255, 255, 255, 0.9)",
+                backdropFilter: "blur(12px)",
+                padding: "20px",
+                borderRadius: "20px",
+                border: "1px solid rgba(15, 23, 42, 0.08)",
+                boxShadow: "0 20px 40px rgba(15,23,42,0.12)",
+                display: "flex",
+                alignItems: "center",
+                gap: "16px",
+                animation: "float 6s ease-in-out infinite"
+              }}>
+                <div style={{
+                  width: "48px", height: "48px", borderRadius: "14px", background: "#0f172a", color: "#b6f000", display: "flex", alignItems: "center", justifyContent: "center"
+                }}>
+                  <ShieldCheck size={24} />
+                </div>
+                <div>
+                  <div style={{ fontSize: "12px", color: "#64748b", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.05em" }}>Security</div>
+                  <div style={{ fontSize: "18px", fontWeight: 800, color: "#0f172a" }}>24/7 Monitored</div>
+                </div>
+              </div>
+
+
+
             </div>
           </div>
+          
+          <style>{`
+            .unique-hero-btn {
+              display: inline-flex;
+              align-items: center;
+              gap: 12px;
+              background: #0f172a;
+              color: #fff;
+              padding: 16px 32px;
+              border-radius: 16px;
+              font-size: 15px;
+              font-weight: 700;
+              text-decoration: none;
+              letter-spacing: 0.05em;
+              transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .unique-hero-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 12px 24px rgba(15,23,42,0.2);
+            }
+            @keyframes float {
+              0% { transform: translateY(0px); }
+              50% { transform: translateY(-15px); }
+              100% { transform: translateY(0px); }
+            }
+            @media (max-width: 900px) {
+              .unique-hero > div { grid-template-columns: 1fr !important; }
+              .unique-hero article { text-align: center; }
+              .unique-hero p { margin: 0 auto 36px auto !important; }
+            }
+            @media (max-width: 760px) {
+              .unique-hero .hero-image-wrapper { min-height: 400px !important; }
+              .unique-hero .floating-stat { left: 10px !important; right: auto !important; transform: scale(0.85); animation: none !important; }
+              .unique-hero .stat-2 { top: 20px !important; }
+            }
+          `}</style>
         </section>
         <section className="story-section page-shell">
           <div className="story-rail">

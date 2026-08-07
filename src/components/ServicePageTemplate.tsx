@@ -876,7 +876,61 @@ export function ServicePageTemplate({
 
                   <div className="pillar-container">
                     {points.slice(0, 6).map((item, i) => {
-                      const images = ["/images/truck3.jpg", "/images/truck2.jpg", "/images/truck1.jpg", "/images/truck4.jpg", "/images/ware.jpg", "/images/ship.jpg"];
+                      let images = ["/images/truck3.jpg", "/images/truck2.jpg", "/images/truck1.jpg", "/images/truck4.jpg", "/images/ware.jpg", "/images/ship.jpg"];
+                      
+                      if (title === "LTL Trucking") {
+                        images = [
+                          "/images/ltl-accordion-1.jpg",
+                          "/images/ltl-accordion-2.jpg",
+                          "/images/ltl-accordion-3.jpg",
+                          "/images/ltl-accordion-4.jpg",
+                          "/images/ltl-accordion-5.jpg",
+                          "/images/ltl-accordion-6.jpg"
+                        ];
+                      } else if (title === "Logistics Services") {
+                        images = [
+                          "/images/logistics-accordion-3.jpg", // Planning and optimizing routes
+                          "/images/logistics-accordion-1.jpg", // Order management
+                          "/images/logistics-accordion-2.jpg", // Freight auditing
+                          "/images/logistics-card-1.jpg",
+                          "/images/logistics-card-2.jpg",
+                          "/images/logistics-card-3.jpg"
+                        ];
+                      } else if (title === "Freight Shipping") {
+                        images = [
+                          "/images/freight-accordion-pricing.jpg",     // 0: Straightforward and competitive pricing
+                          "/images/truck2.jpg",                        // 1: On-time deliveries (fallback)
+                          "/images/freight-accordion-safety.jpg",      // 2: Industry-leading safety measures
+                          "/images/truck4.jpg",                        // 3: Accommodating customer support (fallback)
+                          "/images/ware.jpg",                          // 4: Measurable history of success (fallback)
+                          "/images/freight-accordion-experienced.jpg"  // 5: Experienced and qualified drivers
+                        ];
+                      } else if (title === "Freight Transportation") {
+                        images = [
+                          "/images/freight-trans-card-4.png",          // 0: LTL trucking (Using card image)
+                          "/images/freight-accordion-dryvan.jpg",      // 1: Dry van trucking (Kept as is)
+                          "/images/freight-trans-card-1.jpg",          // 2: Logistics services (Using card image)
+                          "/images/freight-accordion-warehouse.jpg",   // 3: Warehousing services (Kept as is)
+                          "/images/freight-trans-card-2.jpg"           // 4: Or any other trucking services (Using card image)
+                        ];
+                      } else if (title === "Local Trucking Company") {
+                        images = [
+                          "/images/local-trucking-card-4.png", // Transparent and competitive pricing
+                          "/images/local-trucking-card-1.png", // Experienced drivers
+                          "/images/local-trucking-hero.png",   // Knowledgeable local logistics experts
+                          "/images/local-trucking-card-1.png", // Dedicated customer service
+                          "/images/local-trucking-card-3.png", // Punctual deliveries
+                          "/images/local-trucking-card-2.png"  // Well-maintained vehicles
+                        ];
+                      } else if (title === "Carrier Services") {
+                        images = [
+                          "/images/carrier-card-1.png", // Cost-effective shipping rates
+                          "/images/carrier-card-3.png", // Accommodating freight services
+                          "/images/carrier-card-4.png", // FTL, LTL, and PTL options
+                          "/images/carrier-card-1.png", // Dependable communication
+                          "/images/carrier-card-5.png"  // Professional shipping equipment
+                        ];
+                      }
                       return (
                         <div key={i} className="pillar">
                           <Image 
@@ -916,7 +970,53 @@ export function ServicePageTemplate({
                     <div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
                       {cards.map((card, idx) => {
                         const isEven = idx % 2 !== 0;
-                        const images = ["/images/truck3.jpg", "/images/truck4.jpg", "/images/truck2.jpg", "/images/truck1.jpg"];
+                        
+                        let images = ["/images/truck3.jpg", "/images/truck4.jpg", "/images/truck2.jpg", "/images/truck1.jpg"];
+                        if (title === "Logistics Services") {
+                          images = [
+                            "/images/logistics-card-1.jpg", 
+                            "/images/logistics-card-2.jpg", 
+                            "/images/logistics-card-3.jpg", 
+                            "/images/logistics-card-4.jpg"
+                          ];
+                        } else if (title === "LTL Trucking") {
+                          images = [
+                            "/images/ltl-card-4.jpg", // Fair Prices on Smaller Shipments
+                            "/images/ltl-card-3.jpg", // Details Matter with LTL Trucking
+                            "/images/ltl-card-1.jpg", // Keeping Your Cargo Safe
+                            "/images/ltl-card-2.jpg"  // Work with a Trusted LTL Carrier
+                          ];
+                        } else if (title === "Freight Shipping") {
+                          images = [
+                            "/images/freight-shipping-1.jpg", // Upgrade Your Business with Our Freight Shipping
+                            "/images/freight-shipping-2.jpg", // Experienced Freight Company
+                            "/images/freight-shipping-3.jpg", // Consistency Matters with Freight Shipping
+                            "/images/freight-shipping-4.jpg"  // Great Customer Service from Your Freight Company
+                          ];
+                        } else if (title === "Freight Transportation") {
+                          images = [
+                            "/images/freight-trans-card-1.jpg", // Comprehensive Freight Transportation
+                            "/images/freight-trans-card-2.jpg", // Freight Shipping You Never Have to Wait On
+                            "/images/freight-trans-card-3.jpg", // Your Freight Is Safe with Us
+                            "/images/freight-trans-card-4.png"  // Budget-Conscious Freight Shipping
+                          ];
+                        } else if (title === "Local Trucking Company") {
+                          images = [
+                            "/images/local-trucking-card-1.png", // Top-Notch Service from Local Freight Carriers
+                            "/images/local-trucking-card-2.png", // Feel Secure with Our Local Trucking Service
+                            "/images/local-trucking-card-3.png", // Local Hauling That's Completed on Time
+                            "/images/local-trucking-card-4.png"  // Save Money with Our Local Freight Company
+                          ];
+                        } else if (title === "Carrier Services") {
+                          images = [
+                            "/images/carrier-card-1.png", // Accommodating Freight Shippers
+                            "/images/carrier-card-2.png", // Full Truckload (FTL) Shipping
+                            "/images/carrier-card-3.png", // Less Than Truckload (LTL) Shipping
+                            "/images/carrier-card-4.png", // Partial Truckload (PTL) Shipping
+                            "/images/carrier-card-5.png"  // Your Shipments Are Safe with Our Carrier Services
+                          ];
+                        }
+                        
                         const cardImage = images[idx % images.length];
 
                         return (

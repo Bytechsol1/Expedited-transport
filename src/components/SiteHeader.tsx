@@ -115,7 +115,7 @@ export function SiteHeader() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname.startsWith("/trucking-services");
+  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname.startsWith("/trucking-services");
   const navCardRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -162,7 +162,7 @@ export function SiteHeader() {
 
       <header className={`site-header${isLightPage ? " light-page" : ""}`}>
         <div className={`nav-card ${isScrolled ? "scrolled" : ""}`} ref={navCardRef}>
-          <Link href="/" aria-label="Expedited Transport Services" className="brand">
+          <a href="/" aria-label="Expedited Transport Services" className="brand">
             <span className="logo-wrap">
               <Image
                 src="/logo.png"
@@ -174,7 +174,7 @@ export function SiteHeader() {
               />
             </span>
             <span className="brand-name">Expedited Transport</span>
-          </Link>
+          </a>
 
           <nav className="desk-nav" aria-label="Main navigation">
             <ul>

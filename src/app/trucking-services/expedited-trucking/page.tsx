@@ -6,11 +6,11 @@ import { FooterSection } from "@/components/FooterSection";
 import { servicePages } from "@/lib/service-pages";
 
 const benefits = [
-  { text: "Guaranteed delivery times", image: "/images/truck3.jpg" },
-  { text: "Real-time status notifications", image: "/images/truck2.jpg" },
-  { text: "Fewer stops & flexibility", image: "/images/truck1.jpg" },
-  { text: "Reduced cargo handling", image: "/images/truck4.jpg" },
-  { text: "Dedicated customer service", image: "/images/ware.jpg" },
+  { text: "Guaranteed delivery times", image: "/images/expedited-pillar-1.jpg" },
+  { text: "Real-time status notifications", image: "/images/expedited-pillar-2.jpg" },
+  { text: "Fewer stops & flexibility", image: "/images/expedited-pillar-3.jpg" },
+  { text: "Reduced cargo handling", image: "/images/expedited-pillar-4.jpg" },
+  { text: "Dedicated customer service", image: "/images/expedited-pillar-5.jpg" },
 ];
 
 export const metadata = servicePages.expeditedTrucking.metadata;
@@ -434,19 +434,19 @@ export default function ExpeditedTruckingPage() {
                   id: "01",
                   title: "Reasonable Rates on Expedited Trucking",
                   desc: "Just because you need your products delivered quickly does not mean it needs to hurt your bottom line. Thanks to our honest and affordable pricing structure, you can get your freight to where it needs to be without overspending. In fact, many of our clients have come to depend on our expedited shipping for all of their deliveries, helping them lower inventory costs and add flexibility to their supply chain.",
-                  image: "/images/truck3.jpg"
+                  image: "/images/expedited-rates.jpg"
                 },
                 {
                   id: "02",
                   title: "Your Freight Is Safe with Our Expedited Freight Services",
                   desc: "On top of completing your shipments on time, we also guarantee their safety from start to finish. In fact, there are actually many security benefits that come from our expedited trucking services. Because there will be fewer stops and fewer handling requirements during transit, there is less chance for damage or loss during the process.",
-                  image: "/images/truck4.jpg"
+                  image: "/images/expedited-safe.jpg"
                 },
                 {
                   id: "03",
                   title: "Stay Informed with Our Expedited Trucking Company",
                   desc: "In addition to our punctual deliveries, we also pride ourselves on our fantastic customer experience. We know that our clients are hinging their business on our expedited trucking, which is why we do everything to help them feel confident with their decision. We can provide you with real-time status updates throughout the process and answer any questions that come to mind along the way.",
-                  image: "/images/truck2.jpg"
+                  image: "/images/expedited-informed.jpg"
                 }
               ].map((card, idx) => {
                 const isEven = idx % 2 !== 0;

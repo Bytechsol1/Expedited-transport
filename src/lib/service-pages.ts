@@ -244,7 +244,7 @@ export const servicePages = {
     summary:
       "When you need to transport large shipments, hiring a carrier service is the most secure and cost-effective way to do so. Here at Expedited Transport Services, we specialize in all types of freight shipping and pride ourselves on our dependable service. If you would like to discuss the products you need to be shipped and how we can accommodate them, please get in touch with us at (860) 988-3887.",
     body: "",
-    imageSrc: "/images/truck4.jpg",
+    imageSrc: "/images/carrier-hero.png",
     imageAlt: "Carrier services support",
     accordionTitle: "Reliable Shipping Estimates",
     accordionDescription: "Having a trustworthy overview of your shipping rates makes it much easier to feel confident when hiring a carrier service, which is something we strive to provide for all of our prospective clients. Our time in the industry, combined with our dedication to our clients, ensures that you never have to worry about hurting your bottom line when using our trucking services.",
@@ -297,7 +297,7 @@ export const servicePages = {
     summary:
       "When you want to ensure that you are hiring a reputable trucking company, it always helps to go local. Here at Expedited Transport Services, we take pride in providing the surrounding area with valuable trucking services at honest rates. Keep your business running smoothly without taking a gamble with a faraway freight carrier by contacting us at (860) 988-3887.",
     body: "",
-    imageSrc: "/images/truck1.jpg",
+    imageSrc: "/images/local-trucking-hero.png",
     imageAlt: "Local trucking support",
     accordionTitle: "The Leading Local Trucking Company",
     accordionDescription: "Here at Expedited Transport Services, we are driven by constant improvement and success. Providing our valued clients with exceptional service is very important to us, which has helped us earn a solid reputation both locally and nationwide. Some of the things that help us stand out as a local trucking service include:",
