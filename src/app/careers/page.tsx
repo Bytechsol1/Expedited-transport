@@ -3,7 +3,7 @@
 import React from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
-import { ArrowRight, Package, ShieldCheck, MapPin, Smartphone, SmartphoneNfc, BadgeCheck } from "lucide-react";
+import { ArrowRight, Clock, Package, ShieldCheck, MapPin, Smartphone, SmartphoneNfc, BadgeCheck } from "lucide-react";
 import Image from "next/image";
 
 export default function CareersPage() {
@@ -74,9 +74,8 @@ export default function CareersPage() {
             <h1 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 8vw, 88px)", fontWeight: 450, letterSpacing: "-0.02em", lineHeight: 1.05, marginBottom: "30px", color: "#0f172a" }}>
               Drive Your Career <br/>
               <span style={{ 
-                color: "transparent", 
-                WebkitTextStroke: "2px #0f172a", 
-                textStroke: "2px #0f172a",
+                color: "transparent",
+                WebkitTextStroke: "2px #0f172a",
                 backgroundImage: "linear-gradient(90deg, #0f172a, #0f172a)",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "100% 40%",
