@@ -41,63 +41,35 @@ export default function CareersPage() {
 
         {/* HERO SECTION */}
         <section style={{
-          paddingTop: "160px",
-          paddingBottom: "120px",
+          paddingTop: "200px",
+          paddingBottom: "100px",
           position: "relative",
-          overflow: "hidden"
+          overflow: "hidden",
+          background: "radial-gradient(circle at 15% 50%, rgba(244, 252, 232, 0.4), transparent 25%), radial-gradient(circle at 85% 30%, rgba(224, 242, 254, 0.4), transparent 25%)"
         }}>
-          {/* 3D Infinite Grid Background */}
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, perspective: "800px", overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-            <div style={{
-              position: "absolute",
-              bottom: 0,
-              left: "-50%",
-              right: "-50%",
-              height: "200%",
-              backgroundImage: "linear-gradient(rgba(0,0,0,0.06) 2px, transparent 2px), linear-gradient(90deg, rgba(0,0,0,0.06) 2px, transparent 2px)",
-              backgroundSize: "80px 80px",
-              transform: "rotateX(60deg) scale(1.5)",
-              transformOrigin: "bottom center",
-              maskImage: "linear-gradient(to top, rgba(0,0,0,1) 5%, transparent 60%)",
-              WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,1) 5%, transparent 60%)"
-            }} />
-          </div>
+          {/* Subtle Grid Background */}
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none", zIndex: 0 }} />
 
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative", zIndex: 1 }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", borderRadius: "100px", backgroundColor: "#f4fce8", border: "1px solid #d4f0c2", marginBottom: "40px", boxShadow: "0 10px 20px rgba(182, 240, 0, 0.1)" }}>
-              <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#7a9900" }} />
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.2em", color: "#5c7500", fontWeight: 700 }}>
-                Careers at CMJL
-              </span>
-            </div>
-
-            <h1 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 8vw, 88px)", fontWeight: 450, letterSpacing: "-0.02em", lineHeight: 1.05, marginBottom: "30px", color: "#0f172a" }}>
-              Drive Your Career <br/>
-              <span style={{ 
-                color: "transparent",
-                WebkitTextStroke: "2px #0f172a",
-                backgroundImage: "linear-gradient(90deg, #0f172a, #0f172a)",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "100% 40%",
-                backgroundPosition: "0 90%"
-              }}>Forward</span>
+          <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative", zIndex: 1 }}>
+            <h1 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "24px", color: "#0f172a" }}>
+              Drive Your Career<br/>Forward
             </h1>
 
-            <p style={{ fontSize: "22px", color: "#475569", lineHeight: 1.7, maxWidth: "800px", margin: "0 auto 56px", fontWeight: 400 }}>
-              We are on a mission to redefine expedited transport. Bring your skills to a team that values innovation, speed, and reliability. Start your journey with Expedited Transport Services today.
+            <p style={{ fontSize: "18px", color: "#475569", lineHeight: 1.6, maxWidth: "600px", margin: "0 auto 40px", fontWeight: 500 }}>
+              We are on a mission to redefine expedited transport. Bring your skills to a team that values innovation, speed, and reliability.
             </p>
 
             <a href="#open-positions" style={{
-              display: "inline-flex", alignItems: "center", gap: "12px",
+              display: "inline-block",
               backgroundColor: "#0f172a", color: "#ffffff",
-              padding: "20px 48px", fontSize: "16px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700,
-              borderRadius: "100px", textDecoration: "none", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              boxShadow: "0 20px 40px rgba(15, 23, 42, 0.2)"
+              padding: "16px 36px", fontSize: "16px", fontWeight: 700,
+              borderRadius: "12px", textDecoration: "none", transition: "all 0.2s ease",
+              boxShadow: "0 10px 20px rgba(15, 23, 42, 0.1)"
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.backgroundColor = "#b6f000"; e.currentTarget.style.color = "#000000"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(182, 240, 0, 0.3)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.backgroundColor = "#0f172a"; e.currentTarget.style.color = "#ffffff"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(15, 23, 42, 0.2)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.backgroundColor = "#1e293b"; e.currentTarget.style.boxShadow = "0 15px 30px rgba(15, 23, 42, 0.15)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.backgroundColor = "#0f172a"; e.currentTarget.style.boxShadow = "0 10px 20px rgba(15, 23, 42, 0.1)"; }}
             >
-              View Open Positions <ArrowRight size={20} />
+              View Open Positions
             </a>
           </div>
         </section>
