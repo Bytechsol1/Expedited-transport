@@ -3,7 +3,7 @@
 import React from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
-import { ArrowRight, Package, ShieldCheck, MapPin, Smartphone, SmartphoneNfc, BadgeCheck } from "lucide-react";
+import { ArrowRight, Package, ShieldCheck, MapPin, Smartphone, SmartphoneNfc, BadgeCheck, Clock } from "lucide-react";
 import Image from "next/image";
 
 export default function CareersPage() {
