@@ -35,4 +35,4 @@ async function removeBg(inputPath, outputPath) {
   }
 }
 
-removeBg('C:/Users/HIJAZ TR/.gemini/antigravity/brain/6f468d6e-373f-43f7-97e7-6bca10a24f1a/local_trucking_unique_1786468638212.png', 'public/images/local-trucking-hero-new.png');
+removeBg('C:/Users/HIJAZ TR/.gemini/antigravity/brain/6f468d6e-373f-43f7-97e7-6bca10a24f1a/local_truck_clean_1786471115975.png', 'public/images/local-trucking-hero-v3.png');

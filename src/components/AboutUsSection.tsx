@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowRight, Truck, ShieldCheck, Clock, Award, MapPin, Target } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { HotshotFaqSection } from "@/components/HotshotFaqSection";
+import { ContactSection } from "@/components/ContactSection";
 import { FooterSection } from "@/components/FooterSection";
 
 export function AboutUsSection() {
@@ -317,6 +318,9 @@ export function AboutUsSection() {
       </div>
       <div style={{ position: "relative", zIndex: 6 }}>
         <HotshotFaqSection />
+      </div>
+      <div style={{ position: "relative", zIndex: 7 }}>
+        <ContactSection />
       </div>
       <FooterSection />
     </>

@@ -3,6 +3,8 @@
 import React from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
+import { HotshotFaqSection } from "@/components/HotshotFaqSection";
+import { ContactSection } from "@/components/ContactSection";
 import { ArrowRight, Clock, Package, ShieldCheck, MapPin, Smartphone, SmartphoneNfc, BadgeCheck } from "lucide-react";
 import Image from "next/image";
 
@@ -125,37 +127,26 @@ export default function CareersPage() {
                   
                   {/* Unique Apply Now Button over Image */}
                   <div style={{ position: "absolute", bottom: "40px", right: "40px" }}>
-                    <a href="#open-positions" style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      background: "rgba(15, 23, 42, 0.9)",
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
-                      padding: "16px 32px",
-                      borderRadius: "100px",
-                      color: "#b6f000",
-                      textDecoration: "none",
-                      fontWeight: 800,
-                      fontSize: "16px",
-                      letterSpacing: "0.5px",
-                      textTransform: "uppercase",
-                      boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
-                      transition: "all 0.3s ease",
-                      border: "1px solid rgba(182, 240, 0, 0.3)"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#b6f000";
-                      e.currentTarget.style.color = "#0f172a";
-                      e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.boxShadow = "0 24px 48px rgba(182, 240, 0, 0.4)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "rgba(15, 23, 42, 0.9)";
-                      e.currentTarget.style.color = "#b6f000";
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.3)";
-                    }}
+                    <a 
+                      href="https://play.google.com/store/apps/details?id=net.expeditedtransport.driverapp" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                        background: "#b6f000",
+                        padding: "16px 32px",
+                        borderRadius: "100px",
+                        color: "#0f172a",
+                        textDecoration: "none",
+                        fontWeight: 800,
+                        fontSize: "16px",
+                        letterSpacing: "0.5px",
+                        textTransform: "uppercase",
+                        boxShadow: "0 24px 48px rgba(182, 240, 0, 0.4)",
+                        border: "none"
+                      }}
                     >
                       Apply Now <ArrowRight size={20} />
                     </a>
@@ -345,6 +336,12 @@ export default function CareersPage() {
           </div>
         </section>
 
+      </div>
+      <div style={{ position: "relative", zIndex: 6 }}>
+        <HotshotFaqSection />
+      </div>
+      <div style={{ position: "relative", zIndex: 7 }}>
+        <ContactSection />
       </div>
       <FooterSection />
     </>

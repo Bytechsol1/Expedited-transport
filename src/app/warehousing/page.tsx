@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { HotshotFaqSection } from "@/components/HotshotFaqSection";
+import { ContactSection } from "@/components/ContactSection";
 import { FooterSection } from "@/components/FooterSection";
 
 export const metadata: Metadata = {
@@ -1066,6 +1067,7 @@ export default function WarehousingPage() {
         </section>
       </main>
       <HotshotFaqSection />
+      <ContactSection />
       <FooterSection />
     </>
   );

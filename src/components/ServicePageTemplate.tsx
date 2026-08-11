@@ -829,13 +829,13 @@ export function ServicePageTemplate({
                 title === 'Logistics Services' ? { left: '30%', width: '70%', transform: 'translate(-50%, -45%)' } :
                   title === 'Freight Transportation' ? { left: '70%', width: '70%', transform: 'translate(-50%, -35%)' } :
                     title === 'Carrier Services' ? { left: '75%', width: '70%', transform: 'translate(-50%, -38%)', mixBlendMode: 'multiply' } :
-                      title.includes('Local Trucking') ? { left: '75%', width: '70%', transform: 'translate(-50%, -35%)', mixBlendMode: 'multiply' } :
+                      title.includes('Local Trucking') ? { left: '75%', width: '70%', transform: 'translate(-50%, -35%)' } :
                         title === 'Freight Shipping' ? { transform: 'translate(-55%, -35%)' } :
                           {}
             }
           >
             <Image
-              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : title === 'Freight Transportation' ? '/images/freight-new.png' : title === 'Logistics Services' ? '/images/logistics-new.png' : title === 'Carrier Services' ? '/images/carrier-new.png' : title.includes('Local Trucking') ? '/images/local-trucking.png' : '/images/truck-user-final.png'}
+              src={title === 'LTL Trucking' ? '/images/ltl-new.png' : title === 'Freight Transportation' ? '/images/freight-new.png' : title === 'Logistics Services' ? '/images/logistics-new.png' : title === 'Carrier Services' ? '/images/carrier-new.png' : title.includes('Local Trucking') ? '/images/local-trucking-hero-v3.png' : '/images/truck-user-final.png'}
               alt={imageAlt || title}
               fill
               priority
@@ -892,7 +892,7 @@ export function ServicePageTemplate({
                           "/images/logistics-accordion-3.jpg", // Planning and optimizing routes
                           "/images/logistics-accordion-1.jpg", // Order management
                           "/images/logistics-accordion-2.jpg", // Freight auditing
-                          "/images/logistics-card-1.jpg",
+                          "/images/logistics-accordion-4-new.jpg", // Selecting transportation carriers
                           "/images/logistics-accordion-5-new.jpg", // Warehousing and inventory management
                           "/images/logistics-card-3.jpg"
                         ];
@@ -918,7 +918,7 @@ export function ServicePageTemplate({
                           "/images/local-trucking-card-4.png",          // 0: Transparent and competitive pricing
                           "/images/local-trucking-accordion-2-new.jpg", // 1: Experienced drivers
                           "/images/local-trucking-accordion-3-new.jpg", // 2: Knowledgeable local logistics experts
-                          "/images/local-trucking-card-1.png",          // 3: Dedicated customer service
+                          "/images/local-trucking-accordion-4-new.jpg", // 3: Dedicated customer service
                           "/images/local-trucking-accordion-5-new.jpg", // 4: Punctual deliveries
                           "/images/local-trucking-accordion-6-new.jpg"  // 5: Well-maintained vehicles
                         ];
@@ -996,7 +996,7 @@ export function ServicePageTemplate({
                         } else if (title === "Freight Transportation") {
                           images = [
                             "/images/freight-trans-card-1.jpg", // Comprehensive Freight Transportation
-                            "/images/freight-trans-card-2.jpg", // Freight Shipping You Never Have to Wait On
+                            "/images/freight-accordion-2-v2.jpg", // Freight Shipping You Never Have to Wait On
                             "/images/freight-trans-card-3.jpg", // Your Freight Is Safe with Us
                             "/images/freight-trans-card-4-new.jpg"  // Budget-Conscious Freight Shipping
                           ];

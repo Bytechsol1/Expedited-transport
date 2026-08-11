@@ -6,34 +6,34 @@ import { ArrowLeftIcon, ArrowRightIcon } from "./icons";
 
 const FEATURES = [
   {
+    id: 1,
+    text: "Expedited Trucking.",
+    desc: "Fast and priority shipping service designed for time-sensitive deliveries, ensuring urgent freight reaches its destination quickly and safely.",
+    image: "/images/home-service-1.jpg",
+  },
+  {
     id: 2,
-    text: "LTL trucking.",
-    desc: "Cost-effective freight transportation service that ships smaller loads by combining multiple shipments in one truck, ensuring efficient and reliable delivery.",
-    image: "/images/truck2.jpg",
+    text: "Freight Shipping.",
+    desc: "Reliable transportation service for moving goods of all sizes, ensuring safe, efficient, and timely delivery from one location to another.",
+    image: "/images/home-service-2.jpg",
   },
   {
     id: 3,
-    text: "Logistics Services.",
-    desc: "Efficient management of transportation, storage, and delivery processes to ensure goods move smoothly from origin to destination on time.",
-    image: "/images/truck1.jpg",
+    text: "Dry Van Trucking.",
+    desc: "Reliable transportation service for non-temperature-sensitive goods, offering secure and protected shipping for a wide range of freight.",
+    image: "/images/home-service-3.jpg",
   },
   {
     id: 4,
-    text: "Dry Van Trucking.",
-    desc: "Reliable transportation service for non-temperature-sensitive goods, offering secure and protected shipping for a wide range of freight.",
-    image: "/images/truck4.jpg",
+    text: "LTL Trucking.",
+    desc: "Cost-effective freight transportation service that ships smaller loads by combining multiple shipments in one truck, ensuring efficient and reliable delivery.",
+    image: "/images/home-service-4.jpg",
   },
   {
     id: 5,
-    text: "Expedited Trucking.",
-    desc: "Fast and priority shipping service designed for time-sensitive deliveries, ensuring urgent freight reaches its destination quickly and safely.",
-    image: "/images/truck3.jpg",
-  },
-  {
-    id: 6,
-    text: "Freight Shipping.",
-    desc: "Reliable transportation service for moving goods of all sizes, ensuring safe, efficient, and timely delivery from one location to another.",
-    image: "/images/ship.jpg",
+    text: "Logistics Services.",
+    desc: "Efficient management of transportation, storage, and delivery processes to ensure goods move smoothly from origin to destination on time.",
+    image: "/images/home-service-5.jpg",
   },
 ];
 
@@ -397,7 +397,9 @@ export function FeaturesSection() {
                     alt={feature.text.replace(/\.$/, "")}
                     fill
                     sizes="(max-width: 1023px) 0px, 50vw"
-                    style={{ objectFit: "cover" }}
+                    quality={100}
+                    unoptimized={true}
+                    style={{ objectFit: "cover", objectPosition: "center" }}
                   />
                 </div>
               ))}
@@ -496,7 +498,9 @@ export function FeaturesSection() {
                   alt={feature.text.replace(/\.$/, "")}
                   fill
                   sizes="100vw"
-                  style={{ objectFit: "cover" }}
+                  quality={100}
+                  unoptimized={true}
+                  style={{ objectFit: "cover", objectPosition: "center" }}
                 />
               </div>
             ))}
