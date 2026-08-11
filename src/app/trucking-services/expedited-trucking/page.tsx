@@ -6,7 +6,7 @@ import { FooterSection } from "@/components/FooterSection";
 import { servicePages } from "@/lib/service-pages";
 
 const benefits = [
-  { text: "Guaranteed delivery times", image: "/images/expedited-pillar-1-new.jpg" },
+  { text: "Guaranteed delivery times", image: "/images/expedited-pillar-1-v2.jpg" },
   { text: "Real-time status notifications", image: "/images/expedited-pillar-2-final.jpg" },
   { text: "Fewer stops & flexibility", image: "/images/expedited-pillar-3-final.jpg" },
   { text: "Reduced cargo handling", image: "/images/expedited-pillar-4-final.jpg" },
