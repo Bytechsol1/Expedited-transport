@@ -998,7 +998,7 @@ export function ServicePageTemplate({
                             "/images/freight-trans-card-1.jpg", // Comprehensive Freight Transportation
                             "/images/freight-trans-card-2.jpg", // Freight Shipping You Never Have to Wait On
                             "/images/freight-trans-card-3.jpg", // Your Freight Is Safe with Us
-                            "/images/freight-trans-card-4.png"  // Budget-Conscious Freight Shipping
+                            "/images/freight-trans-card-4-new.jpg"  // Budget-Conscious Freight Shipping
                           ];
                         } else if (title === "Local Trucking Company") {
                           images = [
