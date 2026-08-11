@@ -880,12 +880,12 @@ export function ServicePageTemplate({
                       
                       if (title === "LTL Trucking") {
                         images = [
-                          "/images/ltl-accordion-1.jpg",
-                          "/images/ltl-accordion-2.jpg",
-                          "/images/ltl-accordion-3.jpg",
-                          "/images/ltl-accordion-4.jpg",
-                          "/images/ltl-accordion-5.jpg",
-                          "/images/ltl-accordion-6.jpg"
+                          "/images/ltl-accordion-1-v3.jpg",
+                          "/images/ltl-accordion-2-v3.jpg",
+                          "/images/ltl-accordion-3-v3.jpg",
+                          "/images/ltl-accordion-4-v3.jpg",
+                          "/images/ltl-accordion-5-v3.jpg",
+                          "/images/ltl-accordion-6-v3.jpg"
                         ];
                       } else if (title === "Logistics Services") {
                         images = [
@@ -893,41 +893,41 @@ export function ServicePageTemplate({
                           "/images/logistics-accordion-1.jpg", // Order management
                           "/images/logistics-accordion-2.jpg", // Freight auditing
                           "/images/logistics-card-1.jpg",
-                          "/images/logistics-card-2.jpg",
+                          "/images/logistics-accordion-5-new.jpg", // Warehousing and inventory management
                           "/images/logistics-card-3.jpg"
                         ];
                       } else if (title === "Freight Shipping") {
                         images = [
                           "/images/freight-accordion-pricing.jpg",     // 0: Straightforward and competitive pricing
-                          "/images/truck2.jpg",                        // 1: On-time deliveries (fallback)
+                          "/images/freight-accordion-2-new.jpg",       // 1: On-time deliveries
                           "/images/freight-accordion-safety.jpg",      // 2: Industry-leading safety measures
-                          "/images/truck4.jpg",                        // 3: Accommodating customer support (fallback)
-                          "/images/ware.jpg",                          // 4: Measurable history of success (fallback)
+                          "/images/freight-accordion-4-new.jpg",       // 3: Accommodating customer support
+                          "/images/freight-accordion-5-new.jpg",       // 4: Measurable history of success
                           "/images/freight-accordion-experienced.jpg"  // 5: Experienced and qualified drivers
                         ];
                       } else if (title === "Freight Transportation") {
                         images = [
-                          "/images/freight-trans-card-4.png",          // 0: LTL trucking (Using card image)
-                          "/images/freight-accordion-dryvan.jpg",      // 1: Dry van trucking (Kept as is)
+                          "/images/freight-trans-ltl-new.jpg",         // 0: LTL trucking
+                          "/images/freight-trans-dryvan-new.jpg",      // 1: Dry van trucking
                           "/images/freight-trans-card-1.jpg",          // 2: Logistics services (Using card image)
                           "/images/freight-accordion-warehouse.jpg",   // 3: Warehousing services (Kept as is)
-                          "/images/freight-trans-card-2.jpg"           // 4: Or any other trucking services (Using card image)
+                          "/images/freight-trans-other-new.jpg"        // 4: Or any other trucking services
                         ];
                       } else if (title === "Local Trucking Company") {
                         images = [
-                          "/images/local-trucking-card-4.png", // Transparent and competitive pricing
-                          "/images/local-trucking-card-1.png", // Experienced drivers
-                          "/images/local-trucking-hero.png",   // Knowledgeable local logistics experts
-                          "/images/local-trucking-card-1.png", // Dedicated customer service
-                          "/images/local-trucking-card-3.png", // Punctual deliveries
-                          "/images/local-trucking-card-2.png"  // Well-maintained vehicles
+                          "/images/local-trucking-card-4.png",          // 0: Transparent and competitive pricing
+                          "/images/local-trucking-accordion-2-new.jpg", // 1: Experienced drivers
+                          "/images/local-trucking-accordion-3-new.jpg", // 2: Knowledgeable local logistics experts
+                          "/images/local-trucking-card-1.png",          // 3: Dedicated customer service
+                          "/images/local-trucking-accordion-5-new.jpg", // 4: Punctual deliveries
+                          "/images/local-trucking-accordion-6-new.jpg"  // 5: Well-maintained vehicles
                         ];
                       } else if (title === "Carrier Services") {
                         images = [
-                          "/images/carrier-card-1.png", // Cost-effective shipping rates
+                          "/images/carrier-accordion-1-new.jpg", // Cost-effective shipping rates
                           "/images/carrier-card-3.png", // Accommodating freight services
                           "/images/carrier-card-4.png", // FTL, LTL, and PTL options
-                          "/images/carrier-card-1.png", // Dependable communication
+                          "/images/carrier-accordion-4-new.jpg", // Dependable communication
                           "/images/carrier-card-5.png"  // Professional shipping equipment
                         ];
                       }

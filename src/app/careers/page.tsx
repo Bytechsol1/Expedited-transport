@@ -116,12 +116,50 @@ export default function CareersPage() {
                 
                 <div style={{ position: "relative", background: "#e5e7eb", overflow: "hidden" }}>
                   <Image
-                    src="/images/carrier-card-1.png"
-                    alt="Driver looking at app"
+                    src="/images/cmjl-drivers-group.jpg"
+                    alt="CMJL Drivers"
                     fill
                     style={{ objectFit: "cover", objectPosition: "center" }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 20%)" }} />
+                  
+                  {/* Unique Apply Now Button over Image */}
+                  <div style={{ position: "absolute", bottom: "40px", right: "40px" }}>
+                    <a href="#open-positions" style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      background: "rgba(15, 23, 42, 0.9)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                      padding: "16px 32px",
+                      borderRadius: "100px",
+                      color: "#b6f000",
+                      textDecoration: "none",
+                      fontWeight: 800,
+                      fontSize: "16px",
+                      letterSpacing: "0.5px",
+                      textTransform: "uppercase",
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+                      transition: "all 0.3s ease",
+                      border: "1px solid rgba(182, 240, 0, 0.3)"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "#b6f000";
+                      e.currentTarget.style.color = "#0f172a";
+                      e.currentTarget.style.transform = "translateY(-4px)";
+                      e.currentTarget.style.boxShadow = "0 24px 48px rgba(182, 240, 0, 0.4)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(15, 23, 42, 0.9)";
+                      e.currentTarget.style.color = "#b6f000";
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 20px 40px rgba(0,0,0,0.3)";
+                    }}
+                    >
+                      Apply Now <ArrowRight size={20} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

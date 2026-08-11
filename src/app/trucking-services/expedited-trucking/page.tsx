@@ -7,10 +7,10 @@ import { servicePages } from "@/lib/service-pages";
 
 const benefits = [
   { text: "Guaranteed delivery times", image: "/images/expedited-pillar-1-new.jpg" },
-  { text: "Real-time status notifications", image: "/images/expedited-pillar-2.jpg" },
-  { text: "Fewer stops & flexibility", image: "/images/expedited-pillar-3.jpg" },
-  { text: "Reduced cargo handling", image: "/images/expedited-pillar-4.jpg" },
-  { text: "Dedicated customer service", image: "/images/expedited-pillar-5.jpg" },
+  { text: "Real-time status notifications", image: "/images/expedited-pillar-2-final.jpg" },
+  { text: "Fewer stops & flexibility", image: "/images/expedited-pillar-3-final.jpg" },
+  { text: "Reduced cargo handling", image: "/images/expedited-pillar-4-final.jpg" },
+  { text: "Dedicated customer service", image: "/images/expedited-pillar-5-final.jpg" },
 ];
 
 export const metadata = servicePages.expeditedTrucking.metadata;
