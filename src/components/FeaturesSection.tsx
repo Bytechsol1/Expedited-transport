@@ -15,7 +15,7 @@ const FEATURES = [
     id: 2,
     text: "Freight Shipping.",
     desc: "Reliable transportation service for moving goods of all sizes, ensuring safe, efficient, and timely delivery from one location to another.",
-    image: "/images/home-service-2.jpg",
+    image: "/images/ship.jpg",
   },
   {
     id: 3,
