@@ -9,9 +9,14 @@ import { OrderCard, type OrderCardData } from "@/components/OrderCard";
 
 export const dynamic = "force-dynamic";
 
-export default async function AccountPage() {
+export default async function AccountPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ payment?: string }>;
+}) {
   const session = await auth();
   const customerId = session?.user?.id as string | undefined;
+  const { payment } = await searchParams;
 
   const orders = customerId
     ? await db
@@ -60,6 +65,23 @@ export default async function AccountPage() {
         }}
       >
         <div style={{ maxWidth: "48rem", margin: "0 auto" }}>
+          {payment === "success" ? (
+            <div
+              style={{
+                background: "rgba(171,255,2,0.14)",
+                border: "1px solid rgba(171,255,2,0.4)",
+                color: "var(--c-dark-green)",
+                borderRadius: "0.75rem",
+                padding: "0.9rem 1.1rem",
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                marginBottom: "1.5rem",
+              }}
+            >
+              Payment received — thank you! We&apos;ll be in touch to schedule your pickup.
+            </div>
+          ) : null}
+
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "2rem" }}>
             <div>
               <h1 style={{ fontSize: "1.9rem", fontWeight: 800, color: "var(--c-dark-green)", margin: 0 }}>

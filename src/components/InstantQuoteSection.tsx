@@ -38,7 +38,7 @@ export function InstantQuoteSection() {
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<QuoteResult | null>(null);
   const [checkingOut, setCheckingOut] = useState(false);
-  const [paymentBanner, setPaymentBanner] = useState<"success" | "cancelled" | null>(null);
+  const [paymentBanner, setPaymentBanner] = useState<"cancelled" | null>(null);
 
   const { data: session } = useSession();
   const router = useRouter();
@@ -52,7 +52,7 @@ export function InstantQuoteSection() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const payment = params.get("payment");
-    if (payment === "success" || payment === "cancelled") {
+    if (payment === "cancelled") {
       setPaymentBanner(payment);
       params.delete("payment");
       const newSearch = params.toString();
@@ -261,10 +261,8 @@ export function InstantQuoteSection() {
           <div className="iq-results-glow" />
 
           {paymentBanner ? (
-            <div className={`iq-payment-banner iq-payment-banner--${paymentBanner}`}>
-              {paymentBanner === "success"
-                ? "Payment received — thank you! We'll be in touch to schedule your pickup."
-                : "Checkout was cancelled. Your quote is still saved below if you'd like to try again."}
+            <div className="iq-payment-banner iq-payment-banner--cancelled">
+              Checkout was cancelled. Your quote is still saved below if you&apos;d like to try again.
             </div>
           ) : null}
 
@@ -463,11 +461,6 @@ export function InstantQuoteSection() {
           line-height: 1.5;
         }
 
-        .iq-payment-banner--success {
-          background: rgba(182, 240, 0, 0.14);
-          border: 1px solid rgba(182, 240, 0, 0.3);
-          color: #d4ff5c;
-        }
 
         .iq-payment-banner--cancelled {
           background: rgba(255, 255, 255, 0.06);

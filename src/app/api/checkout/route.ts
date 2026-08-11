@@ -92,7 +92,7 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${siteUrl}/?payment=success#instant-quote`,
+      success_url: `${siteUrl}/account?payment=success`,
       cancel_url: `${siteUrl}/?payment=cancelled#instant-quote`,
       metadata: { quoteRequestId: quote.id },
     });
