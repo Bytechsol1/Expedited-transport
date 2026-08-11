@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { signOut } from "next-auth/react";
 
 type HereVehicleProfile = {
@@ -147,7 +148,9 @@ export function RatesManager({
       <header className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Rate Management</h1>
-          <p className="text-sm text-slate-500">Truck types, thresholds, and pricing used by the quote calculator.</p>
+          <p className="text-sm text-slate-500">
+            Truck types, thresholds, and pricing used by the quote calculator. <Link href="/admin/orders" className="underline">Orders</Link>
+          </p>
         </div>
         <button
           onClick={() => signOut({ callbackUrl: "/admin/login" })}

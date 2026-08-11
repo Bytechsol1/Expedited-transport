@@ -2,6 +2,7 @@
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SocialRail } from "@/components/SocialRail";
+import { Providers } from "@/components/Providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,8 +38,10 @@ export default function RootLayout({
       className={`${inter.variable} ${geistMono.variable} antialiased`}
     >
       <body suppressHydrationWarning>
-        <SocialRail />
-        {children}
+        <Providers>
+          <SocialRail />
+          {children}
+        </Providers>
       </body>
     </html>
   );

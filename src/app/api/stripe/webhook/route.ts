@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import Stripe from "stripe";
 import { db } from "@/lib/db/client";
-import { quoteRequests } from "@/lib/db/schema";
+import { orderStatusEvents, quoteRequests } from "@/lib/db/schema";
 import { getStripe } from "@/lib/stripe";
 
 export const runtime = "nodejs";
@@ -29,15 +29,20 @@ export async function POST(request: Request) {
     const quoteRequestId = session.metadata?.quoteRequestId;
 
     if (quoteRequestId) {
-      await db
-        .update(quoteRequests)
-        .set({
-          paymentStatus: "paid",
-          stripePaymentIntentId:
-            typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
-          paidAt: new Date(),
-        })
-        .where(eq(quoteRequests.id, quoteRequestId));
+      await db.transaction(async (tx) => {
+        await tx
+          .update(quoteRequests)
+          .set({
+            paymentStatus: "paid",
+            stripePaymentIntentId:
+              typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
+            paidAt: new Date(),
+            fulfillmentStatus: "confirmed",
+          })
+          .where(eq(quoteRequests.id, quoteRequestId));
+
+        await tx.insert(orderStatusEvents).values({ quoteRequestId, status: "confirmed" });
+      });
     }
   }
 

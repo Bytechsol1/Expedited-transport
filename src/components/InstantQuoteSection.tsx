@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { AnimatePresence, animate, motion } from "framer-motion";
 import { PackageSearch } from "lucide-react";
 import { AddressAutocomplete } from "@/components/AddressAutocomplete";
@@ -37,6 +39,9 @@ export function InstantQuoteSection() {
   const [result, setResult] = useState<QuoteResult | null>(null);
   const [checkingOut, setCheckingOut] = useState(false);
   const [paymentBanner, setPaymentBanner] = useState<"success" | "cancelled" | null>(null);
+
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const requestSeq = useRef(0);
   // Caches resolved geocode results by the exact address text that produced
@@ -119,6 +124,12 @@ export function InstantQuoteSection() {
   }, [pickupAddress, deliveryAddress, pieces, pallets, weightLbs, lengthIn, widthIn, heightIn, hazmat]);
 
   const handleCheckout = async (quoteRequestId: string) => {
+    const role = (session?.user as { role?: string } | undefined)?.role;
+    if (role !== "customer") {
+      router.push(`/login?next=${quoteRequestId}`);
+      return;
+    }
+
     setCheckingOut(true);
     try {
       const response = await fetch("/api/checkout", {

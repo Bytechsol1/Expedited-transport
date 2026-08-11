@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { auth } from "@/lib/auth";
 import { db } from "@/lib/db/client";
 import { quoteRequests, truckTypes } from "@/lib/db/schema";
 import { getClientIp, rateLimit } from "@/lib/rateLimit";
@@ -19,6 +20,13 @@ const requestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const authSession = await auth();
+  const role = (authSession?.user as { role?: string } | undefined)?.role;
+  const customerId = authSession?.user?.id as string | undefined;
+  if (role !== "customer" || !customerId) {
+    return Response.json({ ok: false, error: "Please log in to continue to payment." }, { status: 401 });
+  }
+
   const { allowed, retryAfterMs } = rateLimit(`checkout:${getClientIp(request)}`, 10, 60_000);
   if (!allowed) {
     return Response.json(
@@ -84,14 +92,14 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${siteUrl}/#instant-quote?payment=success`,
-      cancel_url: `${siteUrl}/#instant-quote?payment=cancelled`,
+      success_url: `${siteUrl}/?payment=success#instant-quote`,
+      cancel_url: `${siteUrl}/?payment=cancelled#instant-quote`,
       metadata: { quoteRequestId: quote.id },
     });
 
     await db
       .update(quoteRequests)
-      .set({ paymentStatus: "pending", stripeSessionId: session.id })
+      .set({ paymentStatus: "pending", stripeSessionId: session.id, customerId })
       .where(eq(quoteRequests.id, quote.id));
 
     return Response.json({ ok: true, url: session.url });

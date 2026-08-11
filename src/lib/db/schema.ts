@@ -45,6 +45,13 @@ export const pricingSettings = pgTable("pricing_settings", {
   updatedBy: text("updated_by"),
 });
 
+export const customers = pgTable("customers", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const quoteRequests = pgTable("quote_requests", {
   id: uuid("id").primaryKey().defaultRandom(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -70,6 +77,16 @@ export const quoteRequests = pgTable("quote_requests", {
   stripeSessionId: text("stripe_session_id"),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
   paidAt: timestamp("paid_at", { withTimezone: true }),
+  customerId: uuid("customer_id").references(() => customers.id),
+  fulfillmentStatus: text("fulfillment_status").notNull().default("confirmed"), // "confirmed" | "dispatched" | "in_transit" | "delivered"
+});
+
+export const orderStatusEvents = pgTable("order_status_events", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  quoteRequestId: uuid("quote_request_id").notNull().references(() => quoteRequests.id),
+  status: text("status").notNull(), // "confirmed" | "dispatched" | "in_transit" | "delivered"
+  note: text("note"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const adminUsers = pgTable("admin_users", {

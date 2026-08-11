@@ -3,25 +3,54 @@ import { auth } from "@/lib/auth";
 
 export default auth((request) => {
   const { pathname } = request.nextUrl;
-  const isLoginPage = pathname === "/admin/login";
-  const isApiRoute = pathname.startsWith("/api/admin");
+  const role = (request.auth?.user as { role?: string } | undefined)?.role;
 
-  if (!isLoginPage && !request.auth) {
-    if (isApiRoute) {
-      return NextResponse.json({ ok: false, error: "Unauthorized." }, { status: 401 });
+  const isAdminSection = pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
+  const isAdminLoginPage = pathname === "/admin/login";
+  const isAdminApiRoute = pathname.startsWith("/api/admin");
+
+  if (isAdminSection) {
+    const isAdmin = role === "admin";
+
+    if (!isAdminLoginPage && !isAdmin) {
+      if (isAdminApiRoute) {
+        return NextResponse.json({ ok: false, error: "Unauthorized." }, { status: 401 });
+      }
+      const loginUrl = new URL("/admin/login", request.nextUrl.origin);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(loginUrl);
     }
-    const loginUrl = new URL("/admin/login", request.nextUrl.origin);
-    loginUrl.searchParams.set("callbackUrl", pathname);
-    return NextResponse.redirect(loginUrl);
+
+    if (isAdminLoginPage && isAdmin) {
+      return NextResponse.redirect(new URL("/admin/rates", request.nextUrl.origin));
+    }
+
+    return NextResponse.next();
   }
 
-  if (isLoginPage && request.auth) {
-    return NextResponse.redirect(new URL("/admin/rates", request.nextUrl.origin));
+  const isAccountSection = pathname.startsWith("/account") || pathname.startsWith("/api/account");
+  const isAccountApiRoute = pathname.startsWith("/api/account");
+
+  if (isAccountSection) {
+    const isCustomer = role === "customer";
+
+    if (!isCustomer) {
+      if (isAccountApiRoute) {
+        return NextResponse.json({ ok: false, error: "Unauthorized." }, { status: 401 });
+      }
+      const loginUrl = new URL("/login", request.nextUrl.origin);
+      loginUrl.searchParams.set("next", pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
+  if (pathname === "/login" && role === "customer") {
+    return NextResponse.redirect(new URL("/account", request.nextUrl.origin));
   }
 
   return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*", "/account/:path*", "/api/account/:path*", "/login"],
 };

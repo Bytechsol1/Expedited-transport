@@ -6,6 +6,7 @@ import Image from "next/image";
 import Script from "next/script";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const SERVICES = [
   { label: "Expedited Trucking", href: "/trucking-services/expedited-trucking", icon: "https://cdn.lordicon.com/whrxobsb.json" },
@@ -115,7 +116,9 @@ export function SiteHeader() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname.startsWith("/trucking-services");
+  const { data: authSession } = useSession();
+  const isCustomer = (authSession?.user as { role?: string } | undefined)?.role === "customer";
+  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname === "/login" || pathname === "/account" || pathname.startsWith("/trucking-services");
   const navCardRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -202,6 +205,9 @@ export function SiteHeader() {
             </ul>
           </nav>
 
+          <Link href={isCustomer ? "/account" : "/login"} className="cta-signin">
+            {isCustomer ? "My Account" : "Sign In"}
+          </Link>
           <Link href="/#instant-quote" className="cta-contact">Get a Quote</Link>
 
           <button
@@ -230,6 +236,9 @@ export function SiteHeader() {
           <Link href="/about-us" className="drawer-link" onClick={() => setMobileOpen(false)}>About Us</Link>
           <Link href="/warehousing" className="drawer-link" onClick={() => setMobileOpen(false)}>Warehousing</Link>
           <Link href="/careers" className="drawer-link" onClick={() => setMobileOpen(false)}>Careers</Link>
+          <Link href={isCustomer ? "/account" : "/login"} className="drawer-signin" onClick={() => setMobileOpen(false)}>
+            {isCustomer ? "My Account" : "Sign In"}
+          </Link>
           <Link href="/#instant-quote" className="drawer-cta" onClick={() => setMobileOpen(false)}>Get a Quote</Link>
         </div>
       </header>
@@ -257,7 +266,7 @@ export function SiteHeader() {
           display: flex;
           align-items: center;
           gap: 0.25rem;
-          max-width: 860px;
+          max-width: 1040px;
           margin: 0 auto;
           padding: 0.9rem 0.9rem 0.9rem 1.5rem;
           background: transparent;
@@ -398,13 +407,44 @@ export function SiteHeader() {
           font-weight: 700;
           white-space: nowrap;
           flex-shrink: 0;
-          margin-left: auto;
+          margin-left: 0.5rem;
           letter-spacing: -0.01em;
           transition: background 0.15s ease;
         }
 
         .cta-contact:hover {
           background: #cbff1a;
+        }
+
+        .cta-signin {
+          display: flex;
+          align-items: center;
+          padding: 0.65rem 1.35rem;
+          border-radius: 12px;
+          background: #fff;
+          color: #0a0f00;
+          text-decoration: none;
+          font-family: 'Segoe UI', system-ui, -apple-system, var(--font-inter), 'Inter', sans-serif;
+          font-size: 0.9375rem;
+          font-weight: 700;
+          white-space: nowrap;
+          flex-shrink: 0;
+          margin-left: auto;
+          letter-spacing: -0.01em;
+          transition: background 0.15s ease, transform 0.15s ease;
+        }
+
+        .cta-signin:hover {
+          background: #f0f0f0;
+        }
+
+        .site-header.light-page .cta-signin {
+          background: #0f172a;
+          color: #fff;
+        }
+
+        .site-header.light-page .cta-signin:hover {
+          background: #1e293b;
         }
 
         .burger {
@@ -514,6 +554,20 @@ export function SiteHeader() {
           padding: 0.75rem 1.25rem;
           border-radius: 10px;
           background: #b6f000;
+          color: #0a0f00;
+          text-align: center;
+          font-family: 'Segoe UI', system-ui, sans-serif;
+          font-size: 0.9rem;
+          font-weight: 700;
+          text-decoration: none;
+        }
+
+        .drawer-signin {
+          display: block;
+          margin: 0.75rem 1.25rem 0;
+          padding: 0.75rem 1.25rem;
+          border-radius: 10px;
+          background: #fff;
           color: #0a0f00;
           text-align: center;
           font-family: 'Segoe UI', system-ui, sans-serif;
