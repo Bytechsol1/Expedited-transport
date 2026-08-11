@@ -297,7 +297,7 @@ export const servicePages = {
     summary:
       "When you want to ensure that you are hiring a reputable trucking company, it always helps to go local. Here at Expedited Transport Services, we take pride in providing the surrounding area with valuable trucking services at honest rates. Keep your business running smoothly without taking a gamble with a faraway freight carrier by contacting us at (860) 988-3887.",
     body: "",
-    imageSrc: "/images/local-trucking-hero.png",
+    imageSrc: "/images/local-trucking-hero-new.png",
     imageAlt: "Local trucking support",
     accordionTitle: "The Leading Local Trucking Company",
     accordionDescription: "Here at Expedited Transport Services, we are driven by constant improvement and success. Providing our valued clients with exceptional service is very important to us, which has helped us earn a solid reputation both locally and nationwide. Some of the things that help us stand out as a local trucking service include:",
