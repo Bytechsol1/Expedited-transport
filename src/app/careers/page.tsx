@@ -128,7 +128,7 @@ export default function CareersPage() {
                   {/* Unique Apply Now Button over Image */}
                   <div style={{ position: "absolute", bottom: "40px", right: "40px" }}>
                     <a 
-                      href="https://play.google.com/store/apps/details?id=net.expeditedtransport.driverapp" 
+                      href="https://expeditedtransport.net/register" 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       style={{
@@ -157,111 +157,98 @@ export default function CareersPage() {
           </div>
         </section>
 
-        {/* WHAT WE OFFER (3D EXTRUDED CARDS) */}
-        <section style={{ padding: "0 0 120px", backgroundColor: "#eef2f7", color: "#051e24" }}>
-          <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px" }}>
-            <div style={{ textAlign: "center", marginBottom: "80px" }}>
-              <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(40px, 5vw, 64px)", fontWeight: 450, letterSpacing: "-0.02em" }}>What We Offer</h2>
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "50px", perspective: "1500px", padding: "20px" }}>
-              {[
-                { icon: <Clock size={36} color="#000" />, title: "Flexible Scheduling", desc: "Choose when you want to work. We offer full-time and part-time opportunities that fit perfectly around your life and commitments." },
-                { icon: <SmartphoneNfc size={36} color="#000" />, title: "On-Demand Routes", desc: "Access route postings instantly, similar to platforms like Amazon Flex and Veho, ensuring you always have opportunities available." },
-                { icon: <BadgeCheck size={36} color="#000" />, title: "Weekly Direct Deposit", desc: "Get paid reliably and quickly. We ensure our independent contractors receive their hard-earned money through weekly direct deposits." }
-              ].map((card, idx) => (
-                <div key={idx} style={{
-                  position: "relative",
-                  backgroundColor: "#ffffff",
-                  padding: "48px 40px",
-                  borderRadius: "20px",
-                  border: "3px solid #0f172a",
-                  boxShadow: "-1px 1px 0 #0f172a, -2px 2px 0 #0f172a, -3px 3px 0 #0f172a, -4px 4px 0 #0f172a, -5px 5px 0 #0f172a, -6px 6px 0 #0f172a, -7px 7px 0 #0f172a, -8px 8px 0 #0f172a, -9px 9px 0 #0f172a, -10px 10px 0 #0f172a, -20px 20px 40px rgba(0,0,0,0.15)",
-                  transform: "rotateX(25deg) rotateY(-15deg) rotateZ(5deg)",
-                  transformStyle: "preserve-3d",
-                  transition: "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                  cursor: "default"
-                }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.05) translateY(-10px)";
-                    e.currentTarget.style.boxShadow = "0 30px 60px rgba(0,0,0,0.15), 0 0 0 4px #b6f000";
-                    e.currentTarget.style.borderColor = "#b6f000";
-                    const inner = e.currentTarget.querySelector('.inner-content') as HTMLElement;
-                    if (inner) inner.style.transform = "translateZ(30px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "rotateX(25deg) rotateY(-15deg) rotateZ(5deg)";
-                    e.currentTarget.style.boxShadow = "-1px 1px 0 #0f172a, -2px 2px 0 #0f172a, -3px 3px 0 #0f172a, -4px 4px 0 #0f172a, -5px 5px 0 #0f172a, -6px 6px 0 #0f172a, -7px 7px 0 #0f172a, -8px 8px 0 #0f172a, -9px 9px 0 #0f172a, -10px 10px 0 #0f172a, -20px 20px 40px rgba(0,0,0,0.15)";
-                    e.currentTarget.style.borderColor = "#0f172a";
-                    const inner = e.currentTarget.querySelector('.inner-content') as HTMLElement;
-                    if (inner) inner.style.transform = "translateZ(0)";
-                  }}
-                >
-                  <div className="inner-content" style={{ transition: "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}>
-                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "70px", height: "70px", borderRadius: "16px", backgroundColor: "#b6f000", marginBottom: "32px", border: "2px solid #0f172a", boxShadow: "-4px 4px 0 #0f172a" }}>
-                      {card.icon}
-                    </div>
-
-                    <h3 style={{ fontSize: "24px", fontWeight: 700, marginBottom: "20px", lineHeight: 1.3, color: "#0f172a" }}>
-                      {card.title}
-                    </h3>
-                    <p style={{ color: "#475569", lineHeight: 1.7, fontSize: "16px", fontWeight: 500 }}>
-                      {card.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* REQUIREMENTS */}
-        <section style={{ padding: "0 40px 120px", backgroundColor: "#eef2f7" }}>
-          <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-            <div style={{ 
-              background: "linear-gradient(145deg, #0f172a 0%, #1e293b 100%)", 
-              borderRadius: "32px", 
-              padding: "60px", 
-              color: "#fff",
-              position: "relative",
-              overflow: "hidden",
-              boxShadow: "0 24px 48px rgba(15,23,42,0.15)"
-            }}>
-              <div style={{ position: "absolute", top: "-100px", right: "-100px", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(182, 240, 0, 0.15) 0%, transparent 60%)", borderRadius: "50%", pointerEvents: "none" }} />
+        {/* MINIMALIST MAGAZINE SPLIT SECTION */}
+        <section style={{ padding: "120px 0", backgroundColor: "#ffffff" }}>
+          <div style={{ maxWidth: "1500px", margin: "0 auto", padding: "0 40px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "80px" }}>
               
-              <div style={{ display: "flex", alignItems: "center", gap: "20px", marginBottom: "40px", position: "relative" }}>
-                <div style={{ width: "64px", height: "64px", borderRadius: "20px", background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#b6f000", border: "1px solid rgba(255,255,255,0.05)" }}>
-                  <ShieldCheck size={32} />
-                </div>
-                <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(32px, 4vw, 48px)", fontWeight: 450, letterSpacing: "-0.02em", color: "#fff", margin: 0 }}>
-                  Requirements
+              {/* LEFT SIDE: WHAT WE OFFER */}
+              <div style={{ flex: "1 1 600px" }}>
+                <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 6vw, 80px)", fontWeight: 500, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 20px", lineHeight: 1 }}>
+                  What We <br/> <span style={{ color: "#0ea5e9" }}>Offer.</span>
                 </h2>
+                <p style={{ fontSize: "20px", color: "#64748b", margin: "0 0 60px", lineHeight: 1.6, maxWidth: "500px" }}>
+                  Join a logistics network that respects your time, pays you fast, and gives you total control.
+                </p>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+                  {[
+                    { title: "Flexible Scheduling", desc: "Choose full-time or part-time routes that fit your lifestyle." },
+                    { title: "On-Demand Routes", desc: "Access live route postings instantly through the CMJL App." },
+                    { title: "Weekly Direct Deposit", desc: "Get paid reliably every single week, directly to your account." }
+                  ].map((item, idx) => (
+                    <div key={idx} style={{ display: "flex", gap: "24px" }}>
+                      <div style={{ fontSize: "24px", fontWeight: 300, color: "#94a3b8", fontFamily: "var(--font-mono)" }}>
+                        0{idx + 1}
+                      </div>
+                      <div>
+                        <h3 style={{ fontSize: "24px", fontWeight: 700, color: "#0f172a", marginBottom: "12px", fontFamily: "var(--font-primary)" }}>{item.title}</h3>
+                        <p style={{ margin: 0, color: "#475569", lineHeight: 1.6, fontSize: "18px", maxWidth: "400px" }}>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", position: "relative" }}>
-                {[
-                  "21 years of age or older",
-                  "Valid driver’s license",
-                  "Reliable vehicle (for applicable routes)",
-                  "Smartphone for CMJL App",
-                  "Pass background screening",
-                  "Professional attitude & customer service"
-                ].map((req, idx) => (
-                  <div key={idx} style={{ 
-                    display: "flex", alignItems: "center", gap: "16px",
-                    padding: "20px 24px", borderRadius: "16px",
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.05)",
-                    transition: "all 0.2s ease"
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.borderColor = "rgba(182, 240, 0, 0.3)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)"; }}
-                  >
-                    <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#b6f000", boxShadow: "0 0 10px rgba(182, 240, 0, 0.5)" }}></div>
-                    <span style={{ color: "#f8fafc", fontSize: "18px", fontWeight: 500 }}>{req}</span>
-                  </div>
-                ))}
+              {/* RIGHT SIDE: REQUIREMENTS (INFOGRAPHIC GRID) */}
+              <div style={{ flex: "1 1 500px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "40px" }}>
+                  <div style={{ width: "48px", height: "4px", backgroundColor: "#b6f000", borderRadius: "2px" }} />
+                  <h3 style={{ fontSize: "32px", fontWeight: 700, color: "#0f172a", margin: 0, fontFamily: "var(--font-primary)", letterSpacing: "-0.02em" }}>Driver Requirements</h3>
+                </div>
+                
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "24px" }}>
+                  {[
+                    { short: "21+", desc: "Years of age or older" },
+                    { short: "ID", desc: "Valid driver's license" },
+                    { short: "Car", desc: "Reliable vehicle access" },
+                    { short: "App", desc: "Smartphone for CMJL App" },
+                    { short: "Clear", desc: "Pass background check" },
+                    { short: "Pro", desc: "Professional attitude" }
+                  ].map((req, idx) => (
+                    <div key={idx} style={{ 
+                      background: "#ffffff", 
+                      borderRadius: "20px", 
+                      padding: "32px 24px",
+                      border: "2px solid #f1f5f9",
+                      display: "flex", flexDirection: "column",
+                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                      cursor: "default",
+                      position: "relative",
+                      overflow: "hidden"
+                    }}
+                    onMouseEnter={(e) => { 
+                      e.currentTarget.style.borderColor = "#0f172a"; 
+                      e.currentTarget.style.transform = "translateY(-6px)"; 
+                      e.currentTarget.style.boxShadow = "0 24px 48px rgba(15, 23, 42, 0.08)"; 
+                      const icon = e.currentTarget.querySelector('.req-icon') as HTMLElement;
+                      if (icon) {
+                        icon.style.color = "#b6f000";
+                        icon.style.transform = "translateX(8px)";
+                      }
+                    }}
+                    onMouseLeave={(e) => { 
+                      e.currentTarget.style.borderColor = "#f1f5f9"; 
+                      e.currentTarget.style.transform = "translateY(0)"; 
+                      e.currentTarget.style.boxShadow = "none"; 
+                      const icon = e.currentTarget.querySelector('.req-icon') as HTMLElement;
+                      if (icon) {
+                        icon.style.color = "#0f172a";
+                        icon.style.transform = "translateX(0)";
+                      }
+                    }}
+                    >
+                      <div className="req-icon" style={{ fontSize: "36px", fontWeight: 800, color: "#0f172a", marginBottom: "16px", fontFamily: "var(--font-primary)", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)", display: "inline-block", letterSpacing: "-0.04em" }}>
+                        {req.short}
+                      </div>
+                      <p style={{ margin: 0, fontSize: "16px", color: "#64748b", fontWeight: 500, lineHeight: 1.6 }}>
+                        {req.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
+
             </div>
           </div>
         </section>
