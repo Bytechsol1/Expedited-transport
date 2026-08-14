@@ -68,6 +68,12 @@ export function AboutUsSection() {
 
           <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative", zIndex: 1 }}>
 
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", borderRadius: "100px", backgroundColor: "#f4fce8", border: "1px solid #d4f0c2", marginBottom: "40px", boxShadow: "0 10px 20px rgba(182, 240, 0, 0.1)" }}>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#7a9900" }} />
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "13px", textTransform: "uppercase", letterSpacing: "0.2em", color: "#5c7500", fontWeight: 700 }}>
+                About Us
+              </span>
+            </div>
 
             <h1 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(56px, 8vw, 88px)", fontWeight: 450, letterSpacing: "-0.02em", lineHeight: 1.05, marginBottom: "40px", color: "#0f172a" }}>
               Trucking Company
