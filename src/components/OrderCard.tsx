@@ -35,7 +35,7 @@ export function OrderCard({ order }: { order: OrderCardData }) {
           </p>
           <p className="order-card__meta">
             {order.truckTypeName ?? "Freight shipment"}
-            {order.paidAt ? ` · Paid ${order.paidAt.toLocaleDateString()}` : ""}
+            {order.paidAt ? ` · Paid ${order.paidAt.toLocaleDateString("en-US")}` : ""}
           </p>
         </div>
         {order.price ? <p className="order-card__price">${Number(order.price).toFixed(2)}</p> : null}
@@ -49,7 +49,7 @@ export function OrderCard({ order }: { order: OrderCardData }) {
             <div key={stage.key} className={reached ? "order-step order-step--done" : "order-step"}>
               <div className="order-step__dot" />
               <div className="order-step__label">{stage.label}</div>
-              {date ? <div className="order-step__date">{date.toLocaleDateString()}</div> : null}
+              {date ? <div className="order-step__date">{date.toLocaleDateString("en-US")}</div> : null}
               {index < STAGES.length - 1 ? (
                 <div className={index < currentIndex ? "order-step__line order-step__line--done" : "order-step__line"} />
               ) : null}

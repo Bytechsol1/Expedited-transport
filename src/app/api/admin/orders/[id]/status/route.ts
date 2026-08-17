@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { orderStatusEvents, quoteRequests } from "@/lib/db/schema";
+import { auth } from "@/lib/auth";
 
 export const runtime = "nodejs";
 
@@ -10,6 +11,13 @@ const statusUpdateSchema = z.object({
 });
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const session = await auth();
+  const role = (session?.user as { role?: string } | undefined)?.role;
+
+  if (!session || role !== "admin") {
+    return Response.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
+
   const { id } = await params;
 
   try {

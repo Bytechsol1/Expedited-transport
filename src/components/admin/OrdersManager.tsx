@@ -53,7 +53,7 @@ export function OrdersManager({ initialOrders }: { initialOrders: Order[] }) {
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Orders</h1>
           <p className="text-sm text-slate-500">
-            Paid shipments and their fulfillment status. <Link href="/admin/rates" className="underline">Rate management</Link>
+            Active shipments and their fulfillment status. <Link href="/admin/rates" className="underline">Rate management</Link>
           </p>
         </div>
         <button
@@ -67,7 +67,7 @@ export function OrdersManager({ initialOrders }: { initialOrders: Order[] }) {
       {message ? <p className="rounded-md bg-slate-100 px-3 py-2 text-sm text-slate-700">{message}</p> : null}
 
       {orders.length === 0 ? (
-        <p className="text-sm text-slate-500">No paid orders yet.</p>
+        <p className="text-sm text-slate-500">No orders yet.</p>
       ) : (
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
           <table className="w-full text-left text-sm">
@@ -87,7 +87,7 @@ export function OrdersManager({ initialOrders }: { initialOrders: Order[] }) {
                     <div className="font-medium text-slate-900">
                       {order.pickupAddress} → {order.deliveryAddress}
                     </div>
-                    <div className="text-xs text-slate-400">{order.createdAt.toLocaleDateString()}</div>
+                    <div className="text-xs text-slate-400">{order.createdAt.toLocaleDateString("en-US")}</div>
                   </td>
                   <td className="px-4 py-3 text-slate-700">{order.customerEmail ?? "—"}</td>
                   <td className="px-4 py-3 text-slate-700">{order.truckTypeName ?? "—"}</td>

@@ -22,7 +22,7 @@ export default auth((request) => {
     }
 
     if (isAdminLoginPage && isAdmin) {
-      return NextResponse.redirect(new URL("/admin/rates", request.nextUrl.origin));
+      return NextResponse.redirect(new URL("/admin/portal", request.nextUrl.origin));
     }
 
     return NextResponse.next();

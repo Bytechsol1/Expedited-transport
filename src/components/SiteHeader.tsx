@@ -118,7 +118,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const { data: authSession } = useSession();
   const isCustomer = (authSession?.user as { role?: string } | undefined)?.role === "customer";
-  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname === "/login" || pathname === "/account" || pathname.startsWith("/trucking-services");
+  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname === "/login" || pathname.startsWith("/account") || pathname.startsWith("/trucking-services");
   const navCardRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -265,10 +265,10 @@ export function SiteHeader() {
           position: relative;
           display: flex;
           align-items: center;
-          gap: 0.25rem;
-          max-width: 1040px;
+          gap: 0.5rem;
+          max-width: 1020px;
           margin: 0 auto;
-          padding: 0.9rem 0.9rem 0.9rem 1.5rem;
+          padding: 0.75rem 0.75rem 0.75rem 1.5rem;
           background: transparent;
           border: 1px solid rgba(255,255,255,0.15);
           border-radius: 12px;
@@ -582,6 +582,10 @@ export function SiteHeader() {
           }
 
           .cta-contact {
+            display: none;
+          }
+
+          .cta-signin {
             display: none;
           }
 
