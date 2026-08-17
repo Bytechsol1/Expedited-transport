@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         source: '/trucking-services/hotshot-trucking-services',
         destination: '/trucking-services/expedited-trucking',
         permanent: false,
+      },
+      {
+        source: '/admin',
+        destination: '/admin/portal',
+        permanent: false,
       }
     ]
   }

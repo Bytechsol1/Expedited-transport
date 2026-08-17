@@ -114,7 +114,7 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem", textTransform: "uppercase" }}>CURRENT STATUS</div>
                 <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0f172a" }}>
-                  {shipment.fulfillmentStatus ? shipment.fulfillmentStatus.replace("_", " ").replace(/\b\w/g, l => l.toUpperCase()) : "Pending"}
+                  {shipment.fulfillmentStatus ? shipment.fulfillmentStatus.replace("_", " ").replace(/\b\w/g, (l: string) => l.toUpperCase()) : "Pending"}
                 </div>
               </div>
             </div>
