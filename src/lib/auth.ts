@@ -36,10 +36,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        fullName: { label: "Full Name", type: "text" },
       },
       authorize: async (credentials) => {
         const email = typeof credentials?.email === "string" ? credentials.email.trim().toLowerCase() : "";
         const password = typeof credentials?.password === "string" ? credentials.password : "";
+        const fullName = typeof credentials?.fullName === "string" ? credentials.fullName.trim() : null;
+        
         if (!email || !password) return null;
 
         const [customer] = await db.select().from(customers).where(eq(customers.email, email)).limit(1);
@@ -54,7 +57,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // registration, so create one on the spot rather than making the
         // customer go through a separate signup step.
         const passwordHash = await bcrypt.hash(password, 10);
-        const [created] = await db.insert(customers).values({ email, passwordHash }).returning();
+        const [created] = await db.insert(customers).values({ email, passwordHash, fullName }).returning();
         return { id: created.id, email: created.email, role: "customer" };
       },
     }),

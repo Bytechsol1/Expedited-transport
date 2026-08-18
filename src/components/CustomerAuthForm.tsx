@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
@@ -8,9 +8,17 @@ export function CustomerAuthForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get("next");
+  const modeParam = searchParams.get("mode");
+
+  const [isSignUp, setIsSignUp] = useState(modeParam === "signup");
+  
+  useEffect(() => {
+    setIsSignUp(modeParam === "signup");
+  }, [modeParam]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -43,11 +51,13 @@ export function CustomerAuthForm() {
     setSubmitting(true);
     setError(null);
 
-    const result = await signIn("customer", { email, password, redirect: false });
+    // If signup mode, we could ideally pass fullName, but NextAuth credentials provider doesn't easily let us save it in authorize function unless we pass it.
+    // We will just pass fullName and update the auth logic to handle it if provided.
+    const result = await signIn("customer", { email, password, fullName, redirect: false });
     setSubmitting(false);
 
     if (result?.error) {
-      setError("Invalid email or password.");
+      setError(result.error === "CredentialsSignin" ? "Invalid email or password." : result.error);
       return;
     }
 
@@ -55,40 +65,95 @@ export function CustomerAuthForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="auth-card">
-      <h1 className="auth-title">Sign In</h1>
-      <p className="auth-subtitle">
-        {next
-          ? "Sign in to continue to payment for your quote."
-          : "Enter your email and password — new here? We'll set up your account automatically."}
-      </p>
+    <div className="auth-card">
+      <div style={{ display: "flex", gap: "1rem", marginBottom: "2rem" }}>
+        <button 
+          type="button"
+          onClick={() => setIsSignUp(false)}
+          style={{
+            flex: 1,
+            padding: "0.5rem",
+            background: !isSignUp ? "rgba(5, 36, 36, 0.05)" : "transparent",
+            border: "none",
+            borderRadius: "0.5rem",
+            fontWeight: !isSignUp ? 700 : 500,
+            color: !isSignUp ? "var(--c-dark-green)" : "rgba(5, 36, 36, 0.6)",
+            cursor: "pointer",
+            transition: "all 0.2s ease"
+          }}
+        >
+          Sign In
+        </button>
+        <button 
+          type="button"
+          onClick={() => setIsSignUp(true)}
+          style={{
+            flex: 1,
+            padding: "0.5rem",
+            background: isSignUp ? "rgba(5, 36, 36, 0.05)" : "transparent",
+            border: "none",
+            borderRadius: "0.5rem",
+            fontWeight: isSignUp ? 700 : 500,
+            color: isSignUp ? "var(--c-dark-green)" : "rgba(5, 36, 36, 0.6)",
+            cursor: "pointer",
+            transition: "all 0.2s ease"
+          }}
+        >
+          Sign Up
+        </button>
+      </div>
 
-      <label className="auth-label">Email</label>
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="auth-input"
-        autoComplete="email"
-      />
+      <form onSubmit={handleSubmit}>
+        <h1 className="auth-title">{isSignUp ? "Create Account" : "Welcome Back"}</h1>
+        <p className="auth-subtitle">
+          {next
+            ? "Sign in to continue to payment for your quote."
+            : isSignUp 
+              ? "Sign up to track shipments and manage quotes." 
+              : "Enter your email and password to access your account."}
+        </p>
 
-      <label className="auth-label">Password</label>
-      <input
-        type="password"
-        required
-        minLength={8}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="auth-input"
-        autoComplete="current-password"
-      />
+        {isSignUp && (
+          <>
+            <label className="auth-label">Full Name</label>
+            <input
+              type="text"
+              required
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="auth-input"
+              autoComplete="name"
+            />
+          </>
+        )}
 
-      {error ? <p className="auth-error">{error}</p> : null}
+        <label className="auth-label">Email</label>
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="auth-input"
+          autoComplete="email"
+        />
 
-      <button type="submit" disabled={submitting} className="auth-submit">
-        {submitting ? "Please wait…" : "Sign In"}
-      </button>
+        <label className="auth-label">Password</label>
+        <input
+          type="password"
+          required
+          minLength={8}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="auth-input"
+          autoComplete={isSignUp ? "new-password" : "current-password"}
+        />
+
+        {error ? <p className="auth-error">{error}</p> : null}
+
+        <button type="submit" disabled={submitting} className="auth-submit">
+          {submitting ? "Please wait…" : isSignUp ? "Create Account" : "Sign In"}
+        </button>
+      </form>
 
       <style jsx>{`
         .auth-card {
@@ -159,6 +224,6 @@ export function CustomerAuthForm() {
           cursor: default;
         }
       `}</style>
-    </form>
+    </div>
   );
 }

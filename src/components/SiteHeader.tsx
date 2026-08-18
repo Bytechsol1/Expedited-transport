@@ -210,7 +210,7 @@ export function SiteHeader() {
           ) : (
             <>
               <Link href="/login" className="cta-login-text">Sign In</Link>
-              <Link href="/login" className="cta-signin">Sign Up</Link>
+              <Link href="/login?mode=signup" className="cta-signin">Sign Up</Link>
             </>
           )}
           <Link href="/#instant-quote" className="cta-contact">Get a Quote</Link>
@@ -250,7 +250,7 @@ export function SiteHeader() {
               <Link href="/login" className="drawer-login-text" onClick={() => setMobileOpen(false)}>
                 Sign In
               </Link>
-              <Link href="/login" className="drawer-signin" style={{ margin: 0 }} onClick={() => setMobileOpen(false)}>
+              <Link href="/login?mode=signup" className="drawer-signin" style={{ margin: 0 }} onClick={() => setMobileOpen(false)}>
                 Sign Up
               </Link>
             </div>
