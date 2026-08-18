@@ -15,7 +15,7 @@ const FEATURES = [
     id: 2,
     text: "Freight Shipping.",
     desc: "Reliable transportation service for moving goods of all sizes, ensuring safe, efficient, and timely delivery from one location to another.",
-    image: "/images/ship.jpg",
+    image: "/images/freight-shipping.png",
   },
   {
     id: 3,
@@ -25,15 +25,15 @@ const FEATURES = [
   },
   {
     id: 4,
-    text: "LTL Trucking.",
-    desc: "Cost-effective freight transportation service that ships smaller loads by combining multiple shipments in one truck, ensuring efficient and reliable delivery.",
-    image: "/images/home-service-4.jpg",
+    text: "Logistics Services.",
+    desc: "Efficient management of transportation, storage, and delivery processes to ensure goods move smoothly from origin to destination on time.",
+    image: "/images/logistics-services.png",
   },
   {
     id: 5,
-    text: "Logistics Services.",
-    desc: "Efficient management of transportation, storage, and delivery processes to ensure goods move smoothly from origin to destination on time.",
-    image: "/images/home-service-5.jpg",
+    text: "LTL Trucking.",
+    desc: "Cost-effective freight transportation service that ships smaller loads by combining multiple shipments in one truck, ensuring efficient and reliable delivery.",
+    image: "/images/home-service-4.jpg",
   },
 ];
 

@@ -124,8 +124,13 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                 <div style={{ position: "absolute", top: "12px", left: "10%", right: "10%", height: "2px", background: "rgba(0,0,0,0.05)", zIndex: 0 }} />
                 
                 {["confirmed", "dispatched", "in_transit", "delivered"].map((step, idx) => {
+                  const statuses = ["confirmed", "dispatched", "in_transit", "delivered"];
+                  const currentIdx = statuses.indexOf(shipment?.fulfillmentStatus || "");
                   const event = events.find((e: any) => e.status === step);
-                  const isCompleted = !!event;
+                  
+                  // A step is completed if its index is less than or equal to the current status index,
+                  // AND the order is paid (so it's actually processing).
+                  const isCompleted = idx <= currentIdx && shipment?.paymentStatus === "paid";
                   const isCurrent = shipment?.fulfillmentStatus === step && shipment?.paymentStatus === "paid";
                   
                   return (
