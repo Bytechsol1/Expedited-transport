@@ -3,12 +3,17 @@ import { eq } from "drizzle-orm";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "@/lib/db/client";
+import Google from "next-auth/providers/google";
 import { adminUsers, customers } from "@/lib/db/schema";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/admin/login" },
   providers: [
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
     Credentials({
       id: "admin",
       name: "Admin",
@@ -63,8 +68,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => {
-      if (user) {
+    jwt: async ({ token, user, account }) => {
+      if (account?.provider === "google" && user?.email) {
+        const email = user.email.trim().toLowerCase();
+        let [customer] = await db.select().from(customers).where(eq(customers.email, email)).limit(1);
+        
+        if (!customer) {
+          const passwordHash = await bcrypt.hash(Math.random().toString(36), 10);
+          const [created] = await db.insert(customers).values({ 
+            email, 
+            passwordHash,
+            fullName: user.name || null
+          }).returning();
+          customer = created;
+        }
+        
+        token.id = customer.id;
+        token.role = "customer";
+      } else if (user) {
         token.id = user.id;
         token.role = (user as { role?: string }).role ?? "admin";
       }
