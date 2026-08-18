@@ -208,10 +208,7 @@ export function SiteHeader() {
           {isCustomer ? (
             <Link href="/account" className="cta-signin">My Account</Link>
           ) : (
-            <>
-              <Link href="/login" className="cta-login-text">Sign In</Link>
-              <Link href="/login?mode=signup" className="cta-signin">Sign Up</Link>
-            </>
+            <Link href="/login" className="cta-signin" style={{ marginLeft: 'auto' }}>Log In / Sign Up</Link>
           )}
           <Link href="/#instant-quote" className="cta-contact">Get a Quote</Link>
 
@@ -246,14 +243,9 @@ export function SiteHeader() {
               My Account
             </Link>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", padding: "0.75rem 1.25rem 0" }}>
-              <Link href="/login" className="drawer-login-text" onClick={() => setMobileOpen(false)}>
-                Sign In
-              </Link>
-              <Link href="/login?mode=signup" className="drawer-signin" style={{ margin: 0 }} onClick={() => setMobileOpen(false)}>
-                Sign Up
-              </Link>
-            </div>
+            <Link href="/login" className="drawer-signin" onClick={() => setMobileOpen(false)}>
+              Log In / Sign Up
+            </Link>
           )}
           <Link href="/#instant-quote" className="drawer-cta" onClick={() => setMobileOpen(false)}>Get a Quote</Link>
         </div>
