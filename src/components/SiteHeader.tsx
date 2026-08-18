@@ -205,9 +205,14 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <Link href={isCustomer ? "/account" : "/login"} className="cta-signin">
-            {isCustomer ? "My Account" : "Sign In"}
-          </Link>
+          {isCustomer ? (
+            <Link href="/account" className="cta-signin">My Account</Link>
+          ) : (
+            <>
+              <Link href="/login" className="cta-login-text">Sign In</Link>
+              <Link href="/login" className="cta-signin">Sign Up</Link>
+            </>
+          )}
           <Link href="/#instant-quote" className="cta-contact">Get a Quote</Link>
 
           <button
@@ -236,9 +241,20 @@ export function SiteHeader() {
           <Link href="/about-us" className="drawer-link" onClick={() => setMobileOpen(false)}>About Us</Link>
           <Link href="/warehousing" className="drawer-link" onClick={() => setMobileOpen(false)}>Warehousing</Link>
           <Link href="/careers" className="drawer-link" onClick={() => setMobileOpen(false)}>Careers</Link>
-          <Link href={isCustomer ? "/account" : "/login"} className="drawer-signin" onClick={() => setMobileOpen(false)}>
-            {isCustomer ? "My Account" : "Sign In"}
-          </Link>
+          {isCustomer ? (
+            <Link href="/account" className="drawer-signin" onClick={() => setMobileOpen(false)}>
+              My Account
+            </Link>
+          ) : (
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", padding: "0.75rem 1.25rem 0" }}>
+              <Link href="/login" className="drawer-login-text" onClick={() => setMobileOpen(false)}>
+                Sign In
+              </Link>
+              <Link href="/login" className="drawer-signin" style={{ margin: 0 }} onClick={() => setMobileOpen(false)}>
+                Sign Up
+              </Link>
+            </div>
+          )}
           <Link href="/#instant-quote" className="drawer-cta" onClick={() => setMobileOpen(false)}>Get a Quote</Link>
         </div>
       </header>
@@ -429,7 +445,7 @@ export function SiteHeader() {
           font-weight: 700;
           white-space: nowrap;
           flex-shrink: 0;
-          margin-left: auto;
+          margin-left: 0.25rem;
           letter-spacing: -0.01em;
           transition: background 0.15s ease, transform 0.15s ease;
         }
@@ -445,6 +461,33 @@ export function SiteHeader() {
 
         .site-header.light-page .cta-signin:hover {
           background: #1e293b;
+        }
+
+        .cta-login-text {
+          display: flex;
+          align-items: center;
+          padding: 0.65rem 1rem;
+          color: rgba(255, 255, 255, 0.72);
+          text-decoration: none;
+          font-family: 'Segoe UI', system-ui, -apple-system, var(--font-inter), 'Inter', sans-serif;
+          font-size: 0.9375rem;
+          font-weight: 600;
+          white-space: nowrap;
+          flex-shrink: 0;
+          margin-left: auto;
+          transition: color 0.15s ease;
+        }
+
+        .cta-login-text:hover {
+          color: #fff;
+        }
+
+        .site-header.light-page .cta-login-text {
+          color: rgba(15, 23, 42, 0.72);
+        }
+
+        .site-header.light-page .cta-login-text:hover {
+          color: #0f172a;
         }
 
         .burger {
@@ -573,6 +616,21 @@ export function SiteHeader() {
           font-family: 'Segoe UI', system-ui, sans-serif;
           font-size: 0.9rem;
           font-weight: 700;
+          text-decoration: none;
+        }
+
+        .drawer-login-text {
+          display: block;
+          margin: 0;
+          padding: 0.75rem 1.25rem;
+          border-radius: 10px;
+          background: transparent;
+          border: 1px solid rgba(255,255,255,0.15);
+          color: #fff;
+          text-align: center;
+          font-family: 'Segoe UI', system-ui, sans-serif;
+          font-size: 0.9rem;
+          font-weight: 600;
           text-decoration: none;
         }
 
