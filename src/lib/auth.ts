@@ -3,14 +3,14 @@ import { eq } from "drizzle-orm";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "@/lib/db/client";
-import Google from "next-auth/providers/google";
+import GoogleProvider from "next-auth/providers/google";
 import { adminUsers, customers } from "@/lib/db/schema";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/admin/login" },
   providers: [
-    Google({
+    GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
