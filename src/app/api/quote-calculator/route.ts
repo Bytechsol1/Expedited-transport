@@ -32,6 +32,7 @@ const requestSchema = z.object({
   widthIn: z.number().positive(),
   heightIn: z.number().positive(),
   hazmat: z.boolean().optional().default(false),
+  truckTypeId: z.string().optional(),
 });
 
 export async function POST(request: Request) {
@@ -57,44 +58,52 @@ export async function POST(request: Request) {
       .where(eq(truckTypes.active, true))
       .orderBy(asc(truckTypes.sortOrder));
 
-    const assigned = assignTruckType(
-      {
-        weightLbs: body.weightLbs,
-        pallets: body.pallets,
-        lengthIn: body.lengthIn,
-        widthIn: body.widthIn,
-        heightIn: body.heightIn,
-      },
-      activeTruckTypes.map((truck) => ({
-        id: truck.id,
-        maxWeightLbs: truck.maxWeightLbs,
-        maxPallets: truck.maxPallets,
-        maxLengthIn: truck.maxLengthIn,
-        maxWidthIn: truck.maxWidthIn,
-        maxHeightIn: truck.maxHeightIn,
-      }))
-    );
+    let truckType;
+    if (body.truckTypeId) {
+      truckType = activeTruckTypes.find((t) => t.id === body.truckTypeId);
+      if (!truckType) {
+        return Response.json({ ok: false, error: "Selected truck type is invalid or inactive." }, { status: 400 });
+      }
+    } else {
+      const assigned = assignTruckType(
+        {
+          weightLbs: body.weightLbs,
+          pallets: body.pallets,
+          lengthIn: body.lengthIn,
+          widthIn: body.widthIn,
+          heightIn: body.heightIn,
+        },
+        activeTruckTypes.map((truck) => ({
+          id: truck.id,
+          maxWeightLbs: truck.maxWeightLbs,
+          maxPallets: truck.maxPallets,
+          maxLengthIn: truck.maxLengthIn,
+          maxWidthIn: truck.maxWidthIn,
+          maxHeightIn: truck.maxHeightIn,
+        }))
+      );
 
-    if (!assigned) {
-      await db.insert(quoteRequests).values({
-        pickupAddress: body.pickupAddress,
-        deliveryAddress: body.deliveryAddress,
-        pieces: body.pieces,
-        pallets: body.pallets,
-        weightLbs: Math.round(body.weightLbs),
-        lengthIn: Math.round(body.lengthIn),
-        widthIn: Math.round(body.widthIn),
-        heightIn: Math.round(body.heightIn),
-        hazmat: body.hazmat,
-        status: "oversized",
-      });
+      if (!assigned) {
+        await db.insert(quoteRequests).values({
+          pickupAddress: body.pickupAddress,
+          deliveryAddress: body.deliveryAddress,
+          pieces: body.pieces,
+          pallets: body.pallets,
+          weightLbs: Math.round(body.weightLbs),
+          lengthIn: Math.round(body.lengthIn),
+          widthIn: Math.round(body.widthIn),
+          heightIn: Math.round(body.heightIn),
+          hazmat: body.hazmat,
+          status: "oversized",
+        });
 
-      return Response.json({ ok: true, oversized: true });
-    }
+        return Response.json({ ok: true, oversized: true });
+      }
 
-    const truckType = activeTruckTypes.find((truck) => truck.id === assigned.id);
-    if (!truckType) {
-      throw new Error("Assigned truck type disappeared mid-request.");
+      truckType = activeTruckTypes.find((truck) => truck.id === assigned.id);
+      if (!truckType) {
+        throw new Error("Assigned truck type disappeared mid-request.");
+      }
     }
 
     const [pickup, delivery] = await Promise.all([

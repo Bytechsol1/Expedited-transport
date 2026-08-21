@@ -1,6 +1,7 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
+import { PackageSearch, ArrowRight } from "lucide-react";
 import SplitText from "./SplitText";
 
 /* Payment logos -- all four SVGs (from datatrans/payment-logos, CC BY-SA
@@ -69,9 +70,6 @@ export function FooterSection() {
           >
             info@expeditedtransportservices.net
           </a>
-          <p style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.87rem", margin: 0 }}>
-            License #: DOT 2566125
-          </p>
         </div>
 
         {/* Hours */}
@@ -137,6 +135,18 @@ export function FooterSection() {
             <img src="/images/payment/amex-badge.svg" alt="American Express" style={PAYMENT_LOGO_STYLE} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/payment/discover.svg" alt="Discover" style={PAYMENT_LOGO_STYLE} />
+          </div>
+
+          <div style={{ marginTop: "2rem" }}>
+            <Link 
+              href="/tracking"
+              className="footer-track-btn"
+              style={{ marginTop: 0 }}
+            >
+              <PackageSearch size={16} />
+              <span>Track Order</span>
+              <ArrowRight size={16} className="arrow" />
+            </Link>
           </div>
         </div>
       </div>
@@ -254,6 +264,56 @@ export function FooterSection() {
         @keyframes backToTopFloat {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
+        }
+
+        .footer-track-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6rem;
+          background: rgba(182, 240, 0, 0.05);
+          border: 1px solid rgba(182, 240, 0, 0.2);
+          color: #b6f000;
+          font-family: var(--font-primary);
+          font-size: 0.75rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          text-decoration: none;
+          padding: 0.8rem 1.25rem;
+          border-radius: 50px;
+          margin-top: 1rem;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          width: fit-content;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .footer-track-btn::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent, rgba(182, 240, 0, 0.15), transparent);
+          transform: translateX(-100%);
+          transition: transform 0.6s ease;
+        }
+
+        .footer-track-btn:hover {
+          background: rgba(182, 240, 0, 0.12);
+          border-color: rgba(182, 240, 0, 0.4);
+          box-shadow: 0 0 24px rgba(182, 240, 0, 0.15);
+          transform: translateY(-2px);
+        }
+
+        .footer-track-btn:hover::before {
+          transform: translateX(100%);
+        }
+
+        .footer-track-btn .arrow {
+          transition: transform 0.3s ease;
+        }
+
+        .footer-track-btn:hover .arrow {
+          transform: translateX(3px);
         }
 
         /* ── Tablet ── */

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { AnimatePresence, animate, motion } from "framer-motion";
-import { PackageSearch } from "lucide-react";
+import { PackageSearch, ChevronDown } from "lucide-react";
 import { AddressAutocomplete } from "@/components/AddressAutocomplete";
 
 type Coords = { lat: number; lng: number; label: string };
@@ -24,6 +24,60 @@ type QuoteResult = {
 
 const MAX_WEIGHT_LBS = 45000;
 
+function CustomTruckDropdown({ value, onChange, options }: { value: string, onChange: (v: string) => void, options: {id: string, name: string}[] }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const selected = value ? options.find(o => o.id === value)?.name : "Select Truck Type";
+
+  return (
+    <div className="iq-custom-select" ref={ref}>
+      <div className="iq-select-trigger" onClick={() => setOpen(!open)}>
+        <span>{selected}</span>
+        <ChevronDown size={16} className={`iq-select-icon ${open ? "open" : ""}`} />
+      </div>
+      <AnimatePresence>
+        {open && (
+          <motion.ul 
+            className="iq-select-options"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.15 }}
+          >
+            <li 
+              className={`iq-select-option ${value === "" ? "selected" : ""}`}
+              onClick={() => { onChange(""); setOpen(false); }}
+            >
+              Select Truck Type
+            </li>
+            {options.map(o => (
+              <li 
+                key={o.id}
+                className={`iq-select-option ${value === o.id ? "selected" : ""}`}
+                onClick={() => { onChange(o.id); setOpen(false); }}
+              >
+                {o.name}
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+
 export function InstantQuoteSection() {
   const [pickupAddress, setPickupAddress] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
@@ -34,6 +88,19 @@ export function InstantQuoteSection() {
   const [widthIn, setWidthIn] = useState("");
   const [heightIn, setHeightIn] = useState("");
   const [hazmat, setHazmat] = useState(false);
+  const [truckTypeId, setTruckTypeId] = useState("");
+  const [availableTrucks, setAvailableTrucks] = useState<{id: string, name: string}[]>([]);
+
+  useEffect(() => {
+    fetch("/api/truck-types")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ok) {
+          setAvailableTrucks(data.truckTypes);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<QuoteResult | null>(null);
@@ -101,6 +168,7 @@ export function InstantQuoteSection() {
             widthIn: Number(widthIn),
             heightIn: Number(heightIn),
             hazmat,
+            truckTypeId: truckTypeId || undefined,
           }),
         });
 
@@ -121,7 +189,7 @@ export function InstantQuoteSection() {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [pickupAddress, deliveryAddress, pieces, pallets, weightLbs, lengthIn, widthIn, heightIn, hazmat]);
+  }, [pickupAddress, deliveryAddress, pieces, pallets, weightLbs, lengthIn, widthIn, heightIn, hazmat, truckTypeId]);
 
   const handleCheckout = async (quoteRequestId: string) => {
     const role = (session?.user as { role?: string } | undefined)?.role;
@@ -227,14 +295,27 @@ export function InstantQuoteSection() {
               />
             </div>
 
-            <span className="iq-section-label">Shipment</span>
-            <div className="iq-row iq-row-3">
+            <span className="iq-section-label">Shipment Details</span>
+            <div className="iq-row iq-row-2">
+              <div className="iq-field">
+                <label className="iq-label">Truck Type</label>
+                <CustomTruckDropdown 
+                  value={truckTypeId} 
+                  onChange={setTruckTypeId} 
+                  options={availableTrucks} 
+                />
+              </div>
+              <div style={{ display: "flex", alignItems: "flex-end" }}>
+                <label className="iq-hazmat" style={{ paddingBottom: "0.85rem" }}>
+                  <input type="checkbox" checked={hazmat} onChange={(e) => setHazmat(e.target.checked)} />
+                  Hazmat
+                </label>
+              </div>
+            </div>
+
+            <div className="iq-row iq-row-2">
               <NumberField label="Pieces" value={pieces} onChange={setPieces} />
               <NumberField label="Pallets" value={pallets} onChange={setPallets} />
-              <label className="iq-hazmat">
-                <input type="checkbox" checked={hazmat} onChange={(e) => setHazmat(e.target.checked)} />
-                Hazmat
-              </label>
             </div>
 
             <span className="iq-section-label">Dimensions</span>
@@ -572,6 +653,74 @@ export function InstantQuoteSection() {
 
         .iq-suggestion:hover {
           background: var(--c-dirty-white);
+        }
+
+        .iq-custom-select {
+          position: relative;
+          width: 100%;
+        }
+
+        .iq-select-trigger {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          background: transparent;
+          border-bottom: 1px solid var(--c-dark-green-15);
+          padding: 0.6rem 0;
+          color: var(--c-dark-green);
+          font-family: var(--font-primary);
+          font-size: 0.95rem;
+          cursor: pointer;
+          transition: border-color 0.15s ease;
+        }
+
+        .iq-select-trigger:hover {
+          border-bottom-color: var(--c-lime);
+        }
+
+        .iq-select-icon {
+          color: rgba(5, 36, 36, 0.45);
+          transition: transform 0.2s ease;
+        }
+
+        .iq-select-icon.open {
+          transform: rotate(180deg);
+        }
+
+        .iq-select-options {
+          position: absolute;
+          top: calc(100% + 4px);
+          left: 0;
+          right: 0;
+          z-index: 50;
+          margin: 0;
+          padding: 0.5rem;
+          list-style: none;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+          border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .iq-select-option {
+          padding: 0.75rem 1rem;
+          font-family: var(--font-primary);
+          font-size: 0.875rem;
+          color: var(--c-dark-green);
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .iq-select-option:hover {
+          background: #f8fafc;
+        }
+
+        .iq-select-option.selected {
+          background: rgba(182, 240, 0, 0.15);
+          color: #5c7300;
+          font-weight: 600;
         }
 
         .iq-hazmat {

@@ -1,16 +1,12 @@
 "use server";
 
 import { eq, asc, sql } from "drizzle-orm";
-import { auth } from "@/lib/auth";
 import { db } from "@/lib/db/client";
 import { quoteRequests, orderStatusEvents, truckTypes } from "@/lib/db/schema";
 
 export async function fetchTrackingData(id: string) {
-  const session = await auth();
-  const customerId = session?.user?.id as string | undefined;
-
-  if (!id || !customerId) {
-    return { error: "Not authorized or missing ID" };
+  if (!id) {
+    return { error: "Missing Tracking ID" };
   }
 
   // strip "EXP-" if user entered it
@@ -19,12 +15,12 @@ export async function fetchTrackingData(id: string) {
   try {
     let queryCondition;
     
-    // If it's a full UUID (36 chars) or close to it, match exactly
-    if (cleanId.length > 20) {
+    if (cleanId.length === 36) {
       queryCondition = eq(quoteRequests.id, cleanId);
+    } else if (cleanId.length === 8) {
+      queryCondition = sql`CAST(${quoteRequests.id} AS TEXT) LIKE ${cleanId + "-%"}`;
     } else {
-      // Otherwise, it's a short ID (like 2bc5d116). Cast UUID to text and match prefix
-      queryCondition = sql`CAST(${quoteRequests.id} AS TEXT) LIKE ${cleanId + "%"}`;
+      return { error: "Tracking ID not found. Please enter a complete Tracking ID." };
     }
 
     const results = await db
@@ -52,10 +48,6 @@ export async function fetchTrackingData(id: string) {
 
     if (!shipment) {
       return { error: "Tracking ID not found." };
-    }
-
-    if (shipment.customerId !== customerId) {
-      return { error: "You do not have permission to view this shipment." };
     }
 
     const events = await db

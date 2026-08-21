@@ -168,7 +168,7 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
 
               <div style={{ display: "flex", justifyContent: "flex-end", paddingTop: "0.5rem" }}>
                 <Link 
-                  href={`/account/tracking?id=EXP-${order.id.split("-")[0].toUpperCase()}`}
+                  href={`/tracking?id=EXP-${order.id.split("-")[0].toUpperCase()}`}
                   style={{ 
                     padding: "0.75rem 1.5rem", 
                     background: currentTab === "pending" ? "#b6f000" : "#f8fafc", 

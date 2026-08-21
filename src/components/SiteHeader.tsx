@@ -6,7 +6,7 @@ import Image from "next/image";
 import Script from "next/script";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const SERVICES = [
   { label: "Expedited Trucking", href: "/trucking-services/expedited-trucking", icon: "https://cdn.lordicon.com/whrxobsb.json" },
@@ -114,12 +114,14 @@ function ServicesMega({ open }: { open: boolean }) {
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { data: authSession } = useSession();
   const isCustomer = (authSession?.user as { role?: string } | undefined)?.role === "customer";
-  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname === "/login" || pathname.startsWith("/account") || pathname.startsWith("/trucking-services");
+  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname === "/login" || pathname.startsWith("/account") || pathname.startsWith("/tracking") || pathname.startsWith("/trucking-services");
   const navCardRef = useRef<HTMLDivElement>(null);
+  const accountRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openDropdown = () => {
@@ -147,16 +149,19 @@ export function SiteHeader() {
   }, [isLightPage]);
 
   useEffect(() => {
-    if (!servicesOpen) return;
+    if (!servicesOpen && !accountDropdownOpen) return;
     const handleOutsideClick = (event: MouseEvent) => {
-      if (navCardRef.current && !navCardRef.current.contains(event.target as Node)) {
+      if (servicesOpen && navCardRef.current && !navCardRef.current.contains(event.target as Node)) {
         setServicesOpen(false);
+      }
+      if (accountDropdownOpen && accountRef.current && !accountRef.current.contains(event.target as Node)) {
+        setAccountDropdownOpen(false);
       }
     };
 
     document.addEventListener("mousedown", handleOutsideClick);
     return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, [servicesOpen]);
+  }, [servicesOpen, accountDropdownOpen]);
 
 
   return (
@@ -202,11 +207,25 @@ export function SiteHeader() {
               <li><Link href="/about-us" className="nav-lnk">About Us</Link></li>
               <li><Link href="/warehousing" className="nav-lnk">Warehousing</Link></li>
               <li><Link href="/careers" className="nav-lnk">Careers</Link></li>
+              <li><Link href="/tracking" className="nav-lnk">Track Order</Link></li>
             </ul>
           </nav>
 
           {isCustomer ? (
-            <Link href="/account" className="cta-signin">My Account</Link>
+            <div ref={accountRef} style={{ position: "relative", marginLeft: "auto" }}>
+              <button 
+                className="cta-signin" 
+                onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
+                style={{ cursor: "pointer", border: "none" }}
+              >
+                My Account
+              </button>
+              {accountDropdownOpen && (
+                <div className="account-dropdown-menu">
+                  <button className="account-dropdown-item" onClick={() => { setAccountDropdownOpen(false); signOut(); }}>Sign Out</button>
+                </div>
+              )}
+            </div>
           ) : (
             <Link href="/login" className="cta-signin" style={{ marginLeft: 'auto' }}>Login</Link>
           )}
@@ -238,14 +257,13 @@ export function SiteHeader() {
           <Link href="/about-us" className="drawer-link" onClick={() => setMobileOpen(false)}>About Us</Link>
           <Link href="/warehousing" className="drawer-link" onClick={() => setMobileOpen(false)}>Warehousing</Link>
           <Link href="/careers" className="drawer-link" onClick={() => setMobileOpen(false)}>Careers</Link>
+          <Link href="/tracking" className="drawer-link" onClick={() => setMobileOpen(false)}>Track Order</Link>
           {isCustomer ? (
-            <Link href="/account" className="drawer-signin" onClick={() => setMobileOpen(false)}>
-              My Account
-            </Link>
+            <>
+              <button className="drawer-link" onClick={() => { setMobileOpen(false); signOut(); }} style={{ background: "transparent", border: "none", textAlign: "left", width: "100%" }}>Sign Out</button>
+            </>
           ) : (
-            <Link href="/login" className="drawer-signin" onClick={() => setMobileOpen(false)}>
-              Login
-            </Link>
+            <Link href="/login" className="drawer-link" onClick={() => setMobileOpen(false)}>Customer Login</Link>
           )}
           <Link href="/#instant-quote" className="drawer-cta" onClick={() => setMobileOpen(false)}>Get a Quote</Link>
         </div>
@@ -444,6 +462,43 @@ export function SiteHeader() {
 
         .cta-signin:hover {
           background: #f0f0f0;
+        }
+
+        .account-dropdown-menu {
+          position: absolute;
+          top: calc(100% + 8px);
+          right: 0;
+          background: #0d1728;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          padding: 0.5rem;
+          min-width: 200px;
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          z-index: 100;
+        }
+
+        .account-dropdown-item {
+          display: block;
+          padding: 0.75rem 1rem;
+          color: #fff;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: background 0.15s ease;
+          background: transparent;
+          border: none;
+          text-align: left;
+          cursor: pointer;
+          font-family: inherit;
+        }
+
+        .account-dropdown-item:hover {
+          background: rgba(182, 240, 0, 0.15);
+          color: #b6f000;
         }
 
         .site-header.light-page .cta-signin {
