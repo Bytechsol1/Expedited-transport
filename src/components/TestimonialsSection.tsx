@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import PixelTransition from "./PixelTransition";
@@ -100,7 +100,7 @@ function TestimonialBack({
           borderRadius: "50%",
           objectFit: "cover",
           objectPosition: "top center",
-          border: "2.5px solid #b6f000",
+          border: "2.5px solid #E31E24",
           marginBottom: "1rem",
           flexShrink: 0,
         }}
@@ -118,7 +118,7 @@ function TestimonialBack({
 
       {/* Company */}
       <p style={{
-        color: "#b6f000",
+        color: "#E31E24",
         fontSize: "0.78rem",
         fontFamily: "var(--font-primary, 'Inter', sans-serif)",
         margin: "0 0 1.1rem",
@@ -155,7 +155,7 @@ function TestimonialBack({
   );
 }
 
-/* Pop wrapper — lifts & scales the card on hover with a spring overshoot */
+/* Pop wrapper - lifts & scales the card on hover with a spring overshoot */
 function PopCard({ children, onEnter, onLeave }: {
   children: React.ReactNode;
   onEnter: () => void;
@@ -289,7 +289,7 @@ export function TestimonialsSection() {
                     />
                   }
                   gridSize={8}
-                  pixelColor="#b6f000"
+                  pixelColor="#E31E24"
                   once={false}
                   animationStepDuration={0.18}
                   style={{ width: CARD_W }}
@@ -303,6 +303,7 @@ export function TestimonialsSection() {
     </section>
   );
 }
+
 
 
 

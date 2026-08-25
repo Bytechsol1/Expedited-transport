@@ -121,7 +121,7 @@ export default function ExpeditedTruckingPage() {
           }
 
           .hero-cta:hover {
-            background: #b6f000;
+            background: #E31E24;
             color: #0f172a;
             transform: translateY(-3px);
           }
@@ -144,11 +144,11 @@ export default function ExpeditedTruckingPage() {
             background-color: #f4fce8 !important;
             border-color: #c6f24d !important;
             transform: translateX(8px) !important;
-            box-shadow: 0 12px 24px rgba(182, 240, 0, 0.15) !important;
+            box-shadow: 0 12px 24px rgba(227, 30, 36, 0.15) !important;
           }
           .cta-btn-primary:hover {
             transform: translateY(-4px) !important;
-            box-shadow: 0 30px 60px rgba(182, 240, 0, 0.3) !important;
+            box-shadow: 0 30px 60px rgba(227, 30, 36, 0.3) !important;
           }
           .cta-btn-secondary:hover {
             background-color: rgba(255,255,255,0.1) !important;
@@ -221,7 +221,7 @@ export default function ExpeditedTruckingPage() {
             transition: color 0.6s;
           }
           .pillar:hover .pillar-num {
-            color: #b6f000;
+            color: #E31E24;
           }
           .pillar-content {
             display: flex;
@@ -244,7 +244,7 @@ export default function ExpeditedTruckingPage() {
           .pillar-icon {
             opacity: 0;
             transform: translateX(-20px);
-            color: #b6f000;
+            color: #E31E24;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
           }
           .pillar:hover .pillar-icon {
@@ -425,7 +425,7 @@ export default function ExpeditedTruckingPage() {
 
             <div style={{ textAlign: "center", marginBottom: "80px" }}>
               <h2 style={{ fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24", fontFamily: "var(--font-primary)" }}>Expedited Freight Hauling That You Can Depend On</h2>
-              <div style={{ width: "60px", height: "4px", backgroundColor: "#b6f000", margin: "24px auto 0", borderRadius: "2px" }} />
+              <div style={{ width: "60px", height: "4px", backgroundColor: "#E31E24", margin: "24px auto 0", borderRadius: "2px" }} />
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "100px" }}>
@@ -507,3 +507,4 @@ export default function ExpeditedTruckingPage() {
     </>
   );
 }
+

@@ -139,7 +139,7 @@ export function ProfileForm({
             <button 
               type="submit" 
               disabled={profileLoading}
-              style={{ padding: "0.75rem 1.5rem", background: "#b6f000", color: "#0a0f00", borderRadius: "8px", fontWeight: 700, border: "none", cursor: profileLoading ? "not-allowed" : "pointer", fontSize: "0.95rem", opacity: profileLoading ? 0.7 : 1 }}
+              style={{ padding: "0.75rem 1.5rem", background: "#E31E24", color: "#ffffff", borderRadius: "8px", fontWeight: 700, border: "none", cursor: profileLoading ? "not-allowed" : "pointer", fontSize: "0.95rem", opacity: profileLoading ? 0.7 : 1 }}
             >
               {profileLoading ? "Saving..." : "Save Changes"}
             </button>
@@ -227,3 +227,4 @@ export function ProfileForm({
     </div>
   );
 }
+

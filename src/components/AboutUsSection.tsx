@@ -29,7 +29,7 @@ export function AboutUsSection() {
             color: #0f172a !important;
           }
           .site-header .nav-card .logo-wrap {
-            filter: brightness(0) !important;
+            filter: none !important;
             opacity: 1 !important;
           }
           .site-header .nav-card .burger span {
@@ -84,7 +84,7 @@ export function AboutUsSection() {
               borderRadius: "100px", textDecoration: "none", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
               boxShadow: "0 20px 40px rgba(15, 23, 42, 0.2)"
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.backgroundColor = "#b6f000"; e.currentTarget.style.color = "#000000"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(182, 240, 0, 0.3)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.backgroundColor = "#E31E24"; e.currentTarget.style.color = "#000000"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(227, 30, 36, 0.3)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.backgroundColor = "#0f172a"; e.currentTarget.style.color = "#ffffff"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(15, 23, 42, 0.2)"; }}
             >
               Call Us Today <ArrowRight size={20} />
@@ -206,8 +206,8 @@ export function AboutUsSection() {
                 }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.05) translateY(-10px)";
-                    e.currentTarget.style.boxShadow = "0 30px 60px rgba(0,0,0,0.15), 0 0 0 4px #b6f000";
-                    e.currentTarget.style.borderColor = "#b6f000";
+                    e.currentTarget.style.boxShadow = "0 30px 60px rgba(0,0,0,0.15), 0 0 0 4px #E31E24";
+                    e.currentTarget.style.borderColor = "#E31E24";
                     const inner = e.currentTarget.querySelector('.inner-content') as HTMLElement;
                     if (inner) inner.style.transform = "translateZ(30px)";
                   }}
@@ -220,7 +220,7 @@ export function AboutUsSection() {
                   }}
                 >
                   <div className="inner-content" style={{ transition: "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)" }}>
-                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "70px", height: "70px", borderRadius: "16px", backgroundColor: "#b6f000", marginBottom: "32px", border: "2px solid #0f172a", boxShadow: "-4px 4px 0 #0f172a" }}>
+                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "70px", height: "70px", borderRadius: "16px", backgroundColor: "#E31E24", marginBottom: "32px", border: "2px solid #0f172a", boxShadow: "-4px 4px 0 #0f172a" }}>
                       {card.icon}
                     </div>
 
@@ -251,19 +251,19 @@ export function AboutUsSection() {
             overflow: "hidden",
             boxShadow: "0 40px 80px rgba(0, 0, 0, 0.15)"
           }}>
-            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(182, 240, 0, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(227, 30, 36, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-20%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "60px", position: "relative", zIndex: 1, flexWrap: "wrap" }}>
 
               <div style={{ flex: "1 1 500px" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(182, 240, 0, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(182, 240, 0, 0.2)" }}>
-                  <MapPin size={18} color="#b6f000" />
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "#b6f000", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>Work With Us</span>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(227, 30, 36, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(227, 30, 36, 0.2)" }}>
+                  <MapPin size={18} color="#E31E24" />
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "#E31E24", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>Work With Us</span>
                 </div>
 
                 <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 5vw, 64px)", fontWeight: 450, letterSpacing: "-0.02em", marginBottom: "24px", color: "#ffffff", lineHeight: 1.05 }}>
-                  <span style={{ color: "#b6f000" }}>P</span>artner with the best. <br /> Let's get moving<span style={{ color: "#b6f000" }}>.</span>
+                  <span style={{ color: "#E31E24" }}>P</span>artner with the best. <br /> Let's get moving<span style={{ color: "#E31E24" }}>.</span>
                 </h2>
 
                 <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.7)", marginBottom: "0", lineHeight: 1.6, maxWidth: "540px", fontWeight: 400 }}>
@@ -273,14 +273,14 @@ export function AboutUsSection() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: "20px", minWidth: "300px", flexShrink: 0 }}>
                 <a href="tel:+18609883887" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "24px 40px", backgroundColor: "#b6f000", color: "#000000",
+                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
+                    padding: "24px 40px", backgroundColor: "#E31E24", color: "#ffffff",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
-                  boxShadow: "0 20px 40px rgba(182, 240, 0, 0.2)"
+                  boxShadow: "0 20px 40px rgba(227, 30, 36, 0.2)"
                 }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(182, 240, 0, 0.3)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(182, 240, 0, 0.2)"; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(227, 30, 36, 0.3)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(227, 30, 36, 0.2)"; }}
                 >
                   <span>Call Us Now</span>
                   <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(0,0,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -289,8 +289,8 @@ export function AboutUsSection() {
                 </a>
 
                 <a href="/contact" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff",
+                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
+                    padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
                   border: "1px solid rgba(255,255,255,0.1)"
@@ -320,6 +320,7 @@ export function AboutUsSection() {
     </>
   );
 }
+
 
 
 

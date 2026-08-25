@@ -92,7 +92,7 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
             color: currentTab === "pending" ? "#0f172a" : "rgba(15,23,42,0.5)",
             fontWeight: 700,
             textDecoration: "none",
-            borderBottom: currentTab === "pending" ? "2px solid #b6f000" : "2px solid transparent",
+            borderBottom: currentTab === "pending" ? "2px solid #E31E24" : "2px solid transparent",
             marginBottom: "-1px"
           }}
         >
@@ -105,7 +105,7 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
             color: currentTab === "completed" ? "#0f172a" : "rgba(15,23,42,0.5)",
             fontWeight: 700,
             textDecoration: "none",
-            borderBottom: currentTab === "completed" ? "2px solid #b6f000" : "2px solid transparent",
+            borderBottom: currentTab === "completed" ? "2px solid #E31E24" : "2px solid transparent",
             marginBottom: "-1px"
           }}
         >
@@ -171,8 +171,8 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
                   href={`/tracking?id=EXP-${order.id.split("-")[0].toUpperCase()}`}
                   style={{ 
                     padding: "0.75rem 1.5rem", 
-                    background: currentTab === "pending" ? "#b6f000" : "#f8fafc", 
-                    color: currentTab === "pending" ? "#0a0f00" : "#0f172a", 
+                    background: currentTab === "pending" ? "#E31E24" : "#f8fafc", 
+                    color: currentTab === "pending" ? "#ffffff" : "#0f172a", 
                     borderRadius: "8px", 
                     fontWeight: 700, 
                     textDecoration: "none",
@@ -197,7 +197,7 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
                 : "You don't have any completed deliveries yet."}
             </p>
             {currentTab === "pending" && (
-              <Link href="/#instant-quote" style={{ background: "#b6f000", color: "#0a0f00", padding: "0.75rem 1.5rem", borderRadius: "8px", fontWeight: 700, textDecoration: "none", display: "inline-block" }}>
+              <Link href="/#instant-quote" style={{ background: "#E31E24", color: "#ffffff", padding: "0.75rem 1.5rem", borderRadius: "8px", fontWeight: 700, textDecoration: "none", display: "inline-block" }}>
                 Get a Quote
               </Link>
             )}
@@ -208,3 +208,4 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
     </div>
   );
 }
+

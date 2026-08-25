@@ -20,7 +20,7 @@ export function HotshotServicesSection() {
         .glass-card:hover {
           transform: translateY(-8px);
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-          border-color: rgba(182, 240, 0, 0.3);
+          border-color: rgba(227, 30, 36, 0.3);
         }
         .text-gradient {
           background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.7) 100%);
@@ -28,7 +28,7 @@ export function HotshotServicesSection() {
           -webkit-text-fill-color: transparent;
         }
         .accent-gradient {
-          background: linear-gradient(135deg, #b6f000 0%, #8cae00 100%);
+          background: linear-gradient(135deg, #E31E24 0%, #8cae00 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
@@ -37,7 +37,7 @@ export function HotshotServicesSection() {
           transition: all 0.3s ease;
         }
         .btn-glow:hover {
-          box-shadow: 0 0 20px rgba(182, 240, 0, 0.4);
+          box-shadow: 0 0 20px rgba(227, 30, 36, 0.4);
           transform: translateY(-2px);
         }
         .btn-glass {
@@ -48,14 +48,14 @@ export function HotshotServicesSection() {
         }
         .btn-glass:hover {
           background: rgba(255, 255, 255, 0.1);
-          border-color: rgba(182, 240, 0, 0.5);
+          border-color: rgba(227, 30, 36, 0.5);
         }
         .feature-icon-wrapper {
           transition: all 0.4s ease;
         }
         .glass-card:hover .feature-icon-wrapper {
           transform: scale(1.1) rotate(5deg);
-          color: #b6f000 !important;
+          color: #E31E24 !important;
         }
         .feature-img {
           transition: transform 0.6s ease;
@@ -106,7 +106,7 @@ export function HotshotServicesSection() {
             {/* Left Content */}
             <div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: "10px", padding: "8px 16px", borderRadius: "100px", background: "#111111", border: "1px solid #333", marginBottom: "32px" }}>
-                <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#b6f000" }} />
+                <span style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "#E31E24" }} />
                 <span style={{ fontSize: "12px", textTransform: "uppercase", letterSpacing: "1.5px", color: "#ccc", fontWeight: 600 }}>
                   Premium Services
                 </span>
@@ -123,7 +123,7 @@ export function HotshotServicesSection() {
               <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
                 <a href="tel:+18609883887" style={{
                   display: "inline-flex", alignItems: "center", gap: "12px",
-                  backgroundColor: "#b6f000", color: "#000",
+                  backgroundColor: "#E31E24", color: "#000",
                   padding: "16px 32px", fontSize: "15px", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 700,
                   borderRadius: "8px", textDecoration: "none", transition: "opacity 0.2s"
                 }}
@@ -231,7 +231,7 @@ export function HotshotServicesSection() {
                       e.currentTarget.style.backgroundColor = "#f4fce8";
                       e.currentTarget.style.borderColor = "#c6f24d";
                       e.currentTarget.style.transform = "translateX(8px)";
-                      e.currentTarget.style.boxShadow = "0 12px 24px rgba(182, 240, 0, 0.15)";
+                      e.currentTarget.style.boxShadow = "0 12px 24px rgba(227, 30, 36, 0.15)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = "#ffffff";
@@ -246,7 +246,7 @@ export function HotshotServicesSection() {
                         height: "48px",
                         borderRadius: "14px",
                         backgroundColor: "#0f172a",
-                        color: "#b6f000",
+                        color: "#E31E24",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -273,7 +273,7 @@ export function HotshotServicesSection() {
 
             <div style={{ textAlign: "center", marginBottom: "80px" }}>
               <h2 style={{ fontSize: "40px", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24" }}>Expedited Freight Hauling That You Can Depend On</h2>
-              <div style={{ width: "60px", height: "4px", backgroundColor: "#b6f000", margin: "24px auto 0", borderRadius: "2px" }} />
+              <div style={{ width: "60px", height: "4px", backgroundColor: "#E31E24", margin: "24px auto 0", borderRadius: "2px" }} />
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "100px" }}>
@@ -363,19 +363,19 @@ export function HotshotServicesSection() {
             boxShadow: "0 40px 80px rgba(0, 0, 0, 0.15)"
           }}>
             {/* Background Graphic/Texture */}
-            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(182, 240, 0, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(227, 30, 36, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-20%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "60px", position: "relative", zIndex: 1, flexWrap: "wrap" }}>
 
               <div style={{ flex: "1 1 500px" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(182, 240, 0, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(182, 240, 0, 0.2)" }}>
-                  <MapPin size={18} color="#b6f000" />
-                  <span style={{ fontSize: "14px", color: "#b6f000", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700 }}>Initiate Transport</span>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(227, 30, 36, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(227, 30, 36, 0.2)" }}>
+                  <MapPin size={18} color="#E31E24" />
+                  <span style={{ fontSize: "14px", color: "#E31E24", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 700 }}>Initiate Transport</span>
                 </div>
 
                 <h2 style={{ fontSize: "clamp(48px, 5vw, 64px)", fontWeight: 700, letterSpacing: "-0.03em", marginBottom: "24px", color: "#ffffff", lineHeight: 1.05 }}>
-                  <span style={{ color: "#b6f000" }}>G</span>et Started with Our Expedited <br /> Trucking Today<span style={{ color: "#b6f000" }}>.</span>
+                  <span style={{ color: "#E31E24" }}>G</span>et Started with Our Expedited <br /> Trucking Today<span style={{ color: "#E31E24" }}>.</span>
                 </h2>
 
                 <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.7)", marginBottom: "0", lineHeight: 1.6, maxWidth: "540px", fontWeight: 400 }}>
@@ -385,14 +385,14 @@ export function HotshotServicesSection() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: "20px", minWidth: "300px", flexShrink: 0 }}>
                 <a href="tel:+18609883887" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "24px 40px", backgroundColor: "#b6f000", color: "#000000",
+                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
+                    padding: "24px 40px", backgroundColor: "#E31E24", color: "#ffffff",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
-                  boxShadow: "0 20px 40px rgba(182, 240, 0, 0.2)"
+                  boxShadow: "0 20px 40px rgba(227, 30, 36, 0.2)"
                 }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(182, 240, 0, 0.3)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(182, 240, 0, 0.2)"; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(227, 30, 36, 0.3)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(227, 30, 36, 0.2)"; }}
                 >
                   <span>Call Us Now</span>
                   <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(0,0,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -401,8 +401,8 @@ export function HotshotServicesSection() {
                 </a>
 
                 <a href="/contact" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff",
+                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
+                    padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
                   border: "1px solid rgba(255,255,255,0.1)"
@@ -425,3 +425,4 @@ export function HotshotServicesSection() {
     </>
   );
 }
+

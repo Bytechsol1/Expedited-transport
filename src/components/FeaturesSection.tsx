@@ -234,7 +234,7 @@ export function FeaturesSection() {
                 }}
               >
                 Our{" "}
-                <strong style={{ fontWeight: 400, fontStyle: "italic", color: "#b6f000" }}>Services</strong>{" "}
+                <strong style={{ fontWeight: 400, fontStyle: "italic", color: "#E31E24" }}>Services</strong>{" "}
               </h2>
               {/* Odometer */}
               <div style={{ display: "flex" }}>
@@ -352,7 +352,7 @@ export function FeaturesSection() {
               >
                 <div
                   style={{
-                    background: "#b6f000",
+                    background: "#E31E24",
                     height: "100%",
                     position: "absolute",
                     left: 0,
@@ -604,3 +604,4 @@ export function FeaturesSection() {
     </div>
   );
 }
+

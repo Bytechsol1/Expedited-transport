@@ -89,8 +89,8 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                 disabled={isLoading}
                 style={{ 
                   padding: "0 2rem", 
-                  background: isLoading ? "#d4d4d8" : "#b6f000", 
-                  color: "#0a0f00", 
+                  background: isLoading ? "#d4d4d8" : "#E31E24", 
+                  color: "#ffffff", 
                   borderRadius: "12px", 
                   fontWeight: 700, 
                   border: "none", 
@@ -147,9 +147,9 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                         <div key={step} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", zIndex: 1, width: "25%" }}>
                           <div style={{ 
                             width: "24px", height: "24px", borderRadius: "50%", 
-                            background: isCompleted ? "#b6f000" : "#fff",
-                            border: `2px solid ${isCompleted ? "#b6f000" : "rgba(0,0,0,0.1)"}`,
-                            boxShadow: isCurrent ? "0 0 0 4px rgba(182, 240, 0, 0.2)" : "none",
+                            background: isCompleted ? "#E31E24" : "#fff",
+                            border: `2px solid ${isCompleted ? "#E31E24" : "rgba(0,0,0,0.1)"}`,
+                            boxShadow: isCurrent ? "0 0 0 4px rgba(227, 30, 36, 0.2)" : "none",
                           }} />
                           <div style={{ textAlign: "center" }}>
                             <div style={{ fontSize: "0.75rem", fontWeight: 700, color: isCompleted ? "#0f172a" : "rgba(15,23,42,0.4)", textTransform: "uppercase" }}>
@@ -214,3 +214,4 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
     </main>
   );
 }
+

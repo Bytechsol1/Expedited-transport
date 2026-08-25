@@ -86,7 +86,7 @@ export default function LoginPage() {
         .login-panel__eyebrow-line {
           height: 1px;
           width: 2rem;
-          background: linear-gradient(90deg, rgba(171,255,2,0), rgba(171,255,2,0.75), rgba(171,255,2,0));
+          background: linear-gradient(90deg, rgba(227,30,36,0), rgba(227,30,36,0.75), rgba(227,30,36,0));
         }
         .login-panel__heading {
           font-size: clamp(1.75rem, 2.6vw, 2.4rem);

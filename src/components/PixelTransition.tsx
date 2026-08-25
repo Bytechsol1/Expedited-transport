@@ -19,7 +19,7 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
   firstContent,
   secondContent,
   gridSize = 7,
-  pixelColor = '#b6f000',
+  pixelColor = '#E31E24',
   animationStepDuration = 0.4,
   once = false,
   aspectRatio = '100%',
@@ -138,3 +138,4 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
 };
 
 export default PixelTransition;
+

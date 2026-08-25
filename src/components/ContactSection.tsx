@@ -94,7 +94,7 @@ export function ContactSection() {
         }}
       >
         <SideRays
-          rayColor1="#b6f000"
+          rayColor1="#E31E24"
           rayColor2="#96c8ff"
           origin="top-right"
           speed={2.5}
@@ -122,14 +122,14 @@ export function ContactSection() {
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
           aria-hidden
         >
-          <path d="M-50,80 C80,30 170,130 250,80 S420,30 550,80" fill="none" stroke="#b6f000" strokeWidth="1.8" opacity="0.25" style={{ animation: "cw-float 4.2s ease-in-out infinite alternate" }} />
-          <path d="M-50,170 C80,115 170,225 250,170 S420,115 550,170" fill="none" stroke="#b6f000" strokeWidth="1.2" opacity="0.18" style={{ animation: "cw-float 3.8s ease-in-out infinite alternate", animationDelay: "0.4s" }} />
-          <path d="M-50,270 C80,215 170,325 250,270 S420,215 550,270" fill="none" stroke="#b6f000" strokeWidth="2.0" opacity="0.30" style={{ animation: "cw-float 5.0s ease-in-out infinite alternate", animationDelay: "0.8s" }} />
-          <path d="M-50,370 C80,315 170,425 250,370 S420,315 550,370" fill="none" stroke="#b6f000" strokeWidth="1.0" opacity="0.15" style={{ animation: "cw-float 4.5s ease-in-out infinite alternate", animationDelay: "0.2s" }} />
-          <path d="M-50,470 C80,415 170,525 250,470 S420,415 550,470" fill="none" stroke="#b6f000" strokeWidth="1.6" opacity="0.22" style={{ animation: "cw-float 3.6s ease-in-out infinite alternate", animationDelay: "1.0s" }} />
-          <path d="M-50,570 C80,515 170,625 250,570 S420,515 550,570" fill="none" stroke="#b6f000" strokeWidth="1.3" opacity="0.20" style={{ animation: "cw-float 4.8s ease-in-out infinite alternate", animationDelay: "0.6s" }} />
-          <path d="M-50,670 C80,615 170,725 250,670 S420,615 550,670" fill="none" stroke="#b6f000" strokeWidth="1.9" opacity="0.28" style={{ animation: "cw-float 4.0s ease-in-out infinite alternate", animationDelay: "0.3s" }} />
-          <path d="M-50,770 C80,715 170,825 250,770 S420,715 550,770" fill="none" stroke="#b6f000" strokeWidth="1.1" opacity="0.17" style={{ animation: "cw-float 5.2s ease-in-out infinite alternate", animationDelay: "0.9s" }} />
+          <path d="M-50,80 C80,30 170,130 250,80 S420,30 550,80" fill="none" stroke="#E31E24" strokeWidth="1.8" opacity="0.25" style={{ animation: "cw-float 4.2s ease-in-out infinite alternate" }} />
+          <path d="M-50,170 C80,115 170,225 250,170 S420,115 550,170" fill="none" stroke="#E31E24" strokeWidth="1.2" opacity="0.18" style={{ animation: "cw-float 3.8s ease-in-out infinite alternate", animationDelay: "0.4s" }} />
+          <path d="M-50,270 C80,215 170,325 250,270 S420,215 550,270" fill="none" stroke="#E31E24" strokeWidth="2.0" opacity="0.30" style={{ animation: "cw-float 5.0s ease-in-out infinite alternate", animationDelay: "0.8s" }} />
+          <path d="M-50,370 C80,315 170,425 250,370 S420,315 550,370" fill="none" stroke="#E31E24" strokeWidth="1.0" opacity="0.15" style={{ animation: "cw-float 4.5s ease-in-out infinite alternate", animationDelay: "0.2s" }} />
+          <path d="M-50,470 C80,415 170,525 250,470 S420,415 550,470" fill="none" stroke="#E31E24" strokeWidth="1.6" opacity="0.22" style={{ animation: "cw-float 3.6s ease-in-out infinite alternate", animationDelay: "1.0s" }} />
+          <path d="M-50,570 C80,515 170,625 250,570 S420,515 550,570" fill="none" stroke="#E31E24" strokeWidth="1.3" opacity="0.20" style={{ animation: "cw-float 4.8s ease-in-out infinite alternate", animationDelay: "0.6s" }} />
+          <path d="M-50,670 C80,615 170,725 250,670 S420,615 550,670" fill="none" stroke="#E31E24" strokeWidth="1.9" opacity="0.28" style={{ animation: "cw-float 4.0s ease-in-out infinite alternate", animationDelay: "0.3s" }} />
+          <path d="M-50,770 C80,715 170,825 250,770 S420,715 550,770" fill="none" stroke="#E31E24" strokeWidth="1.1" opacity="0.17" style={{ animation: "cw-float 5.2s ease-in-out infinite alternate", animationDelay: "0.9s" }} />
         </svg>
 
         <div
@@ -156,7 +156,7 @@ export function ContactSection() {
               fontWeight: 700,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              color: "#b6f000",
+              color: "#E31E24",
               margin: "0 0 0.9rem",
             }}
           >
@@ -186,8 +186,8 @@ export function ContactSection() {
                 fontFamily: "var(--font-primary, 'Inter', sans-serif)",
                 fontSize: "1rem",
                 fontWeight: 700,
-                color: "#0a1628",
-                background: "#b6f000",
+                color: "#ffffff",
+                background: "#E31E24",
                 textDecoration: "none",
                 letterSpacing: "-0.01em",
                 padding: "0.75rem 1.75rem",
@@ -196,7 +196,7 @@ export function ContactSection() {
                 marginTop: "0.5rem",
                 marginBottom: "1rem",
                 transition: "all 0.2s ease",
-                boxShadow: "0 4px 14px rgba(182, 240, 0, 0.25)",
+                boxShadow: "0 4px 14px rgba(227, 30, 36, 0.25)",
               }}
             >
               Call Us Now <Phone size={18} style={{ marginLeft: "8px" }} />
@@ -278,8 +278,8 @@ export function ContactSection() {
             style={{
               marginTop: "0.25rem",
               padding: "0.85rem 1.5rem",
-              background: "#b6f000",
-              color: "#0a0f00",
+              background: "#E31E24",
+              color: "#ffffff",
               border: "none",
               borderRadius: "12px",
               fontFamily: "var(--font-primary, 'Inter', sans-serif)",
@@ -290,8 +290,8 @@ export function ContactSection() {
               transition: "background 0.15s ease",
               width: "100%",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#cbff1a")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "#b6f000")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#C81920")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "#E31E24")}
           >
             {sending ? "Sending..." : "Send Message"}
           </button>
@@ -303,7 +303,7 @@ export function ContactSection() {
                 margin: 0,
                 padding: "0.85rem 1rem",
                 borderRadius: "14px",
-                background: "rgba(182, 240, 0, 0.12)",
+                background: "rgba(227, 30, 36, 0.12)",
                 color: "#0f172a",
                 fontSize: "0.95rem",
                 fontWeight: 600,
@@ -327,13 +327,13 @@ export function ContactSection() {
         }
         .contact-form-card input,
         .contact-form-card textarea {
-          color: #0a1628;
+          color: #0f172a;
         }
 
         .contact-call-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(182, 240, 0, 0.4) !important;
-          background: #cbff1a !important;
+          box-shadow: 0 6px 20px rgba(227, 30, 36, 0.4) !important;
+          background: #C81920 !important;
         }
 
         .contact-section { flex-direction: row; }
@@ -395,7 +395,7 @@ const INPUT_STYLE: React.CSSProperties = {
   borderBottom: "1px solid rgba(0,0,0,0.15)",
   borderRadius: 0,
   padding: "0.6rem 0",
-  color: "#0a1628",
+  color: "#0f172a",
   fontFamily: "var(--font-primary, 'Inter', sans-serif)",
   fontSize: "0.95rem",
   outline: "none",
@@ -428,9 +428,10 @@ function Field({
         onChange={onChange}
         style={INPUT_STYLE}
         required={required}
-        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#b6f000")}
+        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#E31E24")}
         onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(0,0,0,0.15)")}
       />
     </div>
   );
 }
+

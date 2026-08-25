@@ -143,7 +143,7 @@ export function CustomerAuthForm() {
         .auth-title {
           font-size: 1.75rem;
           font-weight: 700;
-          color: var(--c-dark-green);
+          color: #ffffff;
           margin: 0 0 0.5rem;
           letter-spacing: -0.01em;
         }
@@ -185,8 +185,8 @@ export function CustomerAuthForm() {
           border: none;
           border-radius: 0.6rem;
           padding: 0.8rem;
-          background: var(--c-lime);
-          color: var(--c-dark-green);
+          background: #E31E24;
+          color: #ffffff;
           font-weight: 700;
           font-size: 0.95rem;
           cursor: pointer;

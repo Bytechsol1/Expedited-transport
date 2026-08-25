@@ -470,7 +470,7 @@ export function InstantQuoteSection() {
         .iq-results-glow {
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse 65% 55% at 88% 0%, rgba(182, 240, 0, 0.3), transparent 68%);
+          background: radial-gradient(ellipse 65% 55% at 88% 0%, rgba(227, 30, 36, 0.3), transparent 68%);
           pointer-events: none;
         }
 
@@ -509,7 +509,7 @@ export function InstantQuoteSection() {
           position: relative;
           height: 1px;
           margin: 1.75rem 0;
-          background: rgba(182, 240, 0, 0.18);
+          background: rgba(227, 30, 36, 0.18);
         }
 
         .iq-divider-dot {
@@ -619,7 +619,7 @@ export function InstantQuoteSection() {
         }
 
         .iq-input:focus {
-          border-bottom-color: var(--c-lime);
+          border-bottom-color: #E31E24;
         }
 
         .iq-suggestions {
@@ -676,7 +676,7 @@ export function InstantQuoteSection() {
         }
 
         .iq-select-trigger:hover {
-          border-bottom-color: var(--c-lime);
+          border-bottom-color: #E31E24;
         }
 
         .iq-select-icon {
@@ -718,7 +718,7 @@ export function InstantQuoteSection() {
         }
 
         .iq-select-option.selected {
-          background: rgba(182, 240, 0, 0.15);
+          background: rgba(227, 30, 36, 0.15);
           color: #5c7300;
           font-weight: 600;
         }
@@ -784,7 +784,7 @@ export function InstantQuoteSection() {
         .iq-slider-input::-moz-range-progress {
           height: 4px;
           border-radius: 999px;
-          background: var(--c-lime);
+          background: #E31E24;
         }
 
         .iq-slider-input::-webkit-slider-thumb {
@@ -794,7 +794,7 @@ export function InstantQuoteSection() {
           margin-top: -10px;
           border-radius: 50%;
           background: #fff;
-          border: 3px solid var(--c-lime);
+          border: 3px solid #E31E24;
           box-shadow: 0 2px 8px rgba(5, 36, 36, 0.25);
           cursor: pointer;
         }
@@ -804,7 +804,7 @@ export function InstantQuoteSection() {
           height: 18px;
           border-radius: 50%;
           background: #fff;
-          border: 3px solid var(--c-lime);
+          border: 3px solid #E31E24;
           box-shadow: 0 2px 8px rgba(5, 36, 36, 0.25);
           cursor: pointer;
         }
@@ -883,7 +883,7 @@ export function InstantQuoteSection() {
 
         .iq-result-warn a,
         .iq-result-error a {
-          color: var(--c-lime);
+          color: #E31E24;
           font-weight: 700;
           text-decoration: underline;
         }
@@ -912,8 +912,8 @@ export function InstantQuoteSection() {
         .iq-pay-btn {
           width: 100%;
           padding: 0.9rem 1.5rem;
-          background: var(--c-lime);
-          color: #0a0f00;
+          background: #E31E24;
+          color: #ffffff;
           border: none;
           border-radius: 12px;
           font-family: var(--font-primary);
@@ -925,7 +925,7 @@ export function InstantQuoteSection() {
         }
 
         .iq-pay-btn:hover:not(:disabled) {
-          background: #cbff1a;
+          background: #C81920;
           transform: translateY(-1px);
         }
 
@@ -1146,7 +1146,7 @@ function SliderField({
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className="iq-slider-input"
-        style={{ background: `linear-gradient(to right, var(--c-lime) ${percent}%, rgba(5, 36, 36, 0.15) ${percent}%)` }}
+        style={{ background: `linear-gradient(to right, #E31E24 ${percent}%, rgba(5, 36, 36, 0.15) ${percent}%)` }}
       />
       <div className="iq-slider-scale">
         <span>0 {unit}</span>
@@ -1155,3 +1155,4 @@ function SliderField({
     </div>
   );
 }
+

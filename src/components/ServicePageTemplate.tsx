@@ -191,7 +191,7 @@ export function ServicePageTemplate({
           }
 
           .hero-cta:hover {
-            background: #b6f000;
+            background: #E31E24;
             color: #0f172a;
             transform: translateY(-3px);
           }
@@ -364,7 +364,7 @@ export function ServicePageTemplate({
             inset: 0 auto auto 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, #0f172a, #b6f000);
+            background: linear-gradient(90deg, #0f172a, #E31E24);
           }
 
           .service-badge {
@@ -375,7 +375,7 @@ export function ServicePageTemplate({
             height: 48px;
             border-radius: 16px;
             background: #0f172a;
-            color: #b6f000;
+            color: #E31E24;
             margin-bottom: 16px;
           }
 
@@ -441,8 +441,8 @@ export function ServicePageTemplate({
             min-width: 170px;
             padding: 15px 18px;
             border-radius: 14px;
-            background: #b6f000;
-            color: #0f172a;
+            background: #E31E24;
+            color: #ffffff;
             text-decoration: none;
             font-weight: 900;
             letter-spacing: 0.08em;
@@ -612,7 +612,7 @@ export function ServicePageTemplate({
             transition: color 0.6s;
           }
           .pillar:hover .pillar-num {
-            color: #b6f000;
+            color: #E31E24;
           }
           .pillar-content {
             display: flex;
@@ -635,7 +635,7 @@ export function ServicePageTemplate({
           .pillar-icon {
             opacity: 0;
             transform: translateX(-20px);
-            color: #b6f000;
+            color: #E31E24;
             transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
           }
           .pillar:hover .pillar-icon {
@@ -964,7 +964,7 @@ export function ServicePageTemplate({
                   <div className="notched-section-inner">
                     <div style={{ textAlign: "center", marginBottom: "60px" }}>
                       <h2 style={{ fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24", fontFamily: "var(--font-primary)" }}>{title} That You Can Depend On</h2>
-                      <div style={{ width: "60px", height: "4px", backgroundColor: "#b6f000", margin: "24px auto 0", borderRadius: "2px" }} />
+                      <div style={{ width: "60px", height: "4px", backgroundColor: "#E31E24", margin: "24px auto 0", borderRadius: "2px" }} />
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
@@ -1072,6 +1072,7 @@ export function ServicePageTemplate({
     </>
   );
 }
+
 
 
 

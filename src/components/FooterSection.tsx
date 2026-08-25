@@ -57,7 +57,7 @@ export function FooterSection() {
           <a
             href="tel:+18609883887"
             style={{ display: "block", color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.93rem", marginBottom: "0.4rem" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "#b6f000")}
+            onMouseEnter={e => (e.currentTarget.style.color = "#E31E24")}
             onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.52)")}
           >
             (860) 988-3887
@@ -65,7 +65,7 @@ export function FooterSection() {
           <a
             href="mailto:info@expeditedtransportservices.net"
             style={{ display: "block", color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.93rem", marginBottom: "0.9rem", wordBreak: "break-all" }}
-            onMouseEnter={e => (e.currentTarget.style.color = "#b6f000")}
+            onMouseEnter={e => (e.currentTarget.style.color = "#E31E24")}
             onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.52)")}
           >
             info@expeditedtransportservices.net
@@ -82,7 +82,7 @@ export function FooterSection() {
                 style={{ display: "flex", justifyContent: "space-between", maxWidth: 260, fontSize: "0.93rem" }}
               >
                 <span style={{ color: "rgba(255,255,255,0.45)" }}>{day}</span>
-                <span style={{ color: time === "Available" ? "#b6f000" : "#fff", fontWeight: time === "24 Hours" ? 600 : 400 }}>
+                <span style={{ color: time === "Available" ? "#E31E24" : "#fff", fontWeight: time === "24 Hours" ? 600 : 400 }}>
                   {time}
                 </span>
               </div>
@@ -103,7 +103,7 @@ export function FooterSection() {
                 key={label}
                 href={href}
                 style={{ color: "rgba(255,255,255,0.52)", textDecoration: "none", fontSize: "0.93rem" }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#b6f000")}
+                onMouseEnter={e => (e.currentTarget.style.color = "#E31E24")}
                 onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.52)")}
               >
                 {label}
@@ -238,18 +238,18 @@ export function FooterSection() {
           width: 44px;
           height: 44px;
           border-radius: 50%;
-          background: #b6f000;
-          border: 1px solid #b6f000;
-          color: #0a0f00;
+          background: #E31E24;
+          border: 1px solid #E31E24;
+          color: #ffffff;
           cursor: pointer;
           padding: 0;
           transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
         }
 
         .back-to-top-btn:hover {
-          background: #cbff1a;
-          border-color: #cbff1a;
-          color: #0a0f00;
+          background: #C81920;
+          border-color: #C81920;
+          color: #ffffff;
           transform: scale(1.1);
         }
 
@@ -270,9 +270,9 @@ export function FooterSection() {
           display: inline-flex;
           align-items: center;
           gap: 0.6rem;
-          background: rgba(182, 240, 0, 0.05);
-          border: 1px solid rgba(182, 240, 0, 0.2);
-          color: #b6f000;
+          background: rgba(227, 30, 36, 0.05);
+          border: 1px solid rgba(227, 30, 36, 0.2);
+          color: #E31E24;
           font-family: var(--font-primary);
           font-size: 0.75rem;
           font-weight: 800;
@@ -292,15 +292,15 @@ export function FooterSection() {
           content: "";
           position: absolute;
           inset: 0;
-          background: linear-gradient(90deg, transparent, rgba(182, 240, 0, 0.15), transparent);
+          background: linear-gradient(90deg, transparent, rgba(227, 30, 36, 0.15), transparent);
           transform: translateX(-100%);
           transition: transform 0.6s ease;
         }
 
         .footer-track-btn:hover {
-          background: rgba(182, 240, 0, 0.12);
-          border-color: rgba(182, 240, 0, 0.4);
-          box-shadow: 0 0 24px rgba(182, 240, 0, 0.15);
+          background: rgba(227, 30, 36, 0.12);
+          border-color: rgba(227, 30, 36, 0.4);
+          box-shadow: 0 0 24px rgba(227, 30, 36, 0.15);
           transform: translateY(-2px);
         }
 
@@ -370,6 +370,7 @@ export function FooterSection() {
     </footer>
   );
 }
+
 
 
 

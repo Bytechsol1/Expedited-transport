@@ -108,7 +108,7 @@ function FreightShippingLowerContent() {
         <div className="cta-band">
           <div className="cta-inner">
             <div>
-              <div className="section-kicker" style={{ color: "#d8f97a", background: "rgba(182, 240, 0, 0.12)" }}>
+              <div className="section-kicker" style={{ color: "#d8f97a", background: "rgba(227, 30, 36, 0.12)" }}>
                 <Truck size={14} /> Truck Icon
               </div>
               <h3>Speak with Our Freight Shipping Experts</h3>

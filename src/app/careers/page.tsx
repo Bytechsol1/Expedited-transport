@@ -29,7 +29,7 @@ export default function CareersPage() {
             color: #0f172a !important;
           }
           .site-header .nav-card .logo-wrap {
-            filter: brightness(0) !important;
+            filter: none !important;
             opacity: 1 !important;
           }
           .site-header .nav-card .burger span {
@@ -87,7 +87,7 @@ export default function CareersPage() {
                     <span style={{ padding: "8px 16px", background: "#f1f5f9", borderRadius: "100px", fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#475569" }}>
                       Independent Contractor
                     </span>
-                    <span style={{ padding: "8px 16px", background: "rgba(182, 240, 0, 0.15)", color: "#526c00", borderRadius: "100px", fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                    <span style={{ padding: "8px 16px", background: "rgba(227, 30, 36, 0.15)", color: "#526c00", borderRadius: "100px", fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
                       Flexible Schedule
                     </span>
                   </div>
@@ -102,13 +102,13 @@ export default function CareersPage() {
 
                   <div style={{ 
                     padding: "24px", 
-                    background: "#f0f9ff", 
+                    background: "#fef2f2", 
                     borderRadius: "16px", 
-                    borderLeft: "4px solid #0ea5e9"
+                    borderLeft: "4px solid #E31E24"
                   }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
-                      <MapPin size={24} color="#0284c7" />
-                      <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#0369a1", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase" }}>Target Locations</h4>
+                      <MapPin size={24} color="#E31E24" />
+                      <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#B9181D", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase" }}>Target Locations</h4>
                     </div>
                     <p style={{ color: "#0f172a", lineHeight: 1.6, margin: 0, fontSize: "16px", fontWeight: 500 }}>
                       Hartford, West Hartford, Bloomfield, Windsor, Avon, Simsbury, Canton, Burlington, Torrington, Middletown, Berlin, Cromwell, New London County, and surrounding areas.
@@ -135,7 +135,7 @@ export default function CareersPage() {
                         display: "flex",
                         alignItems: "center",
                         gap: "12px",
-                        background: "#b6f000",
+                        background: "#E31E24",
                         padding: "16px 32px",
                         borderRadius: "100px",
                         color: "#0f172a",
@@ -144,7 +144,7 @@ export default function CareersPage() {
                         fontSize: "16px",
                         letterSpacing: "0.5px",
                         textTransform: "uppercase",
-                        boxShadow: "0 24px 48px rgba(182, 240, 0, 0.4)",
+                        boxShadow: "0 24px 48px rgba(227, 30, 36, 0.4)",
                         border: "none"
                       }}
                     >
@@ -165,7 +165,7 @@ export default function CareersPage() {
               {/* LEFT SIDE: WHAT WE OFFER */}
               <div style={{ flex: "1 1 600px" }}>
                 <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 6vw, 80px)", fontWeight: 500, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 20px", lineHeight: 1 }}>
-                  What We <br/> <span style={{ color: "#0ea5e9" }}>Offer.</span>
+                  What We <br/> <span style={{ color: "#E31E24" }}>Offer.</span>
                 </h2>
                 <p style={{ fontSize: "20px", color: "#64748b", margin: "0 0 60px", lineHeight: 1.6, maxWidth: "500px" }}>
                   Join a logistics network that respects your time, pays you fast, and gives you total control.
@@ -193,7 +193,7 @@ export default function CareersPage() {
               {/* RIGHT SIDE: REQUIREMENTS (INFOGRAPHIC GRID) */}
               <div style={{ flex: "1 1 500px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "40px" }}>
-                  <div style={{ width: "48px", height: "4px", backgroundColor: "#b6f000", borderRadius: "2px" }} />
+                  <div style={{ width: "48px", height: "4px", backgroundColor: "#E31E24", borderRadius: "2px" }} />
                   <h3 style={{ fontSize: "32px", fontWeight: 700, color: "#0f172a", margin: 0, fontFamily: "var(--font-primary)", letterSpacing: "-0.02em" }}>Driver Requirements</h3>
                 </div>
                 
@@ -223,7 +223,7 @@ export default function CareersPage() {
                       e.currentTarget.style.boxShadow = "0 24px 48px rgba(15, 23, 42, 0.08)"; 
                       const icon = e.currentTarget.querySelector('.req-icon') as HTMLElement;
                       if (icon) {
-                        icon.style.color = "#b6f000";
+                        icon.style.color = "#E31E24";
                         icon.style.transform = "translateX(8px)";
                       }
                     }}
@@ -265,19 +265,19 @@ export default function CareersPage() {
             overflow: "hidden",
             boxShadow: "0 40px 80px rgba(0, 0, 0, 0.15)"
           }}>
-            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(182, 240, 0, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(227, 30, 36, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-20%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "60px", position: "relative", zIndex: 1, flexWrap: "wrap" }}>
 
               <div style={{ flex: "1 1 500px" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(182, 240, 0, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(182, 240, 0, 0.2)" }}>
-                  <Smartphone size={18} color="#b6f000" />
-                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "#b6f000", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>Start Today</span>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(227, 30, 36, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(227, 30, 36, 0.2)" }}>
+                  <Smartphone size={18} color="#E31E24" />
+                  <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "#E31E24", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>Start Today</span>
                 </div>
 
                 <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 5vw, 64px)", fontWeight: 450, letterSpacing: "-0.02em", marginBottom: "24px", color: "#ffffff", lineHeight: 1.05 }}>
-                  Download the <span style={{ color: "#b6f000" }}>CMJL</span> <br /> Driver App<span style={{ color: "#b6f000" }}>.</span>
+                  Download the <span style={{ color: "#E31E24" }}>CMJL</span> <br /> Driver App<span style={{ color: "#E31E24" }}>.</span>
                 </h2>
 
                 <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.7)", marginBottom: "0", lineHeight: 1.6, maxWidth: "540px", fontWeight: 400 }}>
@@ -287,14 +287,14 @@ export default function CareersPage() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: "20px", minWidth: "300px", flexShrink: 0 }}>
                 <a href="https://apps.apple.com/app/cmjl/id6775973879" target="_blank" rel="noopener noreferrer" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
-                  padding: "24px 40px", backgroundColor: "#b6f000", color: "#000000",
+                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
+                  padding: "24px 40px", backgroundColor: "#E31E24", color: "#ffffff",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
-                  boxShadow: "0 20px 40px rgba(182, 240, 0, 0.2)"
+                  boxShadow: "0 20px 40px rgba(227, 30, 36, 0.2)"
                 }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(182, 240, 0, 0.3)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(182, 240, 0, 0.2)"; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(227, 30, 36, 0.3)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(227, 30, 36, 0.2)"; }}
                 >
                   <span>iPhone App Store</span>
                   <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(0,0,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -303,7 +303,7 @@ export default function CareersPage() {
                 </a>
 
                 <a href="https://play.google.com/store/apps/details?id=net.expeditedtransport.driverapp&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
                   padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff",
                   textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
                   borderRadius: "20px", transition: "all 0.3s ease",
@@ -334,3 +334,4 @@ export default function CareersPage() {
     </>
   );
 }
+

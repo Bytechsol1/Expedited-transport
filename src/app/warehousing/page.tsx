@@ -98,7 +98,7 @@ export default function WarehousingPage() {
             overflow-x: hidden;
             color: #0f172a;
             background:
-              radial-gradient(circle at 10% 0%, rgba(182, 240, 0, 0.11), transparent 26%),
+              radial-gradient(circle at 10% 0%, rgba(227, 30, 36, 0.11), transparent 26%),
               radial-gradient(circle at 88% 10%, rgba(59, 130, 246, 0.08), transparent 20%),
               linear-gradient(180deg, #f7f9fc 0%, #edf2f8 100%);
           }
@@ -128,7 +128,7 @@ export default function WarehousingPage() {
             border-radius: 36px;
             color: #fff;
             background:
-              radial-gradient(circle at top right, rgba(182, 240, 0, 0.16), transparent 22%),
+              radial-gradient(circle at top right, rgba(227, 30, 36, 0.16), transparent 22%),
               linear-gradient(145deg, #08111f 0%, #0d1728 58%, #111827 100%);
             box-shadow: 0 32px 72px rgba(15, 23, 42, 0.18);
             position: relative;
@@ -190,9 +190,9 @@ export default function WarehousingPage() {
           }
 
           .cta-button--primary {
-            background: #b6f000;
+            background: #E31E24;
             color: #0f172a;
-            box-shadow: 0 18px 32px rgba(182, 240, 0, 0.18);
+            box-shadow: 0 18px 32px rgba(227, 30, 36, 0.18);
           }
 
           .hero-aside {
@@ -242,10 +242,10 @@ export default function WarehousingPage() {
             padding: 40px 38px 34px;
             border-radius: 34px;
             background:
-              radial-gradient(circle at top right, rgba(182, 240, 0, 0.16), transparent 22%),
+              radial-gradient(circle at top right, rgba(227, 30, 36, 0.16), transparent 22%),
               linear-gradient(145deg, #08111f 0%, #0d1728 58%, #111827 100%);
             color: #fff;
-            border: 1px solid rgba(182, 240, 0, 0.08);
+            border: 1px solid rgba(227, 30, 36, 0.08);
             box-shadow: 0 32px 72px rgba(15, 23, 42, 0.18);
             overflow: hidden;
           }
@@ -256,7 +256,7 @@ export default function WarehousingPage() {
             inset: 0 auto auto 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #0f172a 0%, #b6f000 100%);
+            background: linear-gradient(90deg, #0f172a 0%, #E31E24 100%);
           }
 
           .story-intro .section-kicker {
@@ -290,7 +290,7 @@ export default function WarehousingPage() {
             padding: 18px 20px;
             border-radius: 18px;
             background: rgba(255, 255, 255, 0.06);
-            border-left: 4px solid #b6f000;
+            border-left: 4px solid #E31E24;
             color: #fff;
             font-family: var(--font-mono);
             font-size: 14px;
@@ -320,7 +320,7 @@ export default function WarehousingPage() {
             bottom: 0;
             width: 2px;
             transform: translateX(-50%);
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(182, 240, 0, 0.65), rgba(15, 23, 42, 0.08));
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(227, 30, 36, 0.65), rgba(15, 23, 42, 0.08));
           }
 
           .story-event {
@@ -339,13 +339,13 @@ export default function WarehousingPage() {
             width: 74px;
             height: 74px;
             border-radius: 24px;
-            background: #b6f000;
+            background: #E31E24;
             color: #0f172a;
             font-family: var(--font-mono);
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 0.1em;
-            box-shadow: 0 14px 28px rgba(182, 240, 0, 0.2);
+            box-shadow: 0 14px 28px rgba(227, 30, 36, 0.2);
             position: relative;
             z-index: 1;
             justify-self: center;
@@ -360,7 +360,7 @@ export default function WarehousingPage() {
             background: linear-gradient(160deg, #0f172a 0%, #111827 100%);
             color: #fff;
             box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
-            border: 1px solid rgba(182, 240, 0, 0.08);
+            border: 1px solid rgba(227, 30, 36, 0.08);
             display: grid;
             gap: 10px;
           }
@@ -404,7 +404,7 @@ export default function WarehousingPage() {
             width: 14px;
             height: 2px;
             border-radius: 999px;
-            background: #b6f000;
+            background: #E31E24;
           }
 
           .story-event__card h3 {
@@ -517,7 +517,7 @@ export default function WarehousingPage() {
             border-radius: 26px;
             background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
             color: #fff;
-            border: 1px solid rgba(182, 240, 0, 0.1);
+            border: 1px solid rgba(227, 30, 36, 0.1);
             box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
           }
 
@@ -534,7 +534,7 @@ export default function WarehousingPage() {
             width: 36px;
             height: 36px;
             border-radius: 12px;
-            background: #b6f000;
+            background: #E31E24;
             color: #0f172a;
             font-family: var(--font-mono);
             font-size: 12px;
@@ -603,7 +603,7 @@ export default function WarehousingPage() {
             border-radius: 28px;
             background: linear-gradient(160deg, #0f172a 0%, #111827 100%);
             color: #fff;
-            border: 1px solid rgba(182, 240, 0, 0.08);
+            border: 1px solid rgba(227, 30, 36, 0.08);
             box-shadow: 0 22px 48px rgba(15, 23, 42, 0.12);
             position: relative;
             overflow: hidden;
@@ -618,7 +618,7 @@ export default function WarehousingPage() {
             inset: 0 auto auto 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, #b6f000, rgba(182, 240, 0, 0.15));
+            background: linear-gradient(90deg, #E31E24, rgba(227, 30, 36, 0.15));
           }
 
           .service-badge {
@@ -628,8 +628,8 @@ export default function WarehousingPage() {
             width: 54px;
             height: 54px;
             border-radius: 18px;
-            background: rgba(182, 240, 0, 0.14);
-            color: #b6f000;
+            background: rgba(227, 30, 36, 0.14);
+            color: #E31E24;
           }
 
           .service-card h3 {
@@ -662,7 +662,7 @@ export default function WarehousingPage() {
 
           .service-card--light .service-badge {
             background: #0f172a;
-            color: #b6f000;
+            color: #E31E24;
           }
 
           .cta-section {
@@ -674,7 +674,7 @@ export default function WarehousingPage() {
             padding: 34px;
             border-radius: 32px;
             background:
-              radial-gradient(circle at top right, rgba(182, 240, 0, 0.14), transparent 20%),
+              radial-gradient(circle at top right, rgba(227, 30, 36, 0.14), transparent 20%),
               linear-gradient(135deg, #0f172a 0%, #111827 60%, #15213a 100%);
             color: #fff;
             box-shadow: 0 32px 64px rgba(15, 23, 42, 0.18);
@@ -691,8 +691,8 @@ export default function WarehousingPage() {
             width: 54px;
             height: 54px;
             border-radius: 18px;
-            background: rgba(182, 240, 0, 0.14);
-            color: #b6f000;
+            background: rgba(227, 30, 36, 0.14);
+            color: #E31E24;
           }
 
           .cta-copy h2 {
@@ -734,8 +734,8 @@ export default function WarehousingPage() {
             min-height: 52px;
             padding: 0 20px;
             border-radius: 16px;
-            background: #b6f000;
-            color: #0f172a;
+            background: #E31E24;
+            color: #ffffff;
             text-decoration: none;
             font-size: 14px;
             font-weight: 900;
@@ -922,7 +922,7 @@ export default function WarehousingPage() {
                 animation: "float 6s ease-in-out infinite"
               }}>
                 <div style={{
-                  width: "48px", height: "48px", borderRadius: "14px", background: "#0f172a", color: "#b6f000", display: "flex", alignItems: "center", justifyContent: "center"
+                  width: "48px", height: "48px", borderRadius: "14px", background: "#0f172a", color: "#E31E24", display: "flex", alignItems: "center", justifyContent: "center"
                 }}>
                   <ShieldCheck size={24} />
                 </div>
@@ -1072,6 +1072,7 @@ export default function WarehousingPage() {
     </>
   );
 }
+
 
 
 

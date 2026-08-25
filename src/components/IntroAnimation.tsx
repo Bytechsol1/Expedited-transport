@@ -108,11 +108,11 @@ export function IntroAnimation({ siteReady }: { siteReady: boolean }) {
         transition: exiting ? "opacity 0.2s ease" : "none",
       }}>
         <Image
-          src="/logo.png"
-          alt="Expedited Transport Services logo"
-          width={88}
-          height={88}
-          style={{ objectFit: "contain", width: "88px", height: "auto" }}
+          src="/ex-icon.svg"
+          alt="Expedited icon"
+          width={163}
+          height={100}
+          style={{ objectFit: "contain", width: "163px", height: "auto" }}
           priority
         />
         <p style={{

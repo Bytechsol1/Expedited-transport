@@ -41,7 +41,7 @@ export function CustomerNav() {
               fontSize: "0.95rem",
               textDecoration: "none",
               whiteSpace: "nowrap",
-              borderBottom: isActive ? "2px solid #b6f000" : "2px solid transparent",
+              borderBottom: isActive ? "2px solid #E31E24" : "2px solid transparent",
               transition: "color 0.2s ease, border-color 0.2s ease",
             }}
           >
@@ -52,3 +52,4 @@ export function CustomerNav() {
     </nav>
   );
 }
+

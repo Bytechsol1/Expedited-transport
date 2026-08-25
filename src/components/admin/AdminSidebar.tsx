@@ -45,23 +45,28 @@ export function AdminSidebar() {
 
   return (
     <aside className={`bg-[#2a3441] text-white flex flex-col flex-shrink-0 z-20 shadow-2xl transition-all duration-300 ${collapsed ? 'w-[80px]' : 'w-[260px]'}`}>
-      <div className="h-20 flex items-center justify-between px-6 border-b border-white/5">
+      <div className={`h-20 flex border-b border-white/5 transition-all ${collapsed ? 'items-center justify-center gap-2 px-2' : 'items-center justify-between px-6'}`}>
         <div className="flex items-center gap-3 overflow-hidden">
           <Image 
-            src="/logo.png" 
+            src="/ex-icon.svg" 
             alt="Expedited Logo" 
-            width={32} 
-            height={32} 
+            width={collapsed ? 32 : 60} 
+            height={collapsed ? 20 : 37} 
             className="flex-shrink-0 object-contain"
           />
           {!collapsed && (
-            <span className="text-lg font-black tracking-wider uppercase text-white whitespace-nowrap">
-              EXPEDITED
-            </span>
+            <Image
+              src="/ex-text.svg"
+              alt="EXPEDITED"
+              width={115}
+              height={11}
+              style={{ objectFit: "contain", display: "block" }}
+              className="mt-1"
+            />
           )}
         </div>
         <button onClick={() => setCollapsed(!collapsed)} className="text-slate-400 hover:text-white transition-colors flex-shrink-0">
-          {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+          {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={20} />}
         </button>
       </div>
 

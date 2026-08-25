@@ -157,7 +157,7 @@ export function HeroSection({ onReady }: { onReady?: () => void }) {
           if (!el) continue;
           const revealed = p >= 0.01 && ci < newRevealed;
           el.style.opacity    = revealed ? "1" : "0";
-          el.style.color      = (revealed && ci === newRevealed - 1) ? "#abff02" : "";
+          el.style.color      = (revealed && ci === newRevealed - 1) ? "#E31E24" : "";
         }
       }
     }

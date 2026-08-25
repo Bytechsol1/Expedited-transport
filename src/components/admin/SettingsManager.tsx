@@ -104,7 +104,7 @@ export function SettingsManager() {
             <div className="flex flex-col md:flex-row gap-8 mb-8">
               <div className="w-32 h-32 rounded-2xl bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center flex-shrink-0 relative overflow-hidden group">
                 <div className="w-16 h-16 bg-[#2a3441] rounded-xl flex items-center justify-center shadow-lg">
-                  <Image src="/logo.png" alt="Company Logo" width={32} height={32} style={{ filter: "brightness(0) invert(1)" }} />
+                  <Image src="/ex-logo.svg" alt="Company Logo" width={32} height={32} style={{ filter: "brightness(0) invert(1)" }} />
                 </div>
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
                   <Upload className="text-white" size={24} />

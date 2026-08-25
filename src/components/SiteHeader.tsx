@@ -119,7 +119,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const { data: authSession } = useSession();
   const isCustomer = (authSession?.user as { role?: string } | undefined)?.role === "customer";
-  const isLightPage = pathname === "/about-us" || pathname === "/warehousing" || pathname === "/careers" || pathname === "/login" || pathname.startsWith("/account") || pathname.startsWith("/tracking") || pathname.startsWith("/trucking-services");
+  const isLightPage = true;
   const navCardRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -173,15 +173,23 @@ export function SiteHeader() {
           <a href="/" aria-label="Expedited Transport Services" className="brand">
             <span className="logo-wrap">
               <Image
-                src="/logo.png"
-                alt="Expedited Transport Services logo"
-                width={28}
-                height={28}
-                style={{ objectFit: "contain", display: "block", width: "auto", height: "auto" }}
+                src="/ex-icon.svg"
+                alt="Expedited icon"
+                width={52}
+                height={32}
+                style={{ objectFit: "contain", display: "block" }}
                 priority
               />
             </span>
-            <span className="brand-name">Expedited Transport</span>
+            <Image
+              src="/ex-text.svg"
+              alt="EXPEDITED"
+              width={136}
+              height={13}
+              style={{ objectFit: "contain", display: "block" }}
+              className="brand-text-img"
+              priority
+            />
           </a>
 
           <nav className="desk-nav" aria-label="Main navigation">
@@ -292,12 +300,12 @@ export function SiteHeader() {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          max-width: 1020px;
           margin: 0 auto;
           padding: 0.75rem 0.75rem 0.75rem 1.5rem;
-          background: transparent;
-          border: 1px solid rgba(255,255,255,0.15);
+          background: rgba(255, 255, 255, 0.96);
+          border: 1px solid rgba(15, 23, 42, 0.08);
           border-radius: 12px;
+          max-width: 1150px;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
           text-rendering: optimizeLegibility;
@@ -305,11 +313,11 @@ export function SiteHeader() {
         }
 
         .nav-card.scrolled {
-          background: rgba(10, 10, 10, 0.85);
+          background: rgba(255, 255, 255, 0.96);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border-color: rgba(255, 255, 255, 0.1);
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+          border-color: rgba(15, 23, 42, 0.08);
+          box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
         }
 
         .site-header.light-page .nav-card,
@@ -324,18 +332,17 @@ export function SiteHeader() {
         .brand {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.4rem;
           text-decoration: none;
           flex-shrink: 0;
           margin-right: 0.25rem;
         }
 
-        .logo-wrap {
+        .logo-wrap, .brand-text-img {
           display: flex;
           align-items: center;
           justify-content: center;
-          filter: brightness(0) invert(1);
-          opacity: 0.9;
+          opacity: 1;
           flex-shrink: 0;
         }
 
@@ -343,12 +350,13 @@ export function SiteHeader() {
           font-family: 'Segoe UI', system-ui, -apple-system, var(--font-inter), 'Inter', sans-serif;
           font-size: 1.05rem;
           font-weight: 700;
-          color: #fff;
+          color: #0f172a;
           white-space: nowrap;
           letter-spacing: -0.025em;
         }
 
-        .site-header.light-page .logo-wrap {
+        .site-header.light-page .logo-wrap,
+        .site-header.light-page .brand-text-img {
           filter: none;
           opacity: 1;
         }
@@ -379,7 +387,7 @@ export function SiteHeader() {
           font-size: 0.9375rem;
           font-weight: 500;
           letter-spacing: -0.01em;
-          color: rgba(255,255,255,0.72);
+          color: rgba(15, 23, 42, 0.72);
           text-decoration: none;
           padding: 0.5rem 0.85rem;
           border-radius: 10px;
@@ -393,9 +401,8 @@ export function SiteHeader() {
 
         .nav-lnk:hover,
         .nav-lnk-btn:hover {
-          color: #b6f000;
+          color: #E31E24;
           background: transparent;
-          transform: translateY(-1px);
         }
 
         .site-header.light-page .nav-lnk,
@@ -413,11 +420,11 @@ export function SiteHeader() {
         }
 
         .mega-link:hover {
-          background: rgba(182,240,0,0.07) !important;
+          background: rgba(227,30,36,0.07) !important;
         }
 
         .mega-link:hover .mega-link-text {
-          color: #b6f000 !important;
+          color: #E31E24 !important;
         }
 
         .cta-contact {
@@ -425,8 +432,8 @@ export function SiteHeader() {
           align-items: center;
           padding: 0.65rem 1.35rem;
           border-radius: 12px;
-          background: #b6f000;
-          color: #0a0f00;
+          background: #E31E24;
+          color: #ffffff;
           text-decoration: none;
           font-family: 'Segoe UI', system-ui, -apple-system, var(--font-inter), 'Inter', sans-serif;
           font-size: 0.9375rem;
@@ -439,7 +446,7 @@ export function SiteHeader() {
         }
 
         .cta-contact:hover {
-          background: #cbff1a;
+          background: #C81920;
         }
 
         .cta-signin {
@@ -447,8 +454,8 @@ export function SiteHeader() {
           align-items: center;
           padding: 0.65rem 1.35rem;
           border-radius: 12px;
-          background: #fff;
-          color: #0a0f00;
+          background: #0f172a;
+          color: #ffffff;
           text-decoration: none;
           font-family: 'Segoe UI', system-ui, -apple-system, var(--font-inter), 'Inter', sans-serif;
           font-size: 0.9375rem;
@@ -458,10 +465,6 @@ export function SiteHeader() {
           margin-left: 0.25rem;
           letter-spacing: -0.01em;
           transition: background 0.15s ease, transform 0.15s ease;
-        }
-
-        .cta-signin:hover {
-          background: #f0f0f0;
         }
 
         .account-dropdown-menu {
@@ -483,13 +486,13 @@ export function SiteHeader() {
         .account-dropdown-item {
           display: block;
           padding: 0.75rem 1rem;
-          color: #fff;
+          color: #0f172a;
           font-size: 0.85rem;
           font-weight: 600;
           text-decoration: none;
           border-radius: 8px;
           transition: background 0.15s ease;
-          background: transparent;
+          background: rgba(255, 255, 255, 0.96);
           border: none;
           text-align: left;
           cursor: pointer;
@@ -497,17 +500,13 @@ export function SiteHeader() {
         }
 
         .account-dropdown-item:hover {
-          background: rgba(182, 240, 0, 0.15);
-          color: #b6f000;
+          background: rgba(227, 30, 36, 0.15);
+          color: #E31E24;
         }
 
         .site-header.light-page .cta-signin {
           background: #0f172a;
-          color: #fff;
-        }
-
-        .site-header.light-page .cta-signin:hover {
-          background: #1e293b;
+          color: #ffffff;
         }
 
         .cta-login-text {
@@ -526,7 +525,7 @@ export function SiteHeader() {
         }
 
         .cta-login-text:hover {
-          color: #fff;
+          color: #0f172a;
         }
 
         .site-header.light-page .cta-login-text {
@@ -625,7 +624,7 @@ export function SiteHeader() {
         .drawer-link {
           display: block;
           padding: 0.65rem 1.25rem;
-          color: rgba(255,255,255,0.72);
+          color: rgba(15, 23, 42, 0.72);
           font-family: 'Segoe UI', system-ui, sans-serif;
           font-size: 0.9rem;
           font-weight: 500;
@@ -634,7 +633,7 @@ export function SiteHeader() {
         }
 
         .drawer-link:hover {
-          color: #fff;
+          color: #0f172a;
           background: rgba(255,255,255,0.04);
         }
 
@@ -643,8 +642,8 @@ export function SiteHeader() {
           margin: 0.75rem 1.25rem 1rem;
           padding: 0.75rem 1.25rem;
           border-radius: 10px;
-          background: #b6f000;
-          color: #0a0f00;
+          background: #E31E24;
+          color: #ffffff;
           text-align: center;
           font-family: 'Segoe UI', system-ui, sans-serif;
           font-size: 0.9rem;
@@ -658,7 +657,7 @@ export function SiteHeader() {
           padding: 0.75rem 1.25rem;
           border-radius: 10px;
           background: #fff;
-          color: #0a0f00;
+          color: #ffffff;
           text-align: center;
           font-family: 'Segoe UI', system-ui, sans-serif;
           font-size: 0.9rem;
@@ -671,9 +670,9 @@ export function SiteHeader() {
           margin: 0;
           padding: 0.75rem 1.25rem;
           border-radius: 10px;
-          background: transparent;
-          border: 1px solid rgba(255,255,255,0.15);
-          color: #fff;
+          background: rgba(255, 255, 255, 0.96);
+          border: 1px solid rgba(15, 23, 42, 0.08);
+          color: #0f172a;
           text-align: center;
           font-family: 'Segoe UI', system-ui, sans-serif;
           font-size: 0.9rem;
@@ -712,6 +711,7 @@ export function SiteHeader() {
     </>
   );
 }
+
 
 
 

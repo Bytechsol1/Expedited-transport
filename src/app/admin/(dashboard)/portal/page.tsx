@@ -274,9 +274,6 @@ export default async function AdminDashboardPage() {
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col">
           <div className="p-6 border-b border-slate-100 flex items-center justify-between">
             <h2 className="text-lg font-black text-[#2a3441]">Quote Activity</h2>
-            <Link href="/admin/quotes" className="text-sm font-bold text-[#0d9488] hover:text-[#115e59] flex items-center gap-1 transition-colors">
-              View All <ArrowRight size={14} />
-            </Link>
           </div>
           <div className="p-6">
             <div className="flex justify-between mb-6">
@@ -384,9 +381,6 @@ export default async function AdminDashboardPage() {
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
         <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
           <h2 className="text-lg font-black text-[#2a3441]">Recent Orders</h2>
-          <Link href="/admin/orders" className="text-sm font-bold text-[#0d9488] hover:text-[#115e59] flex items-center gap-1 transition-colors">
-            View All Orders <ArrowRight size={14} />
-          </Link>
         </div>
         
         <div className="overflow-x-auto">
