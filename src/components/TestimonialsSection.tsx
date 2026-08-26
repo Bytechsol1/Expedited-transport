@@ -118,7 +118,7 @@ function TestimonialBack({
 
       {/* Company */}
       <p style={{
-        color: "#E31E24",
+        color: "#FFFFFF",
         fontSize: "0.78rem",
         fontFamily: "var(--font-primary, 'Inter', sans-serif)",
         margin: "0 0 1.1rem",

@@ -82,7 +82,7 @@ export function FooterSection() {
                 style={{ display: "flex", justifyContent: "space-between", maxWidth: 260, fontSize: "0.93rem" }}
               >
                 <span style={{ color: "rgba(255,255,255,0.45)" }}>{day}</span>
-                <span style={{ color: time === "Available" ? "#E31E24" : "#fff", fontWeight: time === "24 Hours" ? 600 : 400 }}>
+                <span style={{ color: time === "Available" ? "#22c55e" : "#fff", fontWeight: time === "24 Hours" ? 600 : 400 }}>
                   {time}
                 </span>
               </div>

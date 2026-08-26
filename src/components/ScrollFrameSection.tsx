@@ -219,7 +219,7 @@ export function ScrollFrameSection() {
             pointerEvents: "none",
           }}
         >
-          <div style={{ width: "2rem", height: "1px", background: "rgba(227,30,36,0.6)" }} />
+          <div style={{ width: "2rem", height: "1px", background: "rgba(255,255,255,0.6)" }} />
           <span
             style={{
               fontFamily: "var(--font-mono, monospace)",
@@ -227,13 +227,13 @@ export function ScrollFrameSection() {
               fontWeight: 600,
               letterSpacing: "0.3em",
               textTransform: "uppercase",
-              color: "rgba(227,30,36,0.9)",
+              color: "rgba(255,255,255,0.9)",
               whiteSpace: "nowrap",
             }}
           >
             About Us
           </span>
-          <div style={{ width: "2rem", height: "1px", background: "rgba(227,30,36,0.6)" }} />
+          <div style={{ width: "2rem", height: "1px", background: "rgba(255,255,255,0.6)" }} />
         </div>
 
         {/* Gradient overlays */}
@@ -301,19 +301,19 @@ export function ScrollFrameSection() {
                   justifyContent: isRight ? "flex-end" : "flex-start",
                 }}
               >
-                <div style={{ width: "1.75rem", height: "1px", background: "rgba(227,30,36,0.7)" }} />
+                <div style={{ width: "1.75rem", height: "1px", background: "rgba(255,255,255,0.7)" }} />
                 <span
                   style={{
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "0.6rem",
                     letterSpacing: "0.22em",
-                    color: "rgba(227,30,36,0.85)",
+                    color: "rgba(255,255,255,0.85)",
                     textTransform: "uppercase",
                   }}
                 >
                   {String(idx + 1).padStart(2, "0")} / {String(CAPTIONS.length).padStart(2, "0")}
                 </span>
-                <div style={{ width: "1.75rem", height: "1px", background: "rgba(227,30,36,0.7)" }} />
+                <div style={{ width: "1.75rem", height: "1px", background: "rgba(255,255,255,0.7)" }} />
               </div>
 
               <h2
@@ -365,7 +365,7 @@ export function ScrollFrameSection() {
             style={{
               height: "100%",
               width: "0%",
-              background: "linear-gradient(90deg, #E31E24, #6bde00)",
+              background: "#FFFFFF",
               borderRadius: "9999px",
             }}
           />

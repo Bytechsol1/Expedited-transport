@@ -192,7 +192,7 @@ export function ServicePageTemplate({
 
           .hero-cta:hover {
             background: #E31E24;
-            color: #0f172a;
+            color: #ffffff;
             transform: translateY(-3px);
           }
 
@@ -632,16 +632,7 @@ export function ServicePageTemplate({
             color: #ffffff;
             font-size: 26px;
           }
-          .pillar-icon {
-            opacity: 0;
-            transform: translateX(-20px);
-            color: #E31E24;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-          }
-          .pillar:hover .pillar-icon {
-            opacity: 1;
-            transform: translateX(0);
-          }
+
           @media (max-width: 900px) {
             .pillar-container {
               flex-direction: column;
@@ -946,9 +937,6 @@ export function ServicePageTemplate({
                             <div className="pillar-num">0{i + 1}</div>
                             <div className="pillar-content">
                               <h3 className="pillar-text">{item}</h3>
-                              <div className="pillar-icon">
-                                <ArrowRight size={24} />
-                              </div>
                             </div>
                           </div>
                         </div>

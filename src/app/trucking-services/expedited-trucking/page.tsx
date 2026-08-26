@@ -122,7 +122,7 @@ export default function ExpeditedTruckingPage() {
 
           .hero-cta:hover {
             background: #E31E24;
-            color: #0f172a;
+            color: #ffffff;
             transform: translateY(-3px);
           }
 
@@ -241,16 +241,7 @@ export default function ExpeditedTruckingPage() {
             color: #ffffff;
             font-size: 26px;
           }
-          .pillar-icon {
-            opacity: 0;
-            transform: translateX(-20px);
-            color: #E31E24;
-            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-          }
-          .pillar:hover .pillar-icon {
-            opacity: 1;
-            transform: translateX(0);
-          }
+
           
           @media (max-width: 900px) {
             .pillar-container {
@@ -408,9 +399,6 @@ export default function ExpeditedTruckingPage() {
                     <div className="pillar-num">0{i + 1}</div>
                     <div className="pillar-content">
                       <h3 className="pillar-text">{item.text}</h3>
-                      <div className="pillar-icon">
-                        <ArrowRight size={24} />
-                      </div>
                     </div>
                   </div>
                 </div>

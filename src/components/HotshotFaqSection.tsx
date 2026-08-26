@@ -160,7 +160,7 @@ export function HotshotFaqSection() {
                   </div>
                 </div>
 
-                {/* Lime glow divider */}
+                {/* Red glow divider */}
                 <div
                   style={{
                     position: "absolute",
@@ -168,7 +168,7 @@ export function HotshotFaqSection() {
                     left: 0,
                     right: 0,
                     height: "1px",
-                    background: "linear-gradient(90deg, rgba(171,255,2,0), rgba(171,255,2,0.75), rgba(171,255,2,0))",
+                    background: "linear-gradient(90deg, rgba(227,30,36,0), rgba(227,30,36,0.75), rgba(227,30,36,0))",
                   }}
                 />
               </div>

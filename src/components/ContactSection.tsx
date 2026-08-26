@@ -94,7 +94,7 @@ export function ContactSection() {
         }}
       >
         <SideRays
-          rayColor1="#E31E24"
+          rayColor1="#FFFFFF"
           rayColor2="#96c8ff"
           origin="top-right"
           speed={2.5}
@@ -122,14 +122,14 @@ export function ContactSection() {
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
           aria-hidden
         >
-          <path d="M-50,80 C80,30 170,130 250,80 S420,30 550,80" fill="none" stroke="#E31E24" strokeWidth="1.8" opacity="0.25" style={{ animation: "cw-float 4.2s ease-in-out infinite alternate" }} />
-          <path d="M-50,170 C80,115 170,225 250,170 S420,115 550,170" fill="none" stroke="#E31E24" strokeWidth="1.2" opacity="0.18" style={{ animation: "cw-float 3.8s ease-in-out infinite alternate", animationDelay: "0.4s" }} />
-          <path d="M-50,270 C80,215 170,325 250,270 S420,215 550,270" fill="none" stroke="#E31E24" strokeWidth="2.0" opacity="0.30" style={{ animation: "cw-float 5.0s ease-in-out infinite alternate", animationDelay: "0.8s" }} />
-          <path d="M-50,370 C80,315 170,425 250,370 S420,315 550,370" fill="none" stroke="#E31E24" strokeWidth="1.0" opacity="0.15" style={{ animation: "cw-float 4.5s ease-in-out infinite alternate", animationDelay: "0.2s" }} />
-          <path d="M-50,470 C80,415 170,525 250,470 S420,415 550,470" fill="none" stroke="#E31E24" strokeWidth="1.6" opacity="0.22" style={{ animation: "cw-float 3.6s ease-in-out infinite alternate", animationDelay: "1.0s" }} />
-          <path d="M-50,570 C80,515 170,625 250,570 S420,515 550,570" fill="none" stroke="#E31E24" strokeWidth="1.3" opacity="0.20" style={{ animation: "cw-float 4.8s ease-in-out infinite alternate", animationDelay: "0.6s" }} />
-          <path d="M-50,670 C80,615 170,725 250,670 S420,615 550,670" fill="none" stroke="#E31E24" strokeWidth="1.9" opacity="0.28" style={{ animation: "cw-float 4.0s ease-in-out infinite alternate", animationDelay: "0.3s" }} />
-          <path d="M-50,770 C80,715 170,825 250,770 S420,715 550,770" fill="none" stroke="#E31E24" strokeWidth="1.1" opacity="0.17" style={{ animation: "cw-float 5.2s ease-in-out infinite alternate", animationDelay: "0.9s" }} />
+          <path d="M-50,80 C80,30 170,130 250,80 S420,30 550,80" fill="none" stroke="#FFFFFF" strokeWidth="1.8" opacity="0.25" style={{ animation: "cw-float 4.2s ease-in-out infinite alternate" }} />
+          <path d="M-50,170 C80,115 170,225 250,170 S420,115 550,170" fill="none" stroke="#FFFFFF" strokeWidth="1.2" opacity="0.18" style={{ animation: "cw-float 3.8s ease-in-out infinite alternate", animationDelay: "0.4s" }} />
+          <path d="M-50,270 C80,215 170,325 250,270 S420,215 550,270" fill="none" stroke="#FFFFFF" strokeWidth="2.0" opacity="0.30" style={{ animation: "cw-float 5.0s ease-in-out infinite alternate", animationDelay: "0.8s" }} />
+          <path d="M-50,370 C80,315 170,425 250,370 S420,315 550,370" fill="none" stroke="#FFFFFF" strokeWidth="1.0" opacity="0.15" style={{ animation: "cw-float 4.5s ease-in-out infinite alternate", animationDelay: "0.2s" }} />
+          <path d="M-50,470 C80,415 170,525 250,470 S420,415 550,470" fill="none" stroke="#FFFFFF" strokeWidth="1.6" opacity="0.22" style={{ animation: "cw-float 3.6s ease-in-out infinite alternate", animationDelay: "1.0s" }} />
+          <path d="M-50,570 C80,515 170,625 250,570 S420,515 550,570" fill="none" stroke="#FFFFFF" strokeWidth="1.3" opacity="0.20" style={{ animation: "cw-float 4.8s ease-in-out infinite alternate", animationDelay: "0.6s" }} />
+          <path d="M-50,670 C80,615 170,725 250,670 S420,615 550,670" fill="none" stroke="#FFFFFF" strokeWidth="1.9" opacity="0.28" style={{ animation: "cw-float 4.0s ease-in-out infinite alternate", animationDelay: "0.3s" }} />
+          <path d="M-50,770 C80,715 170,825 250,770 S420,715 550,770" fill="none" stroke="#FFFFFF" strokeWidth="1.1" opacity="0.17" style={{ animation: "cw-float 5.2s ease-in-out infinite alternate", animationDelay: "0.9s" }} />
         </svg>
 
         <div
@@ -156,7 +156,7 @@ export function ContactSection() {
               fontWeight: 700,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              color: "#E31E24",
+              color: "#FFFFFF",
               margin: "0 0 0.9rem",
             }}
           >
