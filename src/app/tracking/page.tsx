@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
-import { Search, Package } from "lucide-react";
+import { Search, Package, ArrowLeft } from "lucide-react";
 import { fetchTrackingData } from "./actions";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
@@ -10,6 +12,8 @@ import { FooterSection } from "@/components/FooterSection";
 export default function AccountTrackingPage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
   const unwrappedParams = use(searchParams);
   const initialId = unwrappedParams?.id || "";
+
+  const { data: session } = useSession();
 
   const [trackingId, setTrackingId] = useState(initialId);
   const [shipment, setShipment] = useState<any>(null);
@@ -52,6 +56,15 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
       <SiteHeader />
       <div style={{ flex: 1, padding: "8rem 1rem 4rem" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "2rem", maxWidth: "800px", margin: "0 auto" }}>
+          
+          {session && (
+            <div style={{ marginBottom: "-1rem" }}>
+              <Link href="/account" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: "#E31E24", fontWeight: 600, textDecoration: "none", fontSize: "0.95rem", transition: "opacity 0.2s" }} onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.8")} onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}>
+                <ArrowLeft size={18} /> Back to Dashboard
+              </Link>
+            </div>
+          )}
+
           <div style={{ textAlign: "center" }}>
             <h1 style={{ fontSize: "1.75rem", fontWeight: 800, color: "#0f172a", margin: "0 0 0.5rem" }}>
               Track Your Order
