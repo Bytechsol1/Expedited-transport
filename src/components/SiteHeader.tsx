@@ -236,10 +236,6 @@ export function SiteHeader() {
                     <div style={{ color: "rgba(15, 23, 42, 0.5)", fontSize: "0.85rem", marginTop: "2px" }}>{authSession?.user?.email || "customer@example.com"}</div>
                   </div>
                   <div style={{ padding: "0.5rem", display: "flex", flexDirection: "column" }}>
-                    <Link href="/account" className="account-dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
-                      <LayoutDashboard size={18} style={{ color: "rgba(15, 23, 42, 0.5)" }} /> My Portal
-                    </Link>
-                    <div style={{ height: "1px", background: "rgba(15, 23, 42, 0.06)", margin: "0.25rem 0.5rem" }} />
                     <button className="account-dropdown-item signout-btn" onClick={() => { setAccountDropdownOpen(false); signOut(); }}>
                       <LogOut size={18} style={{ opacity: 0.8 }} /> Sign Out
                     </button>
