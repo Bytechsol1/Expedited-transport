@@ -7,6 +7,7 @@ import Script from "next/script";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import { LogOut, LayoutDashboard } from "lucide-react";
 
 const SERVICES = [
   { label: "Expedited Trucking", href: "/trucking-services/expedited-trucking", icon: "https://cdn.lordicon.com/whrxobsb.json" },
@@ -230,7 +231,19 @@ export function SiteHeader() {
               </button>
               {accountDropdownOpen && (
                 <div className="account-dropdown-menu">
-                  <button className="account-dropdown-item" onClick={() => { setAccountDropdownOpen(false); signOut(); }}>Sign Out</button>
+                  <div style={{ padding: "1rem 1.25rem 0.75rem", borderBottom: "1px solid rgba(15, 23, 42, 0.06)" }}>
+                    <div style={{ fontWeight: 600, color: "#0f172a", fontSize: "0.95rem" }}>{authSession?.user?.name || "Customer"}</div>
+                    <div style={{ color: "rgba(15, 23, 42, 0.5)", fontSize: "0.85rem", marginTop: "2px" }}>{authSession?.user?.email || "customer@example.com"}</div>
+                  </div>
+                  <div style={{ padding: "0.5rem", display: "flex", flexDirection: "column" }}>
+                    <Link href="/account" className="account-dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
+                      <LayoutDashboard size={18} style={{ color: "rgba(15, 23, 42, 0.5)" }} /> My Portal
+                    </Link>
+                    <div style={{ height: "1px", background: "rgba(15, 23, 42, 0.06)", margin: "0.25rem 0.5rem" }} />
+                    <button className="account-dropdown-item signout-btn" onClick={() => { setAccountDropdownOpen(false); signOut(); }}>
+                      <LogOut size={18} style={{ opacity: 0.8 }} /> Sign Out
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -471,28 +484,28 @@ export function SiteHeader() {
           position: absolute;
           top: calc(100% + 8px);
           right: 0;
-          background: #0d1728;
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: #ffffff;
+          border: 1px solid rgba(15, 23, 42, 0.08);
           border-radius: 12px;
-          padding: 0.5rem;
-          min-width: 200px;
-          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+          min-width: 240px;
+          box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
           display: flex;
           flex-direction: column;
-          gap: 2px;
           z-index: 100;
         }
 
         .account-dropdown-item {
-          display: block;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
           padding: 0.75rem 1rem;
-          color: #0f172a;
-          font-size: 0.85rem;
-          font-weight: 600;
+          color: #475569;
+          font-size: 0.95rem;
+          font-weight: 500;
           text-decoration: none;
           border-radius: 8px;
-          transition: background 0.15s ease;
-          background: rgba(255, 255, 255, 0.96);
+          transition: background 0.15s ease, color 0.15s ease;
+          background: transparent;
           border: none;
           text-align: left;
           cursor: pointer;
@@ -500,8 +513,17 @@ export function SiteHeader() {
         }
 
         .account-dropdown-item:hover {
-          background: rgba(227, 30, 36, 0.15);
-          color: #E31E24;
+          background: rgba(15, 23, 42, 0.04);
+          color: #0f172a;
+        }
+
+        .account-dropdown-item.signout-btn {
+          color: #0ea5e9;
+        }
+        
+        .account-dropdown-item.signout-btn:hover {
+          background: #E31E24;
+          color: #ffffff;
         }
 
         .site-header.light-page .cta-signin {
