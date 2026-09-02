@@ -84,7 +84,7 @@ export function AboutUsSection() {
               borderRadius: "100px", textDecoration: "none", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
               boxShadow: "0 20px 40px rgba(15, 23, 42, 0.2)"
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.backgroundColor = "#E31E24"; e.currentTarget.style.color = "#000000"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(227, 30, 36, 0.3)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.backgroundColor = "#E31E24"; e.currentTarget.style.color = "#ffffff"; e.currentTarget.style.boxShadow = "0 24px 48px rgba(227, 30, 36, 0.3)"; }}
               onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.backgroundColor = "#0f172a"; e.currentTarget.style.color = "#ffffff"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(15, 23, 42, 0.2)"; }}
             >
               Call Us Today <ArrowRight size={20} />
