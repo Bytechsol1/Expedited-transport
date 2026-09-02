@@ -138,7 +138,7 @@ export default function CareersPage() {
                         background: "#E31E24",
                         padding: "16px 32px",
                         borderRadius: "100px",
-                        color: "#0f172a",
+                        color: "#ffffff",
                         textDecoration: "none",
                         fontWeight: 800,
                         fontSize: "16px",
