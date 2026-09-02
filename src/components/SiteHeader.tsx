@@ -221,14 +221,19 @@ export function SiteHeader() {
           </nav>
 
           {isCustomer ? (
-            <div ref={accountRef} style={{ position: "relative", marginLeft: "auto" }}>
-              <button 
+            <div 
+              ref={accountRef} 
+              style={{ position: "relative", marginLeft: "auto" }}
+              onMouseEnter={() => setAccountDropdownOpen(true)}
+              onMouseLeave={() => setAccountDropdownOpen(false)}
+            >
+              <Link 
+                href="/account"
                 className="cta-signin" 
-                onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
-                style={{ cursor: "pointer", border: "none" }}
+                style={{ cursor: "pointer", display: "inline-block", textDecoration: "none" }}
               >
                 My Account
-              </button>
+              </Link>
               {accountDropdownOpen && (
                 <div className="account-dropdown-menu">
                   <div style={{ padding: "1rem 1.25rem 0.75rem", borderBottom: "1px solid rgba(15, 23, 42, 0.06)" }}>
@@ -488,6 +493,15 @@ export function SiteHeader() {
           display: flex;
           flex-direction: column;
           z-index: 100;
+        }
+
+        .account-dropdown-menu::before {
+          content: "";
+          position: absolute;
+          top: -12px;
+          left: 0;
+          right: 0;
+          height: 12px;
         }
 
         .account-dropdown-item {
