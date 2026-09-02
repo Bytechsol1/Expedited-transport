@@ -68,8 +68,8 @@ export default function CareersPage() {
               borderRadius: "12px", textDecoration: "none", transition: "all 0.2s ease",
               boxShadow: "0 10px 20px rgba(15, 23, 42, 0.1)"
             }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.backgroundColor = "#1e293b"; e.currentTarget.style.boxShadow = "0 15px 30px rgba(15, 23, 42, 0.15)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.backgroundColor = "#0f172a"; e.currentTarget.style.boxShadow = "0 10px 20px rgba(15, 23, 42, 0.1)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.backgroundColor = "#E31E24"; e.currentTarget.style.color = "#ffffff"; e.currentTarget.style.boxShadow = "0 15px 30px rgba(227, 30, 36, 0.25)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.backgroundColor = "#0f172a"; e.currentTarget.style.color = "#ffffff"; e.currentTarget.style.boxShadow = "0 10px 20px rgba(15, 23, 42, 0.1)"; }}
             >
               View Open Positions
             </a>
