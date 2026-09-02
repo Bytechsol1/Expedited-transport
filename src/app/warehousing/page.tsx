@@ -950,11 +950,13 @@ export default function WarehousingPage() {
               font-weight: 700;
               text-decoration: none;
               letter-spacing: 0.05em;
-              transition: transform 0.2s, box-shadow 0.2s;
+              transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
             }
             .unique-hero-btn:hover {
               transform: translateY(-2px);
-              box-shadow: 0 12px 24px rgba(15,23,42,0.2);
+              box-shadow: 0 12px 24px rgba(227,30,36,0.3);
+              background: #E31E24;
+              color: #ffffff;
             }
             @keyframes float {
               0% { transform: translateY(0px); }
