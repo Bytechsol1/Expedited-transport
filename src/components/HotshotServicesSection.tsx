@@ -207,7 +207,7 @@ export function HotshotServicesSection() {
               {/* Right Column: Animated List */}
               <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                 {[
-                  "Guaranteed delivery times",
+                  "Time-critical delivery planning",
                   "Real-time status notifications",
                   "Fewer stops and flexible deliveries",
                   "Reduced handling of your items",
@@ -287,7 +287,7 @@ export function HotshotServicesSection() {
                 {
                   id: "02",
                   title: "Your Freight Is Safe with Our Expedited Freight Services",
-                  desc: "On top of completing your shipments on time, we also guarantee their safety from start to finish. In fact, there are actually many security benefits that come from our expedited trucking services. Because there will be fewer stops and fewer handling requirements during transit, there is less chance for damage or loss during the process.",
+                  desc: "Our expedited trucking services reduce stops and handling requirements during transit, helping protect freight and reduce the risk of damage or loss during the process.",
                   image: "/images/truck4.jpg"
                 },
                 {

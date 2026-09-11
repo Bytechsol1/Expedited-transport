@@ -6,7 +6,7 @@ import { FooterSection } from "@/components/FooterSection";
 import { servicePages } from "@/lib/service-pages";
 
 const benefits = [
-  { text: "Guaranteed delivery times", image: "/images/expedited-pillar-1-v2.jpg" },
+  { text: "Time-critical delivery planning", image: "/images/expedited-pillar-1-v2.jpg" },
   { text: "Real-time status notifications", image: "/images/expedited-pillar-2-final.jpg" },
   { text: "Fewer stops & flexibility", image: "/images/expedited-pillar-3-final.jpg" },
   { text: "Reduced cargo handling", image: "/images/expedited-pillar-4-final.jpg" },
@@ -427,7 +427,7 @@ export default function ExpeditedTruckingPage() {
                 {
                   id: "02",
                   title: "Your Freight Is Safe with Our Expedited Freight Services",
-                  desc: "On top of completing your shipments on time, we also guarantee their safety from start to finish. In fact, there are actually many security benefits that come from our expedited trucking services. Because there will be fewer stops and fewer handling requirements during transit, there is less chance for damage or loss during the process.",
+                  desc: "Our expedited trucking services reduce stops and handling requirements during transit, helping protect freight and reduce the risk of damage or loss during the process.",
                   image: "/images/expedited-safe.jpg"
                 },
                 {

@@ -1,13 +1,8 @@
 "use client";
 
-const STAGES = [
-  { key: "confirmed", label: "Confirmed" },
-  { key: "dispatched", label: "Dispatched" },
-  { key: "in_transit", label: "In Transit" },
-  { key: "delivered", label: "Delivered" },
-] as const;
+import { FULFILLMENT_STAGES, getFulfillmentStatusIndex, type FulfillmentStatus } from "@/lib/orders/status";
 
-type Stage = (typeof STAGES)[number]["key"];
+type Stage = FulfillmentStatus;
 
 export type OrderCardData = {
   id: string;
@@ -23,7 +18,7 @@ export type OrderCardData = {
 export function OrderCard({ order }: { order: OrderCardData }) {
   const currentIndex = Math.max(
     0,
-    STAGES.findIndex((s) => s.key === order.fulfillmentStatus)
+    getFulfillmentStatusIndex(order.fulfillmentStatus)
   );
 
   return (
@@ -42,15 +37,15 @@ export function OrderCard({ order }: { order: OrderCardData }) {
       </div>
 
       <div className="order-stepper">
-        {STAGES.map((stage, index) => {
+        {FULFILLMENT_STAGES.map((stage, index) => {
           const reached = index <= currentIndex;
-          const date = order.stageDates[stage.key];
+          const date = order.stageDates[stage.value];
           return (
-            <div key={stage.key} className={reached ? "order-step order-step--done" : "order-step"}>
+            <div key={stage.value} className={reached ? "order-step order-step--done" : "order-step"}>
               <div className="order-step__dot" />
               <div className="order-step__label">{stage.label}</div>
               {date ? <div className="order-step__date">{date.toLocaleDateString("en-US")}</div> : null}
-              {index < STAGES.length - 1 ? (
+              {index < FULFILLMENT_STAGES.length - 1 ? (
                 <div className={index < currentIndex ? "order-step__line order-step__line--done" : "order-step__line"} />
               ) : null}
             </div>

@@ -44,7 +44,7 @@ const warehousingSections = [
   },
   {
     title: "A Trusted Warehousing Company",
-    text: "We have worked with businesses of many different shapes and sizes, so you can rest assured that we are equipped to meet your needs. With a great track record of success and a constantly evolving offering of services, we guarantee that you will benefit from our professional warehousing and logistics.",
+    text: "We have worked with businesses of many different shapes and sizes, so you can rest assured that we are equipped to meet your needs. With a strong track record and an evolving range of services, we provide dependable professional warehousing and logistics support.",
     accent: "05",
   },
 ] as const;

@@ -1,9 +1,10 @@
-import { desc, eq, inArray } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db/client";
 import { quoteRequests, truckTypes } from "@/lib/db/schema";
 import Link from "next/link";
 import { Package } from "lucide-react";
+import { getFulfillmentStatusLabel } from "@/lib/orders/status";
 
 export const dynamic = "force-dynamic";
 
@@ -15,27 +16,6 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
 
   if (!customerId) return null;
 
-  // We consider paid quote requests as "Orders"
-  const orders = await db
-    .select({
-      id: quoteRequests.id,
-      pickupAddress: quoteRequests.pickupAddress,
-      deliveryAddress: quoteRequests.deliveryAddress,
-      price: quoteRequests.price,
-      fulfillmentStatus: quoteRequests.fulfillmentStatus,
-      paidAt: quoteRequests.paidAt,
-      truckTypeName: truckTypes.name,
-    })
-    .from(quoteRequests)
-    .leftJoin(truckTypes, eq(quoteRequests.assignedTruckTypeId, truckTypes.id))
-    .where(
-      inArray(quoteRequests.paymentStatus, ["paid", "pending"]) 
-    )
-    .orderBy(desc(quoteRequests.paidAt));
-
-  // Client-side filtering because we need to check if the customer is the owner
-  const customerOrders = orders; // The query didn't actually filter by customerId yet! Let's fix that.
-  
   const fetchedOrders = await db
     .select({
       id: quoteRequests.id,
@@ -46,6 +26,20 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
       paymentStatus: quoteRequests.paymentStatus,
       paidAt: quoteRequests.paidAt,
       createdAt: quoteRequests.createdAt,
+      customerName: quoteRequests.customerName,
+      customerEmail: quoteRequests.customerEmail,
+      customerPhone: quoteRequests.customerPhone,
+      customerCompany: quoteRequests.customerCompany,
+      pickupAt: quoteRequests.pickupAt,
+      pickupTimeZone: quoteRequests.pickupTimeZone,
+      shipmentDetails: quoteRequests.shipmentDetails,
+      pieces: quoteRequests.pieces,
+      pallets: quoteRequests.pallets,
+      weightLbs: quoteRequests.weightLbs,
+      lengthIn: quoteRequests.lengthIn,
+      widthIn: quoteRequests.widthIn,
+      heightIn: quoteRequests.heightIn,
+      hazmat: quoteRequests.hazmat,
       truckTypeName: truckTypes.name,
     })
     .from(quoteRequests)
@@ -53,10 +47,7 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
     .where(eq(quoteRequests.customerId, customerId))
     .orderBy(desc(quoteRequests.createdAt));
 
-  // For orders, we'll include anything that is paid, or "confirmed/dispatched/in_transit/delivered"
-  // Let's assume an "order" is something that has been accepted.
-  // Actually, standard is "paid" or if it has fulfillment status.
-  const validOrders = fetchedOrders.filter(o => o.paymentStatus === "paid" || o.paymentStatus === "pending" || o.fulfillmentStatus !== "confirmed");
+  const validOrders = fetchedOrders.filter((order) => order.paymentStatus === "paid");
 
   const pendingOrders = validOrders.filter(o => o.fulfillmentStatus !== "delivered");
   const completedOrders = validOrders.filter(o => o.fulfillmentStatus === "delivered");
@@ -71,6 +62,15 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
   const formatDate = (date: Date | null) => {
     if (!date) return "—";
     return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(date);
+  };
+
+  const formatPickupAt = (date: Date | null, timeZone: string | null) => {
+    if (!date) return "—";
+    return new Intl.DateTimeFormat("en-US", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: timeZone || undefined,
+    }).format(date);
   };
 
   return (
@@ -134,7 +134,7 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
                     padding: "0.35rem 0.75rem", borderRadius: "6px", fontSize: "0.85rem", fontWeight: 700, textTransform: "capitalize",
                     border: "1px solid rgba(0,0,0,0.05)"
                   }}>
-                    {order.fulfillmentStatus.replace("_", " ")}
+                    {getFulfillmentStatusLabel(order.fulfillmentStatus)}
                   </div>
                 </div>
               </div>
@@ -148,10 +148,39 @@ export default async function AccountOrdersPage({ searchParams }: { searchParams
                   <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>ORDER DATE</div>
                   <div style={{ fontWeight: 600, color: "#0f172a" }}>{formatDate(order.paidAt || order.createdAt)}</div>
                 </div>
-                <div>
-                  <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>AMOUNT</div>
-                  <div style={{ fontWeight: 600, color: "#0f172a" }}>{formatCurrency(order.price)}</div>
+                  <div>
+                    <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>AMOUNT</div>
+                    <div style={{ fontWeight: 600, color: "#0f172a" }}>{formatCurrency(order.price)}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>PICKUP SCHEDULE</div>
+                    <div style={{ fontWeight: 600, color: "#0f172a" }}>{formatPickupAt(order.pickupAt, order.pickupTimeZone)}</div>
+                  </div>
                 </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.5rem", background: "#f8fafc", padding: "1.25rem", borderRadius: "12px" }}>
+                <div>
+                  <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>CUSTOMER</div>
+                  <div style={{ fontWeight: 600, color: "#0f172a" }}>{order.customerName || "—"}</div>
+                  <div style={{ color: "rgba(15,23,42,0.6)", fontSize: "0.85rem" }}>{order.customerEmail || "—"}</div>
+                  <div style={{ color: "rgba(15,23,42,0.6)", fontSize: "0.85rem" }}>{order.customerPhone || "—"}</div>
+                  {order.customerCompany ? <div style={{ color: "rgba(15,23,42,0.6)", fontSize: "0.85rem" }}>{order.customerCompany}</div> : null}
+                </div>
+                <div>
+                  <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>SHIPMENT</div>
+                  <div style={{ fontWeight: 600, color: "#0f172a" }}>
+                    {order.pieces} pcs · {order.pallets} pallets · {order.weightLbs.toLocaleString()} lbs
+                  </div>
+                  <div style={{ color: "rgba(15,23,42,0.6)", fontSize: "0.85rem" }}>
+                    {order.lengthIn} × {order.widthIn} × {order.heightIn} in{order.hazmat ? " · Hazmat" : ""}
+                  </div>
+                </div>
+                {order.shipmentDetails ? (
+                  <div>
+                    <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>SHIPMENT DETAILS / SPECIAL INSTRUCTIONS</div>
+                    <div style={{ color: "#0f172a", whiteSpace: "pre-wrap" }}>{order.shipmentDetails}</div>
+                  </div>
+                ) : null}
               </div>
 
               <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>

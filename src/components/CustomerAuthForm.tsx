@@ -8,6 +8,7 @@ export function CustomerAuthForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get("next");
+  const termsAccepted = searchParams.get("termsAccepted") === "true";
   const modeParam = searchParams.get("mode");
 
   const [isSignUp, setIsSignUp] = useState(modeParam === "signup");
@@ -33,7 +34,7 @@ export function CustomerAuthForm() {
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ quoteRequestId: next }),
+        body: JSON.stringify({ quoteRequestId: next, termsAccepted }),
       });
       const data: { ok: boolean; url?: string; error?: string } = await response.json();
       if (data.ok && data.url) {

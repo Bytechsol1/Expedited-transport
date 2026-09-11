@@ -75,11 +75,11 @@ export function FooterSection() {
         {/* Hours */}
         <div>
           <span style={SECTION_LABEL}>Hours of Operation</span>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+          <div className="flex flex-col gap-4 text-[0.93rem]">
             {HOURS.map(({ day, time }) => (
               <div
                 key={day}
-                style={{ display: "flex", justifyContent: "space-between", maxWidth: 260, fontSize: "0.93rem" }}
+                className="flex flex-col gap-1"
               >
                 <span style={{ color: "rgba(255,255,255,0.45)" }}>{day}</span>
                 <span style={{ color: time === "Available" ? "#22c55e" : "#fff", fontWeight: time === "24 Hours" ? 600 : 400 }}>
@@ -110,6 +110,23 @@ export function FooterSection() {
               </Link>
             ))}
           </div>
+        </div>
+
+        {/* Policies */}
+        <div>
+          <span className="mb-[1.2rem] block text-[0.72rem] font-bold tracking-[0.22em] text-white uppercase">Policies</span>
+          <ul className="m-0 flex list-none flex-col gap-[0.55rem] p-0 text-[0.93rem] text-white/52">
+            {[
+              "Terms of Use",
+              "Privacy Policy",
+              "Cancellation & Refund Policy",
+              "Cargo Claims",
+              "Prohibited Items",
+              "Accessibility",
+            ].map(item => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </div>
 
         {/* Payment */}
@@ -158,19 +175,6 @@ export function FooterSection() {
         <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.78rem" }}>
           ©2024–26 Expedited Transport Services. All rights reserved.
         </span>
-        <div style={{ display: "flex", gap: "2rem" }}>
-          {["Terms of Use", "Privacy Policy"].map(item => (
-            <a
-              key={item}
-              href="#"
-              style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.78rem", textDecoration: "none" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}
-            >
-              {item}
-            </a>
-          ))}
-        </div>
       </div>
 
       {/* ── Big SplitText brand name — links to home ── */}
@@ -208,7 +212,7 @@ export function FooterSection() {
         /* ── Desktop grid ── */
         .footer-grid {
           display: grid;
-          grid-template-columns: 1.2fr 1fr 0.8fr 1fr;
+          grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.65fr) minmax(0, 1fr) minmax(246px, 1fr);
           padding: 4rem 4rem 3.5rem;
           gap: 2.5rem;
         }
@@ -317,7 +321,7 @@ export function FooterSection() {
         }
 
         /* ── Tablet ── */
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
           .footer-grid {
             grid-template-columns: 1fr 1fr;
             padding: 3rem 2rem 2.5rem;

@@ -42,7 +42,7 @@ function LogisticsLowerContent() {
           <article className="detail-card">
             <div className="section-kicker">Logistics Services</div>
             <h2>Work with a Top Logistics Company</h2>
-            <p>The purpose of transport logistics is to oversee your entire supply chain and make intelligent decisions that will help optimize your freight shipments. If you are tired of the headache that comes along with organizing your deliveries, then you are guaranteed to find value in our services.</p>
+            <p>The purpose of transport logistics is to oversee your entire supply chain and make intelligent decisions that help optimize freight shipments. If you are tired of the headache that comes with organizing deliveries, our services can bring clarity and dependable support.</p>
             <p>We are proud to be a logistics company trusted by many organizations who count on us to make sure their shipments reach their destination in the smoothest way possible. No matter the size of your business, you can count on us to scale with you and stay on top of all of your transportation needs.</p>
 
             <div className="check-list">

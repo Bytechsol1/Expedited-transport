@@ -24,7 +24,7 @@ export const servicePages = {
       "We are proud to offer expedited trucking services you can rely on, with dependable transportation at great rates and exceptional client care. Having successfully completed many accelerated shipping jobs, we have built a reputation as a trusted resource for quick, stress-free deliveries. If your shipment must arrive by a specific date, our team will help you work out the details as quickly as possible.",
     imageSrc: "/images/truck4.jpg",
     imageAlt: "Expedited trucking support",
-    points: ["Guaranteed delivery times", "Real-time status notifications", "Dedicated customer service"],
+    points: ["Time-critical delivery planning", "Real-time status notifications", "Dedicated customer service"],
     cards: makeCards([
       {
         title: "Direct handling",
@@ -198,7 +198,7 @@ export const servicePages = {
     imageSrc: "/images/truck3.jpg",
     imageAlt: "Logistics services support",
     accordionTitle: "Work with a Top Logistics Company",
-    accordionDescription: "The purpose of transport logistics is to oversee your entire supply chain and make intelligent decisions that will help optimize your freight shipments. If you are tired of the headache that comes along with organizing your deliveries, then you are guaranteed to find value in our services. We are proud to be a logistics company trusted by many organizations who count on us to make sure their shipments reach their destination in the smoothest way possible. No matter the size of your business, you can count on us to scale with you and stay on top of all of your transportation needs.",
+    accordionDescription: "The purpose of transport logistics is to oversee your entire supply chain and make intelligent decisions that will help optimize your freight shipments. If you are tired of the headache that comes along with organizing your deliveries, our services can bring clarity and dependable support. We are proud to be a logistics company trusted by many organizations who count on us to help their shipments reach their destination smoothly. No matter the size of your business, you can count on us to scale with you and stay on top of your transportation needs.",
     points: [
       "Planning and optimizing routes",
       "Order management",
@@ -321,7 +321,7 @@ export const servicePages = {
       },
       {
         title: "Feel Secure with Our Local Trucking Service",
-        description: "When you trust a third party to transport cargo for your business, you always want to feel confident that it will arrive in the same condition it leaves in. To ensure that our clients have nothing to worry about, we are dedicated to taking all of the appropriate measures to guarantee safe transit. Our vehicles are frequently inspected and serviced, and we pay careful attention during the loading and unloading process to make sure that there is never any room for error.",
+        description: "When you trust a third party to transport cargo for your business, you want to feel confident that it will arrive in the same condition it leaves in. We take appropriate measures to support safe transit. Our vehicles are frequently inspected and serviced, and we pay careful attention during the loading and unloading process to reduce avoidable risk.",
         icon: ShieldCheck,
       },
       {

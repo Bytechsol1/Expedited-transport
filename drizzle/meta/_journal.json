@@ -29,6 +29,13 @@
       "when": 1786485273841,
       "tag": "0003_flawless_yellowjacket",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788904094090,
+      "tag": "0004_even_junta",
+      "breakpoints": true
     }
   ]
 }

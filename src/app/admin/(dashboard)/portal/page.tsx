@@ -8,12 +8,15 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { getFulfillmentStatusLabel, normalizeFulfillmentStatus } from "@/lib/orders/status";
 
 export const dynamic = "force-dynamic";
 
 const getStatusColor = (status: string) => {
   switch (status) {
     case "pending": return "bg-slate-100 text-slate-700 border-slate-200";
+    case "booking_received": return "bg-slate-100 text-slate-700 border-slate-200";
+    case "booking_confirmed":
     case "confirmed": return "bg-blue-100 text-blue-700 border-blue-200";
     case "dispatched": return "bg-purple-100 text-purple-700 border-purple-200";
     case "in_transit": return "bg-amber-100 text-amber-700 border-amber-200";
@@ -55,14 +58,16 @@ export default async function AdminDashboardPage() {
     .leftJoin(truckTypes, eq(quoteRequests.assignedTruckTypeId, truckTypes.id))
     .orderBy(desc(quoteRequests.createdAt));
 
-  const orders = allRequests;
-  const quotes: typeof allRequests = []; // Quotes are now treated as orders
+  const orders = allRequests.filter((request) => request.paymentStatus === "paid");
+  const quotes = allRequests.filter((request) => request.paymentStatus !== "paid");
 
   // Metrics
   const totalOrders = orders.length;
   const totalQuotes = quotes.length;
   
-  const activeOrdersList = orders.filter((o) => ["confirmed", "dispatched", "in_transit"].includes(o.fulfillmentStatus));
+  const activeOrdersList = orders.filter((order) => (
+    ["booking_received", "booking_confirmed", "dispatched", "in_transit"].includes(normalizeFulfillmentStatus(order.fulfillmentStatus))
+  ));
   const activeOrders = activeOrdersList.length;
   const deliveredOrders = orders.filter((o) => o.fulfillmentStatus === "delivered").length;
   const revenueGeneratingStatuses = ["dispatched", "in_transit", "delivered"];
@@ -82,7 +87,8 @@ export default async function AdminDashboardPage() {
 
   // Shipment Status Lifecycle counts
   const statusCounts = {
-    confirmed: orders.filter(o => o.fulfillmentStatus === "confirmed").length,
+    booking_received: orders.filter((order) => normalizeFulfillmentStatus(order.fulfillmentStatus) === "booking_received").length,
+    booking_confirmed: orders.filter((order) => normalizeFulfillmentStatus(order.fulfillmentStatus) === "booking_confirmed").length,
     dispatched: orders.filter(o => o.fulfillmentStatus === "dispatched").length,
     in_transit: orders.filter(o => o.fulfillmentStatus === "in_transit").length,
     delivered: orders.filter(o => o.fulfillmentStatus === "delivered").length,
@@ -131,7 +137,7 @@ export default async function AdminDashboardPage() {
             <Package size={18} className="text-slate-400 group-hover:text-[#0d9488] transition-colors" />
           </div>
           <div className="text-3xl font-black text-[#2a3441]">{totalOrders}</div>
-          <div className="text-xs font-bold text-slate-400 mt-2">Confirmed shipments</div>
+          <div className="text-xs font-bold text-slate-400 mt-2">Booking records</div>
         </div>
 
         <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col group hover:border-[#5eead4] hover:shadow-md transition-all relative overflow-hidden">
@@ -329,8 +335,18 @@ export default async function AdminDashboardPage() {
                     <Package size={16} />
                   </div>
                   <div className="text-center">
-                    <span className="block text-[11px] font-bold text-slate-400 uppercase">Confirmed</span>
-                    <span className="block text-xl font-black text-[#2a3441] mt-1">{statusCounts.confirmed}</span>
+                    <span className="block text-[11px] font-bold text-slate-400 uppercase">Booking Received</span>
+                    <span className="block text-xl font-black text-[#2a3441] mt-1">{statusCounts.booking_received}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 border-4 border-white shadow-sm flex items-center justify-center text-blue-600">
+                    <CheckCircle size={16} />
+                  </div>
+                  <div className="text-center">
+                    <span className="block text-[11px] font-bold text-slate-400 uppercase">Booking Confirmed</span>
+                    <span className="block text-xl font-black text-[#2a3441] mt-1">{statusCounts.booking_confirmed}</span>
                   </div>
                 </div>
                 
@@ -416,7 +432,7 @@ export default async function AdminDashboardPage() {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full border ${getStatusColor(order.fulfillmentStatus)}`}>
-                      {order.fulfillmentStatus.replace('_', ' ')}
+                      {getFulfillmentStatusLabel(order.fulfillmentStatus)}
                     </span>
                   </td>
                   <td className="px-6 py-4 font-black text-[#2a3441]">

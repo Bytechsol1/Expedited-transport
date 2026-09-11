@@ -81,13 +81,21 @@ export const quoteRequests = pgTable("quote_requests", {
   stripePaymentIntentId: text("stripe_payment_intent_id"),
   paidAt: timestamp("paid_at", { withTimezone: true }),
   customerId: uuid("customer_id").references(() => customers.id),
-  fulfillmentStatus: text("fulfillment_status").notNull().default("confirmed"), // "confirmed" | "dispatched" | "in_transit" | "delivered"
+  customerName: text("customer_name"),
+  customerEmail: text("customer_email"),
+  customerPhone: text("customer_phone"),
+  customerCompany: text("customer_company"),
+  pickupAt: timestamp("pickup_at", { withTimezone: true }),
+  pickupTimeZone: text("pickup_time_zone"),
+  shipmentDetails: text("shipment_details"),
+  termsAcceptedAt: timestamp("terms_accepted_at", { withTimezone: true }),
+  fulfillmentStatus: text("fulfillment_status").notNull().default("booking_received"), // "booking_received" | "booking_confirmed" | "dispatched" | "in_transit" | "delivered"
 });
 
 export const orderStatusEvents = pgTable("order_status_events", {
   id: uuid("id").primaryKey().defaultRandom(),
   quoteRequestId: uuid("quote_request_id").notNull().references(() => quoteRequests.id),
-  status: text("status").notNull(), // "confirmed" | "dispatched" | "in_transit" | "delivered"
+  status: text("status").notNull(), // "booking_received" | "booking_confirmed" | "dispatched" | "in_transit" | "delivered"
   note: text("note"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });

@@ -9,7 +9,7 @@ const frameSrc = (i: number) => `/frames2/frame_${pad(i)}.webp`;
 const CAPTIONS = [
   { heading: "Precision in Motion",    body: "Every mile is planned. Every load is secured." },
   { heading: "Built for the Long Haul", body: "Our fleet is engineered for reliability across any terrain." },
-  { heading: "On Time, Every Time",    body: "We don't just promise delivery — we guarantee it." },
+  { heading: "Reliable, Time-Critical Transportation", body: "Responsive planning and dependable service for urgent freight." },
   { heading: "Your Cargo, Our Priority", body: "Transparent pricing. Zero hidden fees. Unlimited trust." },
 ];
 
@@ -75,7 +75,7 @@ export function ScrollFrameSection() {
     const dw = iw * scale, dh = ih * scale;
     const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
     ctx.drawImage(img, dx, dy, dw, dh);
-  }, []);
+  }, [imagesRef]);
 
   // Sync canvas resolution
   useEffect(() => {

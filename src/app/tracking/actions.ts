@@ -36,6 +36,12 @@ export async function fetchTrackingData(id: string) {
         pieces: quoteRequests.pieces,
         pallets: quoteRequests.pallets,
         weightLbs: quoteRequests.weightLbs,
+        lengthIn: quoteRequests.lengthIn,
+        widthIn: quoteRequests.widthIn,
+        heightIn: quoteRequests.heightIn,
+        hazmat: quoteRequests.hazmat,
+        pickupAt: quoteRequests.pickupAt,
+        pickupTimeZone: quoteRequests.pickupTimeZone,
         distanceMiles: quoteRequests.distanceMiles,
         price: quoteRequests.price,
       })
@@ -57,7 +63,7 @@ export async function fetchTrackingData(id: string) {
       .orderBy(asc(orderStatusEvents.createdAt));
 
     return { shipment, events };
-  } catch (error) {
+  } catch {
     return { error: "Invalid Tracking ID format. Please make sure it's a valid ID." };
   }
 }

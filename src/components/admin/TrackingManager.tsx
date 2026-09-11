@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { 
-  Package, Truck, CheckCircle, Clock, Map, AlertCircle, 
-  Search, Filter, X, ChevronRight, Navigation, MapPin
+  Package, Truck, CheckCircle, Clock, Map,
+  Search, X, MapPin
 } from "lucide-react";
-import Image from "next/image";
 
-type ShipmentStatus = "Pending" | "Picked Up" | "In Transit" | "Out for Delivery" | "Delivered" | "Delayed" | string;
+type ShipmentStatus = "Booking Received" | "Booking Confirmed" | "Dispatched" | "In Transit" | "Delivered";
 
 export interface Shipment {
   id: string;
@@ -23,24 +22,22 @@ export interface Shipment {
 
 const getStatusColor = (status: ShipmentStatus) => {
   switch (status) {
-    case "Pending": return "bg-slate-100 text-slate-700 border-slate-200";
-    case "Picked Up": return "bg-blue-100 text-blue-700 border-blue-200";
+    case "Booking Received": return "bg-slate-100 text-slate-700 border-slate-200";
+    case "Booking Confirmed": return "bg-blue-100 text-blue-700 border-blue-200";
+    case "Dispatched": return "bg-purple-100 text-purple-700 border-purple-200";
     case "In Transit": return "bg-[#5eead4]/20 text-[#0d9488] border-[#5eead4]/50";
-    case "Out for Delivery": return "bg-lime-100 text-lime-700 border-lime-200";
     case "Delivered": return "bg-emerald-100 text-emerald-700 border-emerald-200";
-    case "Delayed": return "bg-red-100 text-red-700 border-red-200";
     default: return "bg-slate-100 text-slate-700 border-slate-200";
   }
 };
 
 const getStatusIcon = (status: ShipmentStatus) => {
   switch (status) {
-    case "Pending": return <Clock size={14} />;
-    case "Picked Up": return <Package size={14} />;
+    case "Booking Received": return <Clock size={14} />;
+    case "Booking Confirmed": return <Package size={14} />;
+    case "Dispatched": return <Truck size={14} />;
     case "In Transit": return <Truck size={14} />;
-    case "Out for Delivery": return <Navigation size={14} />;
     case "Delivered": return <CheckCircle size={14} />;
-    case "Delayed": return <AlertCircle size={14} />;
     default: return <Clock size={14} />;
   }
 };
@@ -60,8 +57,8 @@ export function TrackingManager({ initialShipments = [] }: { initialShipments?: 
 
   const stats = {
     total: initialShipments.length,
+    bookingReceived: initialShipments.filter(s => s.status === "Booking Received").length,
     inTransit: initialShipments.filter(s => s.status === "In Transit").length,
-    outForDelivery: initialShipments.filter(s => s.status === "Out for Delivery").length,
     delivered: initialShipments.filter(s => s.status === "Delivered").length,
   };
 
@@ -85,18 +82,18 @@ export function TrackingManager({ initialShipments = [] }: { initialShipments?: 
         </div>
         <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col group hover:border-[#5eead4] hover:shadow-md transition-all relative overflow-hidden">
           <div className="flex justify-between mb-3 relative z-10">
-            <span className="text-sm font-bold text-slate-500 group-hover:text-[#0d9488] transition-colors">In Transit</span>
-            <Truck size={18} className="text-[#0d9488]" />
+            <span className="text-sm font-bold text-slate-500 group-hover:text-[#0d9488] transition-colors">Booking Received</span>
+            <Clock size={18} className="text-[#0d9488]" />
           </div>
-          <div className="text-3xl font-black text-[#0d9488] relative z-10">{stats.inTransit}</div>
+          <div className="text-3xl font-black text-[#0d9488] relative z-10">{stats.bookingReceived}</div>
           <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-[#5eead4]/10 rounded-full blur-xl group-hover:bg-[#5eead4]/20 transition-all"></div>
         </div>
         <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col group hover:shadow-md transition-shadow">
           <div className="flex justify-between mb-3">
-            <span className="text-sm font-bold text-slate-500">Out for Delivery</span>
-            <Navigation size={18} className="text-slate-400 group-hover:text-lime-500 transition-colors" />
+            <span className="text-sm font-bold text-slate-500">In Transit</span>
+            <Truck size={18} className="text-slate-400 group-hover:text-lime-500 transition-colors" />
           </div>
-          <div className="text-3xl font-black text-[#2a3441]">{stats.outForDelivery}</div>
+          <div className="text-3xl font-black text-[#2a3441]">{stats.inTransit}</div>
         </div>
         <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col group hover:shadow-md transition-shadow">
           <div className="flex justify-between mb-3">
@@ -145,7 +142,7 @@ export function TrackingManager({ initialShipments = [] }: { initialShipments?: 
 
         {/* Filter Pills */}
         <div className="flex flex-wrap gap-2">
-          {["All Statuses", "Pending", "Picked Up", "In Transit", "Out for Delivery", "Delivered", "Delayed"].map(status => (
+          {["All Statuses", "Booking Received", "Booking Confirmed", "Dispatched", "In Transit", "Delivered"].map(status => (
             <button
               key={status}
               onClick={() => setActiveFilter(status as ShipmentStatus | "All Statuses")}

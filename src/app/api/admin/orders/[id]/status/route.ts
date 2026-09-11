@@ -1,13 +1,14 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/lib/db/client";
 import { orderStatusEvents, quoteRequests } from "@/lib/db/schema";
 import { auth } from "@/lib/auth";
+import { FULFILLMENT_STATUS_VALUES } from "@/lib/orders/status";
 
 export const runtime = "nodejs";
 
 const statusUpdateSchema = z.object({
-  status: z.enum(["confirmed", "dispatched", "in_transit", "delivered"]),
+  status: z.enum(FULFILLMENT_STATUS_VALUES),
 });
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -27,7 +28,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       const [order] = await tx
         .update(quoteRequests)
         .set({ fulfillmentStatus: body.status })
-        .where(eq(quoteRequests.id, id))
+        .where(and(eq(quoteRequests.id, id), eq(quoteRequests.paymentStatus, "paid")))
         .returning();
 
       if (!order) return null;
@@ -37,7 +38,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     });
 
     if (!updated) {
-      return Response.json({ ok: false, error: "Order not found." }, { status: 404 });
+      return Response.json({ ok: false, error: "Paid order not found." }, { status: 404 });
     }
 
     return Response.json({ ok: true, order: updated });

@@ -103,7 +103,7 @@ export function AboutUsSection() {
                       <div style={{ width: "14px", height: "8px", background: "#f5bf12", transform: "skewX(-18deg)" }} />
                     </div>
                     <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#0f172a" }}>
-                      100% Satisfaction Guaranteed
+                      Service Built Around Your Needs
                     </span>
                   </div>
 
@@ -115,7 +115,7 @@ export function AboutUsSection() {
                   </h2>
 
                   <p style={{ marginTop: "24px", marginBottom: 0, maxWidth: "700px", fontSize: "18px", lineHeight: 1.7, color: "#475569" }}>
-                    We have never been satisfied with being second best, so if you have been searching for a local trucking company that will put your shipment above all else, then you have come to the right place. We pay close attention to all aspects of the service we offer, meaning that we are always guaranteed to impress.
+                    We have never been satisfied with being second best, so if you have been searching for a local trucking company that will put your shipment above all else, then you have come to the right place. We pay close attention to every aspect of our service and work hard to earn your trust.
                   </p>
 
                   <p style={{ marginTop: "22px", marginBottom: 0, maxWidth: "700px", fontSize: "18px", lineHeight: 1.7, color: "#475569" }}>
@@ -187,8 +187,8 @@ export function AboutUsSection() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "60px", perspective: "1500px", padding: "40px 20px" }}>
               {[
-                { icon: <Clock size={36} color="#000" />, title: "On Time, Every Time", desc: "Punctuality is crucial in the trucking industry, which is why we plan and organize all of our shipments carefully. From our route selection, until we unload your freight, you can count on us to do everything required to get your product to its destination on time." },
-                { icon: <ShieldCheck size={36} color="#000" />, title: "Delivered in Perfect Condition", desc: "In addition to our efficient logistics, we also go to great lengths to ensure that no damage is inflicted to your materials during transit. Using advanced trucks and safety equipment means that we will drop off all of your freight in the same condition it leaves in." },
+                { icon: <Clock size={36} color="#000" />, title: "Reliable, Time-Critical Transportation", desc: "Punctuality is crucial in the trucking industry, which is why we plan and organize all of our shipments carefully. From route selection through unloading, our team stays focused on dependable execution." },
+                { icon: <ShieldCheck size={36} color="#000" />, title: "Freight Care in Transit", desc: "In addition to efficient logistics, we use appropriate trucks, safety equipment, and careful handling practices to help protect your freight throughout transit." },
                 { icon: <Award size={36} color="#000" />, title: "Reasonable Rates on Certified Trucking", desc: "When searching for a trucking company, it always helps to find one that won’t hurt your bottom line. Our honest and affordable pricing has helped us create many strong partnerships with local businesses who trust us for all of their freight shipping." }
               ].map((card, idx) => (
                 <div key={idx} style={{
@@ -263,7 +263,7 @@ export function AboutUsSection() {
                 </div>
 
                 <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 5vw, 64px)", fontWeight: 450, letterSpacing: "-0.02em", marginBottom: "24px", color: "#ffffff", lineHeight: 1.05 }}>
-                  <span style={{ color: "#E31E24" }}>P</span>artner with the best. <br /> Let's get moving<span style={{ color: "#E31E24" }}>.</span>
+                  <span style={{ color: "#E31E24" }}>P</span>artner with the best. <br /> Let&apos;s get moving<span style={{ color: "#E31E24" }}>.</span>
                 </h2>
 
                 <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.7)", marginBottom: "0", lineHeight: 1.6, maxWidth: "540px", fontWeight: 400 }}>

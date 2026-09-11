@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import Stripe from "stripe";
 import { db } from "@/lib/db/client";
 import { orderStatusEvents, quoteRequests } from "@/lib/db/schema";
@@ -30,18 +30,21 @@ export async function POST(request: Request) {
 
     if (quoteRequestId) {
       await db.transaction(async (tx) => {
-        await tx
+        const [updated] = await tx
           .update(quoteRequests)
           .set({
             paymentStatus: "paid",
             stripePaymentIntentId:
               typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
             paidAt: new Date(),
-            fulfillmentStatus: "confirmed",
+            fulfillmentStatus: "booking_received",
           })
-          .where(eq(quoteRequests.id, quoteRequestId));
+          .where(and(eq(quoteRequests.id, quoteRequestId), ne(quoteRequests.paymentStatus, "paid")))
+          .returning({ id: quoteRequests.id });
 
-        await tx.insert(orderStatusEvents).values({ quoteRequestId, status: "confirmed" });
+        if (updated) {
+          await tx.insert(orderStatusEvents).values({ quoteRequestId, status: "booking_received" });
+        }
       });
     }
   }

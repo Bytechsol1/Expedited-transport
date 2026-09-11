@@ -2,6 +2,11 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { quoteRequests, customers, orderStatusEvents } from "@/lib/db/schema";
 import { TrackingManager } from "@/components/admin/TrackingManager";
+import {
+  FULFILLMENT_STAGES,
+  getFulfillmentStatusLabel,
+  normalizeFulfillmentStatus,
+} from "@/lib/orders/status";
 
 export const dynamic = "force-dynamic";
 
@@ -13,10 +18,13 @@ export default async function AdminTrackingPage() {
       deliveryAddress: quoteRequests.deliveryAddress,
       fulfillmentStatus: quoteRequests.fulfillmentStatus,
       paymentStatus: quoteRequests.paymentStatus,
-      customerEmail: customers.email,
+      customerName: quoteRequests.customerName,
+      customerEmail: quoteRequests.customerEmail,
+      accountEmail: customers.email,
     })
     .from(quoteRequests)
     .leftJoin(customers, eq(quoteRequests.customerId, customers.id))
+    .where(eq(quoteRequests.paymentStatus, "paid"))
     .orderBy(desc(quoteRequests.createdAt));
 
   const allEvents = await db
@@ -27,25 +35,19 @@ export default async function AdminTrackingPage() {
   const shipments = allOrders.map(order => {
     const orderEvents = allEvents.filter(e => e.quoteRequestId === order.id).sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
     
-    // Map db status to UI status
-    let uiStatus = "Pending";
-    if (order.fulfillmentStatus === "confirmed") uiStatus = "Pending";
-    else if (order.fulfillmentStatus === "dispatched") uiStatus = "Picked Up";
-    else if (order.fulfillmentStatus === "in_transit") uiStatus = "In Transit";
-    else if (order.fulfillmentStatus === "delivered") uiStatus = "Delivered";
+    const uiStatus = getFulfillmentStatusLabel(order.fulfillmentStatus);
 
     const formatDate = (date: Date) => {
       return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "numeric" }).format(date);
     };
 
-    const activity = ["confirmed", "dispatched", "in_transit", "delivered"].map(step => {
-      const event = orderEvents.find(e => e.status === step);
-      let label = step.replace("_", " ").toUpperCase();
-      
+    const activity = FULFILLMENT_STAGES.map((step) => {
+      const event = orderEvents.find((item) => normalizeFulfillmentStatus(item.status) === step.value);
+
       return {
-        label,
+        label: step.label,
         date: event ? formatDate(event.createdAt) : "-",
-        location: event ? (step === "confirmed" ? "System" : step === "delivered" ? order.deliveryAddress : order.pickupAddress) : "-",
+        location: event ? (step.value.startsWith("booking_") ? "System" : step.value === "delivered" ? order.deliveryAddress : order.pickupAddress) : "-",
         completed: !!event
       };
     });
@@ -53,7 +55,7 @@ export default async function AdminTrackingPage() {
     return {
       id: `EXP-${order.id.split("-")[0].toUpperCase()}`,
       rawId: order.id,
-      customer: order.customerEmail || "Unknown",
+      customer: order.customerName || order.customerEmail || order.accountEmail || "Unknown",
       origin: order.pickupAddress,
       destination: order.deliveryAddress,
       status: uiStatus,

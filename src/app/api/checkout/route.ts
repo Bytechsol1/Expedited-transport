@@ -17,6 +17,22 @@ const QUOTE_EXPIRY_MS = 30 * 60 * 1000;
 
 const requestSchema = z.object({
   quoteRequestId: z.string().uuid(),
+  termsAccepted: z.literal(true, { error: "You must accept the required policies before payment." }),
+});
+
+const payableQuoteSchema = z.object({
+  customerName: z.string().trim().min(2),
+  customerEmail: z.string().trim().email(),
+  customerPhone: z.string().trim().refine((value) => value.replace(/\D/g, "").length >= 7),
+  pickupAddress: z.string().trim().min(3),
+  deliveryAddress: z.string().trim().min(3),
+  pickupAt: z.date().refine((value) => value.getTime() > Date.now()),
+  weightLbs: z.number().positive(),
+  pieces: z.number().int().positive(),
+  pallets: z.number().int().min(0),
+  lengthIn: z.number().int().positive(),
+  widthIn: z.number().int().positive(),
+  heightIn: z.number().int().positive(),
 });
 
 export async function POST(request: Request) {
@@ -35,12 +51,21 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: z.infer<typeof requestSchema>;
+  let requestBody: unknown;
   try {
-    body = requestSchema.parse(await request.json());
+    requestBody = await request.json();
   } catch {
-    return Response.json({ ok: false, error: "Invalid checkout request." }, { status: 400 });
+    return Response.json({ ok: false, error: "Checkout request must be valid JSON." }, { status: 400 });
   }
+
+  const parsed = requestSchema.safeParse(requestBody);
+  if (!parsed.success) {
+    return Response.json(
+      { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid checkout request." },
+      { status: 400 }
+    );
+  }
+  const body = parsed.data;
 
   try {
     const [quote] = await db
@@ -52,6 +77,16 @@ export async function POST(request: Request) {
         price: quoteRequests.price,
         status: quoteRequests.status,
         paymentStatus: quoteRequests.paymentStatus,
+        customerName: quoteRequests.customerName,
+        customerEmail: quoteRequests.customerEmail,
+        customerPhone: quoteRequests.customerPhone,
+        pickupAt: quoteRequests.pickupAt,
+        weightLbs: quoteRequests.weightLbs,
+        pieces: quoteRequests.pieces,
+        pallets: quoteRequests.pallets,
+        lengthIn: quoteRequests.lengthIn,
+        widthIn: quoteRequests.widthIn,
+        heightIn: quoteRequests.heightIn,
         truckTypeName: truckTypes.name,
       })
       .from(quoteRequests)
@@ -61,6 +96,21 @@ export async function POST(request: Request) {
 
     if (!quote || quote.status !== "quoted" || !quote.price) {
       return Response.json({ ok: false, error: "Quote not found or not payable." }, { status: 404 });
+    }
+
+    const quoteValidation = payableQuoteSchema.safeParse(quote);
+    if (!quoteValidation.success) {
+      const pickupIsInvalid = !quote.pickupAt || quote.pickupAt.getTime() <= Date.now();
+      return Response.json(
+        {
+          ok: false,
+          error: pickupIsInvalid
+            ? "The pickup date and time has passed. Please recalculate your quote with a future pickup time."
+            : "This quote is missing required customer or shipment information. Please recalculate it.",
+          expired: pickupIsInvalid,
+        },
+        { status: 422 }
+      );
     }
 
     if (quote.paymentStatus === "paid") {
@@ -99,7 +149,12 @@ export async function POST(request: Request) {
 
     await db
       .update(quoteRequests)
-      .set({ paymentStatus: "pending", stripeSessionId: session.id, customerId })
+      .set({
+        paymentStatus: "pending",
+        stripeSessionId: session.id,
+        customerId,
+        termsAcceptedAt: new Date(),
+      })
       .where(eq(quoteRequests.id, quote.id));
 
     return Response.json({ ok: true, url: session.url });

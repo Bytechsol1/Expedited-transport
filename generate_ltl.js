@@ -8,7 +8,7 @@ ltl = ltl.replace(/<span>Expedited<\/span>/g, '<span>LTL<\/span>');
 
 // Replace benefits
 const oldBenefits = `const benefits = [
-  "Guaranteed delivery times",
+  "Time-critical delivery planning",
   "Real-time status notifications",
   "Fewer stops and flexible deliveries",
   "Reduced handling of your items",
@@ -26,7 +26,7 @@ const newBenefits = `const benefits = [
 ltl = ltl.replace(oldBenefits, newBenefits);
 
 // Replace summary
-const oldSummary = `Experience unmatched reliability in time-critical delivery. Our premium semi-truck fleet, featuring high-capacity cargo bays and powerful engines, is built for speed and security. We guarantee your most urgent shipments reach their destination on schedule. Contact us to optimize your high-priority cargo logistics.`;
+const oldSummary = `Experience focused support for time-critical delivery. Our premium semi-truck fleet, featuring high-capacity cargo bays and powerful engines, is built for speed and security. We coordinate urgent shipments with careful planning and responsive service. Contact us to optimize your high-priority cargo logistics.`;
 
 const newSummary = `Just because you don't have enough freight to fill up a truck does not mean you have to be throwing money away. With Expedited Transport Services, you only pay for the space you need. Our less-than-truckload shipping services are everything you need to keep your operation running smoothly without worrying about the size of your cargo.`;
 ltl = ltl.replace(oldSummary, newSummary);
@@ -47,7 +47,7 @@ ltl = ltl.replace('Just because you need your products delivered quickly does no
 
 ltl = ltl.replace('Safety First', 'Cargo Safety');
 ltl = ltl.replace('Your Freight Is Safe with Our Expedited Freight Services', 'Keeping Your Cargo Safe');
-ltl = ltl.replace('On top of completing your shipments on time, we also guarantee their safety from start to finish. In fact, there are actually many security benefits that come from our expedited trucking services. Because there will be fewer stops and fewer handling requirements during transit, there is less chance for damage or loss during the process.', 'Our carefully organized shipments ensure secure loading so your pallets or other materials are protected during transit.');
+ltl = ltl.replace('Our expedited trucking services reduce stops and handling requirements during transit, helping protect freight and reduce the risk of damage or loss during the process.', 'Our carefully organized shipments support secure loading so your pallets or other materials are protected during transit.');
 
 ltl = ltl.replace('Customer Experience', 'Expert Advice');
 ltl = ltl.replace('Stay Informed with Our Expedited Trucking Company', 'When to Hire an LTL Freight Company');

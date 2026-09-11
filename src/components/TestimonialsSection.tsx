@@ -11,7 +11,7 @@ const SPEED = 0.65;
 
 const TESTIMONIALS = [
   {
-    quote: "Deliveries always on time. Expedited Transport never lets us down - our entire supply chain depends on them.",
+    quote: "Expedited Transport communicates clearly and keeps our time-critical shipments moving with dependable service.",
     name: "Nora Elkind",
     company: "Tri-State Parts",
     photo: "https://img.magnific.com/free-photo/cheerful-entrepreneur_1098-17978.jpg?semt=ais_hybrid&w=740&q=80",

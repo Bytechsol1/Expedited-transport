@@ -2,8 +2,6 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { customers, quoteRequests, truckTypes } from "@/lib/db/schema";
 import { OrdersManager } from "@/components/admin/OrdersManager";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -16,12 +14,28 @@ export default async function AdminOrdersPage() {
       deliveryAddress: quoteRequests.deliveryAddress,
       price: quoteRequests.price,
       fulfillmentStatus: quoteRequests.fulfillmentStatus,
+      customerName: quoteRequests.customerName,
+      customerEmail: quoteRequests.customerEmail,
+      customerPhone: quoteRequests.customerPhone,
+      customerCompany: quoteRequests.customerCompany,
+      pickupAt: quoteRequests.pickupAt,
+      pickupTimeZone: quoteRequests.pickupTimeZone,
+      shipmentDetails: quoteRequests.shipmentDetails,
+      pieces: quoteRequests.pieces,
+      pallets: quoteRequests.pallets,
+      weightLbs: quoteRequests.weightLbs,
+      lengthIn: quoteRequests.lengthIn,
+      widthIn: quoteRequests.widthIn,
+      heightIn: quoteRequests.heightIn,
+      hazmat: quoteRequests.hazmat,
+      termsAcceptedAt: quoteRequests.termsAcceptedAt,
       truckTypeName: truckTypes.name,
-      customerEmail: customers.email,
+      accountEmail: customers.email,
     })
     .from(quoteRequests)
     .leftJoin(truckTypes, eq(quoteRequests.assignedTruckTypeId, truckTypes.id))
     .leftJoin(customers, eq(quoteRequests.customerId, customers.id))
+    .where(eq(quoteRequests.paymentStatus, "paid"))
     .orderBy(desc(quoteRequests.createdAt));
 
   return (

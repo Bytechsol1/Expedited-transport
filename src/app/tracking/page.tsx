@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, use } from "react";
 import { Search, Package, ArrowLeft } from "lucide-react";
 import { fetchTrackingData } from "./actions";
 import { useSession } from "next-auth/react";
@@ -8,6 +8,39 @@ import Link from "next/link";
 
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
+import {
+  FULFILLMENT_STAGES,
+  getFulfillmentStatusIndex,
+  getFulfillmentStatusLabel,
+  normalizeFulfillmentStatus,
+} from "@/lib/orders/status";
+
+type TrackedShipment = {
+  id: string;
+  pickupAddress: string;
+  deliveryAddress: string;
+  fulfillmentStatus: string;
+  paymentStatus: string;
+  status: string;
+  customerId: string | null;
+  truckTypeName: string | null;
+  pieces: number;
+  pallets: number;
+  weightLbs: number;
+  lengthIn: number;
+  widthIn: number;
+  heightIn: number;
+  hazmat: boolean;
+  pickupAt: Date | null;
+  pickupTimeZone: string | null;
+  distanceMiles: string | null;
+  price: string | null;
+};
+
+type TrackingEvent = {
+  status: string;
+  createdAt: Date;
+};
 
 export default function AccountTrackingPage({ searchParams }: { searchParams: Promise<{ id?: string }> }) {
   const unwrappedParams = use(searchParams);
@@ -16,8 +49,8 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
   const { data: session } = useSession();
 
   const [trackingId, setTrackingId] = useState(initialId);
-  const [shipment, setShipment] = useState<any>(null);
-  const [events, setEvents] = useState<any[]>([]);
+  const [shipment, setShipment] = useState<TrackedShipment | null>(null);
+  const [events, setEvents] = useState<TrackingEvent[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -133,7 +166,7 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                   <div style={{ textAlign: "right" }}>
                     <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem", textTransform: "uppercase" }}>CURRENT STATUS</div>
                     <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "#0f172a" }}>
-                      {shipment.fulfillmentStatus ? shipment.fulfillmentStatus.replace("_", " ").replace(/\b\w/g, (l: string) => l.toUpperCase()) : "Pending"}
+                      {getFulfillmentStatusLabel(shipment.fulfillmentStatus)}
                     </div>
                   </div>
                 </div>
@@ -142,22 +175,21 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                   <div style={{ display: "flex", justifyContent: "space-between", position: "relative" }}>
                     <div style={{ position: "absolute", top: "12px", left: "10%", right: "10%", height: "2px", background: "rgba(0,0,0,0.05)", zIndex: 0 }} />
                     
-                    {["confirmed", "dispatched", "in_transit", "delivered"].map((step, idx) => {
-                      const statuses = ["confirmed", "dispatched", "in_transit", "delivered"];
-                      const currentIdx = statuses.indexOf(shipment?.fulfillmentStatus || "");
-                      const event = events.find((e: any) => e.status === step);
+                    {FULFILLMENT_STAGES.map((step, idx) => {
+                      const currentIdx = getFulfillmentStatusIndex(shipment?.fulfillmentStatus);
+                      const event = events.find((item) => normalizeFulfillmentStatus(item.status) === step.value);
                       
                       const isCompleted = idx <= currentIdx;
-                      const isCurrent = shipment?.fulfillmentStatus === step;
+                      const isCurrent = normalizeFulfillmentStatus(shipment?.fulfillmentStatus) === step.value;
 
                       let displayDate = event?.createdAt;
                       if (!displayDate && isCompleted) {
-                        const subsequentEvent = events.find((e: any) => statuses.indexOf(e.status) >= idx);
+                        const subsequentEvent = events.find((item) => getFulfillmentStatusIndex(item.status) >= idx);
                         if (subsequentEvent) displayDate = subsequentEvent.createdAt;
                       }
                       
                       return (
-                        <div key={step} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", zIndex: 1, width: "25%" }}>
+                        <div key={step.value} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", zIndex: 1, width: `${100 / FULFILLMENT_STAGES.length}%` }}>
                           <div style={{ 
                             width: "24px", height: "24px", borderRadius: "50%", 
                             background: isCompleted ? "#E31E24" : "#fff",
@@ -166,7 +198,7 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                           }} />
                           <div style={{ textAlign: "center" }}>
                             <div style={{ fontSize: "0.75rem", fontWeight: 700, color: isCompleted ? "#0f172a" : "rgba(15,23,42,0.4)", textTransform: "uppercase" }}>
-                              {step.replace("_", " ")}
+                              {step.label}
                             </div>
                             {displayDate && <div style={{ fontSize: "0.7rem", color: "rgba(15,23,42,0.5)" }}>{formatDate(displayDate)}</div>}
                           </div>
@@ -208,6 +240,22 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                   <div>
                     <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>TOTAL WEIGHT</div>
                     <div style={{ fontWeight: 600, color: "#0f172a" }}>{shipment.weightLbs ? `${shipment.weightLbs} lbs` : "—"}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>DIMENSIONS</div>
+                    <div style={{ fontWeight: 600, color: "#0f172a" }}>{shipment.lengthIn} × {shipment.widthIn} × {shipment.heightIn} in</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>PICKUP SCHEDULE</div>
+                    <div style={{ fontWeight: 600, color: "#0f172a" }}>
+                      {shipment.pickupAt
+                        ? new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short", timeZone: shipment.pickupTimeZone || undefined }).format(new Date(shipment.pickupAt))
+                        : "—"}
+                    </div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>HAZMAT</div>
+                    <div style={{ fontWeight: 600, color: "#0f172a" }}>{shipment.hazmat ? "Yes" : "No"}</div>
                   </div>
                   <div>
                     <div style={{ fontSize: "0.85rem", color: "rgba(15,23,42,0.5)", fontWeight: 600, marginBottom: "0.25rem" }}>DISTANCE</div>
