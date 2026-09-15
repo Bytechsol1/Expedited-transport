@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, CheckCircle2, Clock, Shield, Box, HeadphonesIcon, BadgeDollarSign, Truck, ShieldCheck, MapPin, Target } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
 import { servicePages } from "@/lib/service-pages";
+import responsive from "@/components/ServiceResponsive.module.css";
 
 const benefits = [
   { text: "Time-critical delivery planning", image: "/images/expedited-pillar-1-v2.jpg" },
@@ -19,7 +19,7 @@ export default function ExpeditedTruckingPage() {
   return (
     <>
       <SiteHeader />
-      <main className="expedited-page">
+      <main className={`expedited-page ${responsive.page}`}>
         <style>{`
           .expedited-page {
             background: #fff;
@@ -297,14 +297,14 @@ export default function ExpeditedTruckingPage() {
 
         <section className="overlay-hero">
           {/* Background giant text */}
-          <div className="bg-text">
+          <h1 className="bg-text">
             <span style={{ textAlign: 'left', paddingLeft: '4vw', transform: 'translateY(-8vh)', fontSize: 'clamp(30px, 7vw, 120px)' }}>
               Expedited
             </span>
             <span style={{ textAlign: 'left', paddingLeft: '16vw', marginTop: '-4vh', position: 'relative', zIndex: 3, fontSize: 'clamp(30px, 7vw, 120px)' }}>
               Trucking
             </span>
-          </div>
+          </h1>
 
           {/* Truck image – overlaps text */}
           <div className="truck-layer" style={{ left: '73%', width: '75%', filter: 'drop-shadow(0px 25px 35px rgba(0, 0, 0, 0.3))' }}>
@@ -334,31 +334,20 @@ export default function ExpeditedTruckingPage() {
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent)" }} />
 
           {/* Part 1: Honest Outlook Banner */}
-          <div style={{ padding: "140px 40px 80px", maxWidth: "1400px", margin: "0 auto" }}>
-            <div style={{
-              position: "relative",
-              borderRadius: "32px",
-              overflow: "hidden",
-              padding: "100px 80px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: "60px",
-              boxShadow: "0 40px 80px rgba(0,0,0,0.15)",
-              minHeight: "420px"
-            }}>
-              <Image src="/images/truck2.jpg" alt="Expedited Trucking" fill style={{ objectFit: "cover" }} />
+          <div className="mx-auto max-w-[1400px] px-5 pt-10 pb-12 sm:px-6 sm:py-20 lg:px-10 lg:pt-[140px]">
+            <div className="relative flex items-center justify-between gap-8 overflow-hidden rounded-[32px] px-6 py-10 shadow-[0_40px_80px_rgba(0,0,0,0.15)] sm:p-10 lg:min-h-[420px] lg:gap-[60px] lg:px-20 lg:py-[100px]">
+              <Image src="/images/truck2.jpg" alt="Expedited Trucking" fill sizes="100vw" style={{ objectFit: "cover" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, #0f172a 0%, rgba(15,23,42,0.95) 50%, rgba(15,23,42,0.4) 100%)" }} />
 
               <div style={{ position: "relative", zIndex: 1, maxWidth: "600px" }}>
-                <h2 style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "32px", color: "white", lineHeight: 1.1, fontFamily: "var(--font-primary)" }}>
+                <h2 className="mb-6 font-[var(--font-primary)] text-[clamp(28px,4vw,52px)] leading-[1.1] font-bold tracking-[-0.02em] text-white lg:mb-8">
                   Trust Your Business with Our <br /> Expedited Freight Company
                 </h2>
 
-                <p style={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.8, fontSize: "18px", marginBottom: "24px", fontFamily: "var(--font-primary)" }}>
+                <p className="mb-6 font-[var(--font-primary)] text-base leading-[1.8] text-white/80 sm:text-lg">
                   Having successfully completed many different accelerated shipping jobs, we have made a name for ourselves as a top-notch resource for quick and stress-free deliveries.
                 </p>
-                <p style={{ color: "rgba(255,255,255,0.8)", lineHeight: 1.8, fontSize: "18px", fontFamily: "var(--font-primary)" }}>
+                <p className="font-[var(--font-primary)] text-base leading-[1.8] text-white/80 sm:text-lg">
                   If you are depending on materials reaching their destination by a particular date, we encourage you to get in touch with us and we will help you work out the details for your shipment as quickly as possible.
                 </p>
               </div>
@@ -366,17 +355,17 @@ export default function ExpeditedTruckingPage() {
           </div>
 
           {/* Part 2: Interactive Pillar Accordion */}
-          <div style={{ padding: "80px 40px 140px", maxWidth: "1400px", margin: "0 auto" }}>
+          <div className="mx-auto max-w-[1400px] px-5 pt-12 pb-14 sm:px-6 sm:py-20 lg:px-10 lg:pt-20 lg:pb-[140px]">
             
             {/* Section Header */}
-            <div style={{ textAlign: "center", marginBottom: "60px", maxWidth: "800px", margin: "0 auto 60px" }}>
-              <h2 style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "24px", lineHeight: 1.1, color: "#0f172a", fontFamily: "var(--font-primary)" }}>
+            <div className="mx-auto mb-8 max-w-[800px] text-center sm:mb-12 lg:mb-[60px]">
+              <h2 className="mb-6 font-[var(--font-primary)] text-[clamp(28px,4vw,52px)] leading-[1.1] font-bold tracking-[-0.02em] text-slate-900">
                 The Expedited Trucking Company for Any Job
               </h2>
-              <p style={{ color: "#475569", lineHeight: 1.8, fontSize: "18px", marginBottom: "24px", fontFamily: "var(--font-primary)" }}>
+              <p className="mb-6 font-[var(--font-primary)] text-base leading-[1.8] text-slate-600 sm:text-lg">
                 Unlike some hotshot trucking companies, which can only accommodate smaller loads, we are happy to help you with cargo of all shapes and sizes. From single pallets to entire truckloads, our qualified team of trucking experts works hard to get your shipments delivered on time, no matter the distance.
               </p>
-              <p style={{ color: "#475569", lineHeight: 1.8, fontSize: "18px", fontFamily: "var(--font-primary)" }}>
+              <p className="font-[var(--font-primary)] text-base leading-[1.8] text-slate-600 sm:text-lg">
                 Some of the additional benefits of hiring our expedited freight carrier for your job include:
               </p>
             </div>
@@ -391,6 +380,7 @@ export default function ExpeditedTruckingPage() {
                     alt={item.text} 
                     fill 
                     className="pillar-bg"
+                    sizes="(max-width: 600px) 100vw, (max-width: 1279px) 50vw, 33vw"
                     style={{ objectFit: "cover" }} 
                   />
                   <div className="pillar-overlay" />
@@ -408,15 +398,15 @@ export default function ExpeditedTruckingPage() {
         </section>
 
         {/* -- FEATURES SECTION -------------------------------------------- */}
-        <section style={{ padding: "120px 0", backgroundColor: "#ffffff", position: "relative" }}>
-          <div style={{ maxWidth: "1400px", margin: "0 auto", padding: "0 40px" }}>
+        <section className="relative bg-white py-12 sm:py-20 lg:py-[120px]">
+          <div className="mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-10">
 
-            <div style={{ textAlign: "center", marginBottom: "80px" }}>
-              <h2 style={{ fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24", fontFamily: "var(--font-primary)" }}>Expedited Freight Hauling That You Can Depend On</h2>
+            <div className="mb-8 text-center sm:mb-12 lg:mb-20">
+              <h2 className="font-[var(--font-primary)] text-[clamp(28px,4vw,40px)] leading-tight font-bold tracking-[-0.02em] text-[#051e24]">Expedited Freight Hauling That You Can Depend On</h2>
               <div style={{ width: "60px", height: "4px", backgroundColor: "#E31E24", margin: "24px auto 0", borderRadius: "2px" }} />
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "100px" }}>
+            <div className="flex flex-col gap-10 sm:gap-16 lg:gap-[100px]">
               {[
                 {
                   id: "01",
@@ -440,23 +430,18 @@ export default function ExpeditedTruckingPage() {
                 const isEven = idx % 2 !== 0;
 
                 return (
-                  <div key={idx} style={{
-                    display: "flex",
-                    flexDirection: isEven ? "row-reverse" : "row",
-                    alignItems: "stretch",
-                    gap: "80px"
-                  }}>
+                  <div key={idx} className={`notched-card flex items-stretch gap-20 ${isEven ? "reverse min-[1101px]:flex-row-reverse" : "normal min-[1101px]:flex-row"}`}>
                     {/* Text Side */}
-                    <div style={{ flex: "1 1 45%", display: "flex", alignItems: "center" }}>
-                      <div style={{ display: "flex", alignItems: "flex-start", gap: "24px" }}>
-                        <div style={{ fontSize: "13px", color: "#8b9ba5", fontWeight: 600, fontFamily: "var(--font-mono)", marginTop: "12px", letterSpacing: "1px" }}>
+                    <div className="notched-text-wrapper flex min-w-0 flex-[1_1_45%] items-center">
+                      <div className="flex min-w-0 items-start gap-3 sm:gap-6">
+                        <div className="shrink-0" style={{ fontSize: "13px", color: "#8b9ba5", fontWeight: 600, fontFamily: "var(--font-mono)", marginTop: "12px", letterSpacing: "1px" }}>
                           {card.id}
                         </div>
-                        <div>
-                          <h3 style={{ fontSize: "clamp(32px, 4vw, 44px)", fontWeight: 600, color: "#061d26", marginBottom: "24px", letterSpacing: "-0.02em", lineHeight: 1.1, fontFamily: "var(--font-primary)" }}>
+                        <div className="min-w-0">
+                          <h3 className="mb-6 font-[var(--font-primary)] text-[clamp(26px,4vw,44px)] leading-[1.1] font-semibold tracking-[-0.02em] text-[#061d26]">
                             {card.title}
                           </h3>
-                          <p style={{ color: "#4a5568", fontSize: "17px", lineHeight: 1.8, fontFamily: "var(--font-primary)" }}>
+                          <p className="font-[var(--font-primary)] text-base leading-[1.8] text-[#4a5568] sm:text-[17px]">
                             {card.desc}
                           </p>
                         </div>
@@ -464,7 +449,7 @@ export default function ExpeditedTruckingPage() {
                     </div>
 
                     {/* Image Side */}
-                    <div style={{ flex: "1 1 55%", position: "relative", minHeight: "450px", filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.1))" }}>
+                    <div className="notched-img-wrapper relative min-h-[450px] min-w-0 flex-[1_1_55%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)]">
                       <div style={{
                         position: "absolute", inset: 0,
                         clipPath: "url(#hotshot-image-clip)",
@@ -475,6 +460,7 @@ export default function ExpeditedTruckingPage() {
                           src={card.image}
                           alt={card.title}
                           fill
+                          sizes="(max-width: 1100px) 100vw, 50vw"
                           style={{
                             objectFit: "cover",
                             transform: isEven ? "scaleX(-1)" : "none" // Flip image back so it doesn't look mirrored

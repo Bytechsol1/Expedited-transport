@@ -5,9 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
-import { LogOut, LayoutDashboard } from "lucide-react";
+import { LogIn, LogOut, UserRound } from "lucide-react";
 
 const SERVICES = [
   { label: "Expedited Trucking", href: "/trucking-services/expedited-trucking", icon: "https://cdn.lordicon.com/whrxobsb.json" },
@@ -116,13 +115,15 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+  const [mobileAccountOpen, setMobileAccountOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
   const { data: authSession } = useSession();
   const isCustomer = (authSession?.user as { role?: string } | undefined)?.role === "customer";
   const isLightPage = true;
   const navCardRef = useRef<HTMLDivElement>(null);
   const accountRef = useRef<HTMLDivElement>(null);
+  const mobileAccountRef = useRef<HTMLDivElement>(null);
+  const mobileAccountButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openDropdown = () => {
@@ -164,6 +165,28 @@ export function SiteHeader() {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [servicesOpen, accountDropdownOpen]);
 
+  useEffect(() => {
+    if (!mobileAccountOpen) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!mobileAccountRef.current?.contains(event.target as Node)) {
+        setMobileAccountOpen(false);
+      }
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMobileAccountOpen(false);
+        mobileAccountButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileAccountOpen]);
 
   return (
     <>
@@ -171,7 +194,7 @@ export function SiteHeader() {
 
       <header className={`site-header${isLightPage ? " light-page" : ""}`}>
         <div className={`nav-card ${isScrolled ? "scrolled" : ""}`} ref={navCardRef}>
-          <a href="/" aria-label="Expedited Transport Services" className="brand">
+          <Link href="/" aria-label="Expedited Transport Services" className="brand" onClick={() => setMobileOpen(false)}>
             <span className="logo-wrap">
               <Image
                 src="/ex-icon.svg"
@@ -191,7 +214,7 @@ export function SiteHeader() {
               className="brand-text-img"
               priority
             />
-          </a>
+          </Link>
 
           <nav className="desk-nav" aria-label="Main navigation">
             <ul>
@@ -223,6 +246,7 @@ export function SiteHeader() {
           {isCustomer ? (
             <div 
               ref={accountRef} 
+              className="desktop-account"
               style={{ position: "relative", marginLeft: "auto" }}
               onMouseEnter={() => setAccountDropdownOpen(true)}
               onMouseLeave={() => setAccountDropdownOpen(false)}
@@ -230,7 +254,6 @@ export function SiteHeader() {
               <Link 
                 href="/account"
                 className="cta-signin" 
-                style={{ cursor: "pointer", display: "inline-block", textDecoration: "none" }}
               >
                 My Account
               </Link>
@@ -253,10 +276,63 @@ export function SiteHeader() {
           )}
           <Link href="/#instant-quote" className="cta-contact">Get a Quote</Link>
 
+          <div ref={mobileAccountRef} className="relative ml-auto hidden shrink-0 max-[900px]:block">
+            <button
+              ref={mobileAccountButtonRef}
+              type="button"
+              aria-label="Customer account"
+              aria-expanded={mobileAccountOpen}
+              aria-controls="mobile-account-panel"
+              className="flex size-[34px] cursor-pointer items-center justify-center rounded-lg border border-slate-900/12 bg-slate-900/6 text-[#e72227] transition-colors hover:bg-slate-900/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+              onClick={() => {
+                setMobileAccountOpen(value => !value);
+                setMobileOpen(false);
+              }}
+            >
+              <UserRound size={19} fill="currentColor" strokeWidth={1.5} aria-hidden="true" />
+            </button>
+            {mobileAccountOpen && (
+              <div
+                id="mobile-account-panel"
+                role="region"
+                aria-label="Customer account options"
+                className="absolute right-0 top-[calc(100%+1.25rem)] z-10 w-48 rounded-xl border border-slate-900/10 bg-white p-2 text-slate-900 shadow-xl"
+              >
+                <Link
+                  href={isCustomer ? "/account" : "/login"}
+                  className="flex min-h-11 items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold hover:bg-slate-100 focus-visible:bg-slate-100"
+                  onClick={() => setMobileAccountOpen(false)}
+                >
+                  {isCustomer ? <UserRound size={18} aria-hidden="true" /> : <LogIn size={18} aria-hidden="true" />}
+                  {isCustomer ? "My Account" : "Customer Login"}
+                </Link>
+                {isCustomer && (
+                  <button
+                    type="button"
+                    className="flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold text-red-600 hover:bg-red-50 focus-visible:bg-red-50"
+                    onClick={() => {
+                      setMobileAccountOpen(false);
+                      void signOut();
+                    }}
+                  >
+                    <LogOut size={18} aria-hidden="true" />
+                    Sign Out
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
+
           <button
+            type="button"
             className={`burger${mobileOpen ? " is-open" : ""}`}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            onClick={() => setMobileOpen((value) => !value)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => {
+              setMobileOpen((value) => !value);
+              setMobileAccountOpen(false);
+            }}
           >
             <span />
             <span />
@@ -268,7 +344,12 @@ export function SiteHeader() {
           </div>
         </div>
 
-        <div className={`drawer${mobileOpen ? " drawer-open" : ""}`}>
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+          inert={!mobileOpen}
+          className={`drawer${mobileOpen ? " drawer-open" : ""}`}
+        >
           <div className="drawer-section-label">Services</div>
           {SERVICES.map((svc) => (
             <Link key={svc.href} href={svc.href} className="drawer-link" onClick={() => setMobileOpen(false)}>
@@ -280,15 +361,11 @@ export function SiteHeader() {
           <Link href="/warehousing" className="drawer-link" onClick={() => setMobileOpen(false)}>Warehousing</Link>
           <Link href="/careers" className="drawer-link" onClick={() => setMobileOpen(false)}>Careers</Link>
           <Link href="/tracking" className="drawer-link" onClick={() => setMobileOpen(false)}>Track Order</Link>
-          {isCustomer ? (
-            <>
-              <button className="drawer-link" onClick={() => { setMobileOpen(false); signOut(); }} style={{ background: "transparent", border: "none", textAlign: "left", width: "100%" }}>Sign Out</button>
-            </>
-          ) : (
+          {!isCustomer && (
             <Link href="/login" className="drawer-link" onClick={() => setMobileOpen(false)}>Customer Login</Link>
           )}
           <Link href="/#instant-quote" className="drawer-cta" onClick={() => setMobileOpen(false)}>Get a Quote</Link>
-        </div>
+        </nav>
       </header>
       <style>{`
         .site-header {
@@ -638,8 +715,9 @@ export function SiteHeader() {
         }
 
         .drawer-open {
-          max-height: 90vh;
+          max-height: calc(100dvh - 7rem);
           overflow-y: auto;
+          overscroll-behavior: contain;
           opacity: 1;
         }
 
@@ -650,13 +728,13 @@ export function SiteHeader() {
           font-weight: 600;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.3);
+          color: rgba(255,255,255,0.65);
         }
 
         .drawer-link {
           display: block;
           padding: 0.65rem 1.25rem;
-          color: rgba(15, 23, 42, 0.72);
+          color: rgba(255,255,255,0.9);
           font-family: 'Segoe UI', system-ui, sans-serif;
           font-size: 0.9rem;
           font-weight: 500;
@@ -664,8 +742,9 @@ export function SiteHeader() {
           transition: color 0.13s ease, background 0.13s ease;
         }
 
-        .drawer-link:hover {
-          color: #0f172a;
+        .drawer-link:hover,
+        .drawer-link:focus-visible {
+          color: #ffffff;
           background: rgba(255,255,255,0.04);
         }
 
@@ -712,6 +791,12 @@ export function SiteHeader() {
           text-decoration: none;
         }
 
+        @media (min-width: 901px) {
+          .drawer {
+            display: none;
+          }
+        }
+
         @media (max-width: 900px) {
           .desk-nav {
             display: none;
@@ -721,12 +806,14 @@ export function SiteHeader() {
             display: none;
           }
 
-          .cta-signin {
+          .cta-signin,
+          .desktop-account {
             display: none;
           }
 
           .burger {
             display: flex;
+            margin-left: 0;
           }
         }
 
@@ -737,6 +824,16 @@ export function SiteHeader() {
 
           .brand-name {
             font-size: 0.85rem;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .brand .logo-wrap img {
+            width: 40px;
+          }
+
+          .brand-text-img {
+            width: 112px;
           }
         }
       `}</style>

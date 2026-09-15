@@ -1,13 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, CheckCircle2, Shield } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
 import { HotshotFaqSection } from "@/components/HotshotFaqSection";
 import { ContactSection } from "@/components/ContactSection";
+import responsive from "./ServiceResponsive.module.css";
 
 export type ServiceCard = {
   title: string;
@@ -88,7 +89,7 @@ export function ServicePageTemplate({
         </defs>
       </svg>
       <SiteHeader />
-      <main className="service-page">
+      <main className={`service-page ${responsive.page}`}>
         <style>{`
           .service-page {
             background: #fff;
@@ -699,14 +700,14 @@ export function ServicePageTemplate({
 
         <section className="overlay-hero">
           {/* Background giant text */}
-          <div className="bg-text">
+          <h1 className="bg-text">
             {title.split(/[\s\n]+/).map((word, i) => {
               const isFirstWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services' || title === 'Carrier Services' || title.includes('Local Trucking')) && i === 0;
               const isSecondWordSpecial = (title === 'LTL Trucking' || title === 'Freight Shipping' || title === 'Freight Transportation' || title === 'Logistics Services' || title === 'Carrier Services' || title.includes('Local Trucking')) && i === 1;
 
               const isSpecialLayout = (title === 'LTL Trucking' || title === 'Freight Transportation' || title === 'Logistics Services' || title === 'Carrier Services' || title.includes('Local Trucking'));
 
-              let customStyle: any = {};
+              let customStyle: CSSProperties = {};
               if (isFirstWordSpecial) {
                 const isLogistics = title === 'Logistics Services';
                 customStyle = {
@@ -810,7 +811,7 @@ export function ServicePageTemplate({
                 </span>
               );
             })}
-          </div>
+          </h1>
 
           {/* Truck image – overlaps text */}
           <div
@@ -854,13 +855,13 @@ export function ServicePageTemplate({
 
               {/* Interactive Pillar Accordion (Using `points`) */}
               {points && points.length > 0 && (
-                <div style={{ padding: "80px 40px 140px", maxWidth: "1400px", margin: "0 auto" }}>
-                  <div style={{ textAlign: "center", marginBottom: "60px", maxWidth: "800px", margin: "0 auto 60px" }}>
+                <div className="mx-auto max-w-[1400px] px-5 pt-12 pb-14 sm:px-6 sm:py-20 lg:px-10 lg:pt-20 lg:pb-[140px]">
+                  <div className="mx-auto mb-8 max-w-[800px] text-center sm:mb-12 lg:mb-[60px]">
 
-                    <h2 style={{ fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "24px", lineHeight: 1.1, color: "#0f172a", fontFamily: "var(--font-primary)" }}>
+                    <h2 className="mb-6 font-[var(--font-primary)] text-[clamp(28px,4vw,52px)] leading-[1.1] font-bold tracking-[-0.02em] text-slate-900">
                       {accordionTitle || `${title} Company for Any Job`}
                     </h2>
-                    <p style={{ color: "#475569", lineHeight: 1.8, fontSize: "18px", fontFamily: "var(--font-primary)" }}>
+                    <p className="font-[var(--font-primary)] text-base leading-[1.8] text-slate-600 sm:text-lg">
                       {accordionDescription || `${summary} Some of the additional benefits of hiring our ${title.toLowerCase()} carrier for your job include:`}
                     </p>
                   </div>
@@ -927,8 +928,9 @@ export function ServicePageTemplate({
                           <Image 
                             src={images[i % images.length]} 
                             alt={item} 
-                            fill 
+                            fill
                             className="pillar-bg"
+                            sizes="(max-width: 600px) 100vw, (max-width: 1279px) 50vw, 33vw"
                             style={{ objectFit: "cover" }} 
                           />
                           <div className="pillar-overlay" />
@@ -948,14 +950,14 @@ export function ServicePageTemplate({
 
               {/* Notched Image Cards (Using `cards`) */}
               {cards && cards.length > 0 && (
-                <section style={{ padding: "80px 0", backgroundColor: "#ffffff", position: "relative" }}>
+                <section className="relative bg-white py-12 sm:py-20">
                   <div className="notched-section-inner">
-                    <div style={{ textAlign: "center", marginBottom: "60px" }}>
-                      <h2 style={{ fontSize: "clamp(32px, 4vw, 40px)", fontWeight: 700, letterSpacing: "-0.02em", color: "#051e24", fontFamily: "var(--font-primary)" }}>{title} That You Can Depend On</h2>
+                    <div className="mb-8 text-center sm:mb-[60px]">
+                      <h2 className="font-[var(--font-primary)] text-[clamp(28px,4vw,40px)] leading-tight font-bold tracking-[-0.02em] text-[#051e24]">{title} That You Can Depend On</h2>
                       <div style={{ width: "60px", height: "4px", backgroundColor: "#E31E24", margin: "24px auto 0", borderRadius: "2px" }} />
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "column", gap: "80px" }}>
+                    <div className="flex flex-col gap-10 sm:gap-16 lg:gap-20">
                       {cards.map((card, idx) => {
                         const isEven = idx % 2 !== 0;
                         
@@ -1010,11 +1012,11 @@ export function ServicePageTemplate({
                         return (
                           <div key={idx} className={`notched-card ${isEven ? 'reverse' : 'normal'}`}>
                             <div className="notched-text-wrapper">
-                              <div style={{ display: "flex", alignItems: "flex-start", gap: "24px" }}>
-                                <div style={{ fontSize: "13px", color: "#8b9ba5", fontWeight: 600, fontFamily: "var(--font-mono)", marginTop: "12px", letterSpacing: "1px" }}>
+                              <div className="flex min-w-0 items-start gap-3 sm:gap-6">
+                                <div className="shrink-0" style={{ fontSize: "13px", color: "#8b9ba5", fontWeight: 600, fontFamily: "var(--font-mono)", marginTop: "12px", letterSpacing: "1px" }}>
                                   0{idx + 1}
                                 </div>
-                                <div>
+                                <div className="min-w-0">
                                   <h3 style={{ fontSize: "clamp(26px, 4vw, 44px)", fontWeight: 600, color: "#061d26", marginBottom: "20px", letterSpacing: "-0.02em", lineHeight: 1.1, fontFamily: "var(--font-primary)" }}>
                                     {card.title}
                                   </h3>
@@ -1036,6 +1038,7 @@ export function ServicePageTemplate({
                                   src={cardImage}
                                   alt={card.title}
                                   fill
+                                  sizes="(max-width: 1100px) 100vw, 50vw"
                                   style={{
                                     objectFit: "cover",
                                     transform: isEven ? "scaleX(-1)" : "none"

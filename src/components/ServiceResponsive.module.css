@@ -1,0 +1,172 @@
+.page :global(.bg-text) {
+  margin: 0;
+  z-index: 3;
+}
+
+.page :global(.notched-text-wrapper),
+.page :global(.notched-img-wrapper),
+.page :global(.pillar),
+.page :global(.pillar-content) {
+  min-width: 0;
+}
+
+.page :global(.pillar-text) {
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 1100px) {
+  .page :global(.overlay-hero) {
+    min-height: 0 !important;
+    padding: 120px 24px 56px !important;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  .page :global(.bg-text) {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    white-space: normal !important;
+  }
+
+  .page :global(.bg-text span) {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    text-align: center !important;
+    font-size: clamp(28px, 8vw, 80px) !important;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #0f172a;
+    -webkit-text-stroke: 0;
+  }
+
+  .page :global(.truck-layer) {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 800px;
+    margin: 0 !important;
+    flex-shrink: 0;
+  }
+
+  .page :global(.hero-footer) {
+    flex-direction: column !important;
+    align-items: center;
+    text-align: center !important;
+    gap: 24px !important;
+  }
+
+  .page :global(.hero-footer p) {
+    max-width: 720px;
+    font-size: 16px;
+  }
+
+  .page :global(.hero-cta) {
+    max-width: 100%;
+    justify-content: center;
+    padding: 16px 24px;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .page :global(.notched-card),
+  .page :global(.notched-card.normal),
+  .page :global(.notched-card.reverse) {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .page :global(.notched-text-wrapper) {
+    flex: none;
+    width: 100%;
+  }
+
+  .page :global(.notched-img-wrapper) {
+    flex: none;
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .page :global(.notched-section-inner) {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .page :global(.pillar-container) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
+    gap: 16px;
+  }
+
+  .page :global(.pillar),
+  .page :global(.pillar:hover) {
+    height: auto;
+    min-height: 180px;
+    border-radius: 24px;
+  }
+
+  .page :global(.pillar-inner) {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .page :global(.pillar-num) {
+    font-size: 28px;
+  }
+
+  .page :global(.pillar-text),
+  .page :global(.pillar:hover .pillar-text) {
+    font-size: 20px;
+    color: #fff;
+  }
+}
+
+@media (max-width: 600px) {
+  .page :global(.bg-text span:nth-child(odd)) {
+    padding-left: 8% !important;
+    text-align: left !important;
+  }
+
+  .page :global(.bg-text span:nth-child(even)) {
+    padding-right: 8% !important;
+    text-align: right !important;
+  }
+
+  .page :global(.overlay-hero) {
+    padding: 112px 20px 48px !important;
+    gap: 20px;
+  }
+
+  .page :global(.pillar-container) {
+    grid-template-columns: 1fr;
+  }
+
+  .page :global(.pillar),
+  .page :global(.pillar:hover) {
+    min-height: 160px;
+  }
+
+  .page :global(.pillar-inner) {
+    padding: 20px;
+  }
+
+  .page :global(.pillar-text),
+  .page :global(.pillar:hover .pillar-text) {
+    font-size: 18px;
+  }
+
+  .page :global(.notched-section-inner) {
+    padding: 0 20px;
+  }
+}

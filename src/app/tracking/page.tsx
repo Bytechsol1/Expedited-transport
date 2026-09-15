@@ -108,8 +108,8 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
           </div>
 
           <div style={{ background: "#fff", borderRadius: "16px", border: "1px solid rgba(0,0,0,0.05)", boxShadow: "0 4px 20px rgba(0,0,0,0.03)", padding: "1.5rem" }}>
-            <form onSubmit={handleTrack} style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-              <div style={{ flex: 1, minWidth: "250px", position: "relative" }}>
+            <form onSubmit={handleTrack} className="flex flex-col gap-3 sm:flex-row">
+              <div className="relative w-full min-w-0 flex-1">
                 <div style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)", color: "rgba(15,23,42,0.4)" }}>
                   <Search size={20} />
                 </div>
@@ -118,6 +118,7 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
                   value={trackingId}
                   onChange={(e) => setTrackingId(e.target.value)}
                   placeholder="Enter Tracking ID" 
+                  aria-label="Tracking ID"
                   required
                   style={{
                     width: "100%",
@@ -133,16 +134,7 @@ export default function AccountTrackingPage({ searchParams }: { searchParams: Pr
               <button 
                 type="submit" 
                 disabled={isLoading}
-                style={{ 
-                  padding: "0 2rem", 
-                  background: isLoading ? "#d4d4d8" : "#E31E24", 
-                  color: "#ffffff", 
-                  borderRadius: "12px", 
-                  fontWeight: 700, 
-                  border: "none", 
-                  cursor: isLoading ? "not-allowed" : "pointer",
-                  fontSize: "1rem"
-                }}
+                className="inline-flex h-10 shrink-0 cursor-pointer items-center justify-center self-center rounded-xl border-0 bg-[#E31E24] px-8 text-center text-sm font-bold text-white disabled:cursor-not-allowed disabled:bg-zinc-300"
               >
                 {isLoading ? "Searching..." : "Track Order"}
               </button>

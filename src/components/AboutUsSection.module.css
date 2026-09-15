@@ -1,0 +1,37 @@
+.benefitCard {
+  box-shadow: -5px 5px 0 #0f172a, -10px 10px 24px rgb(0 0 0 / 10%);
+}
+
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
+  .benefitCard {
+    box-shadow: -1px 1px 0 #0f172a, -2px 2px 0 #0f172a, -3px 3px 0 #0f172a,
+      -4px 4px 0 #0f172a, -5px 5px 0 #0f172a, -6px 6px 0 #0f172a,
+      -7px 7px 0 #0f172a, -8px 8px 0 #0f172a, -9px 9px 0 #0f172a,
+      -10px 10px 0 #0f172a, -20px 20px 40px rgb(0 0 0 / 15%);
+    transform: rotateX(25deg) rotateY(-15deg) rotateZ(5deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s, box-shadow 0.5s, border-color 0.5s;
+  }
+
+  .cardContent {
+    transition: transform 0.5s;
+  }
+
+  .benefitCard:hover {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1.05) translateY(-10px);
+    box-shadow: 0 30px 60px rgb(0 0 0 / 15%), 0 0 0 4px #e31e24;
+    border-color: #e31e24;
+  }
+
+  .benefitCard:hover .cardContent {
+    transform: translateZ(30px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefitCard,
+  .cardContent {
+    transform: none;
+    transition: none;
+  }
+}

@@ -5,14 +5,14 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { FooterSection } from "@/components/FooterSection";
 import { HotshotFaqSection } from "@/components/HotshotFaqSection";
 import { ContactSection } from "@/components/ContactSection";
-import { ArrowRight, Clock, Package, ShieldCheck, MapPin, Smartphone, SmartphoneNfc, BadgeCheck } from "lucide-react";
+import { ArrowRight, MapPin, Smartphone } from "lucide-react";
 import Image from "next/image";
 
 export default function CareersPage() {
   return (
     <>
       <SiteHeader />
-      <div style={{ backgroundColor: "#ffffff", color: "#0f172a", minHeight: "100vh", fontFamily: "'Inter', sans-serif" }}>
+      <main className="min-h-screen bg-white font-[var(--font-inter)] text-slate-900">
 
         <style>{`
           .site-header .nav-card,
@@ -42,29 +42,25 @@ export default function CareersPage() {
         `}</style>
 
         {/* HERO SECTION */}
-        <section style={{
-          paddingTop: "200px",
-          paddingBottom: "100px",
-          position: "relative",
-          overflow: "hidden",
+        <section className="relative overflow-hidden pt-28 pb-14 sm:pt-36 sm:pb-20 lg:pt-[200px] lg:pb-[100px]" style={{
           background: "radial-gradient(circle at 15% 50%, rgba(244, 252, 232, 0.4), transparent 25%), radial-gradient(circle at 85% 30%, rgba(224, 242, 254, 0.4), transparent 25%)"
         }}>
           {/* Subtle Grid Background */}
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none", zIndex: 0 }} />
 
-          <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 40px", textAlign: "center", position: "relative", zIndex: 1 }}>
-            <h1 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 8vw, 80px)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "24px", color: "#0f172a" }}>
+          <div className="relative z-1 mx-auto max-w-[1000px] px-5 text-center sm:px-6 lg:px-10">
+            <h1 className="mb-6 font-[var(--font-primary)] text-[clamp(36px,8vw,80px)] leading-[1.1] font-semibold tracking-[-0.03em] text-slate-900">
               Drive Your Career<br/>Forward
             </h1>
 
-            <p style={{ fontSize: "18px", color: "#475569", lineHeight: 1.6, maxWidth: "600px", margin: "0 auto 40px", fontWeight: 500 }}>
+            <p className="mx-auto mb-8 max-w-[600px] text-base leading-[1.6] font-medium text-slate-600 sm:mb-10 sm:text-lg">
               We are on a mission to redefine expedited transport. Bring your skills to a team that values innovation, speed, and reliability.
             </p>
 
-            <a href="#open-positions" style={{
+            <a href="#open-positions" className="px-6 py-4 text-sm sm:px-9 sm:text-base" style={{
               display: "inline-block",
               backgroundColor: "#0f172a", color: "#ffffff",
-              padding: "16px 36px", fontSize: "16px", fontWeight: 700,
+              fontWeight: 700,
               borderRadius: "12px", textDecoration: "none", transition: "all 0.2s ease",
               boxShadow: "0 10px 20px rgba(15, 23, 42, 0.1)"
             }}
@@ -77,38 +73,33 @@ export default function CareersPage() {
         </section>
 
         {/* INDEPENDENT CONTRACTOR SECTION */}
-        <section id="open-positions" style={{ padding: "80px 0 120px", background: "linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%)", overflow: "hidden" }}>
-          <div style={{ maxWidth: "1600px", margin: "0 auto", padding: "0 24px" }}>
+        <section id="open-positions" className="scroll-mt-24 overflow-hidden bg-linear-to-b from-slate-50 to-[#eef2f7] pt-10 pb-14 sm:py-16 lg:pt-20 lg:pb-[120px]">
+          <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
             <div style={{ position: "relative", background: "#ffffff", borderRadius: "28px", overflow: "hidden", boxShadow: "0 18px 60px rgba(15, 23, 42, 0.08)" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "600px" }}>
-                <div style={{ padding: "80px 60px", background: "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div className="grid grid-cols-1 lg:min-h-[600px] lg:grid-cols-2">
+                <div className="flex min-w-0 flex-col justify-center bg-linear-to-b from-white to-slate-50 px-6 py-8 sm:p-10 lg:px-10 lg:py-20 xl:px-[60px]">
                   
-                  <div style={{ display: "flex", gap: "12px", marginBottom: "30px", flexWrap: "wrap" }}>
-                    <span style={{ padding: "8px 16px", background: "#f1f5f9", borderRadius: "100px", fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#475569" }}>
+                  <div className="mb-6 flex flex-wrap gap-2 sm:mb-[30px] sm:gap-3">
+                    <span className="rounded-full bg-slate-100 px-3 py-2 text-[10px] leading-relaxed font-bold tracking-[0.1em] text-slate-600 uppercase sm:px-4 sm:text-xs">
                       Independent Contractor
                     </span>
-                    <span style={{ padding: "8px 16px", background: "rgba(227, 30, 36, 0.15)", color: "#526c00", borderRadius: "100px", fontSize: "12px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                    <span className="rounded-full bg-[#E31E24]/15 px-3 py-2 text-[10px] leading-relaxed font-bold tracking-[0.1em] text-[#526c00] uppercase sm:px-4 sm:text-xs">
                       Flexible Schedule
                     </span>
                   </div>
 
-                  <h2 style={{ margin: "0 0 24px", fontFamily: "var(--font-primary)", fontSize: "clamp(36px, 4vw, 56px)", lineHeight: 1.05, letterSpacing: "-0.02em", fontWeight: 450, color: "#0f172a" }}>
+                  <h2 className="mt-0 mb-6 font-[var(--font-primary)] text-[clamp(30px,4vw,56px)] leading-[1.1] font-[450] tracking-[-0.02em] text-slate-900 lg:leading-[1.05]">
                     Join the CMJL Driver Network
                   </h2>
 
-                  <p style={{ margin: "0 0 32px", fontSize: "18px", lineHeight: 1.7, color: "#475569", maxWidth: "600px" }}>
+                  <p className="mt-0 mb-8 max-w-[600px] text-base leading-[1.7] text-slate-600 lg:text-lg">
                     Looking for flexible work and weekly pay? CMJL is hiring Independent Contractor Drivers throughout Connecticut. Whether you’re looking for full-time, part-time, or extra income, our app makes it easy to view and accept available delivery opportunities.
                   </p>
 
-                  <div style={{ 
-                    padding: "24px", 
-                    background: "#fef2f2", 
-                    borderRadius: "16px", 
-                    borderLeft: "4px solid #E31E24"
-                  }}>
+                  <div className="rounded-2xl border-l-4 border-[#E31E24] bg-red-50 p-4 sm:p-6">
                     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
-                      <MapPin size={24} color="#E31E24" />
-                      <h4 style={{ fontSize: "16px", fontWeight: 800, color: "#B9181D", margin: 0, letterSpacing: "0.05em", textTransform: "uppercase" }}>Target Locations</h4>
+                      <MapPin size={24} color="#E31E24" className="shrink-0" />
+                      <h4 className="m-0 text-sm font-extrabold tracking-[0.05em] text-[#B9181D] uppercase sm:text-base">Target Locations</h4>
                     </div>
                     <p style={{ color: "#0f172a", lineHeight: 1.6, margin: 0, fontSize: "16px", fontWeight: 500 }}>
                       Hartford, West Hartford, Bloomfield, Windsor, Avon, Simsbury, Canton, Burlington, Torrington, Middletown, Berlin, Cromwell, New London County, and surrounding areas.
@@ -116,32 +107,32 @@ export default function CareersPage() {
                   </div>
                 </div>
                 
-                <div style={{ position: "relative", background: "#e5e7eb", overflow: "hidden" }}>
+                <div className="relative min-h-[280px] overflow-hidden bg-gray-200 sm:min-h-[420px] lg:min-h-0">
                   <Image
                     src="/images/cmjl-drivers-group.jpg"
                     alt="CMJL Drivers"
                     fill
+                    sizes="(max-width: 1023px) 100vw, 50vw"
                     style={{ objectFit: "cover", objectPosition: "center" }}
                   />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 20%)" }} />
+                  <div className="absolute inset-0 bg-linear-to-b from-white to-transparent to-20% lg:bg-linear-to-r" />
                   
                   {/* Unique Apply Now Button over Image */}
-                  <div style={{ position: "absolute", bottom: "40px", right: "40px" }}>
+                  <div className="absolute right-5 bottom-5 sm:right-10 sm:bottom-10">
                     <a 
                       href="https://expeditedtransport.net/register" 
                       target="_blank" 
                       rel="noopener noreferrer" 
+                      className="px-6 py-3.5 text-sm sm:px-8 sm:py-4 sm:text-base"
                       style={{
                         display: "flex",
                         alignItems: "center",
                         gap: "12px",
                         background: "#E31E24",
-                        padding: "16px 32px",
                         borderRadius: "100px",
                         color: "#ffffff",
                         textDecoration: "none",
                         fontWeight: 800,
-                        fontSize: "16px",
                         letterSpacing: "0.5px",
                         textTransform: "uppercase",
                         boxShadow: "0 24px 48px rgba(227, 30, 36, 0.4)",
@@ -158,32 +149,32 @@ export default function CareersPage() {
         </section>
 
         {/* MINIMALIST MAGAZINE SPLIT SECTION */}
-        <section style={{ padding: "120px 0", backgroundColor: "#ffffff" }}>
-          <div style={{ maxWidth: "1500px", margin: "0 auto", padding: "0 40px" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "80px" }}>
+        <section className="bg-white py-14 sm:py-20 lg:py-[120px]">
+          <div className="mx-auto max-w-[1500px] px-5 sm:px-6 lg:px-10">
+            <div className="grid grid-cols-1 gap-12 sm:gap-16 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-20">
               
               {/* LEFT SIDE: WHAT WE OFFER */}
-              <div style={{ flex: "1 1 600px" }}>
-                <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 6vw, 80px)", fontWeight: 500, letterSpacing: "-0.04em", color: "#0f172a", margin: "0 0 20px", lineHeight: 1 }}>
+              <div className="min-w-0">
+                <h2 className="mt-0 mb-5 font-[var(--font-primary)] text-[clamp(40px,6vw,80px)] leading-none font-medium tracking-[-0.04em] text-slate-900">
                   What We <br/> <span style={{ color: "#E31E24" }}>Offer.</span>
                 </h2>
-                <p style={{ fontSize: "20px", color: "#64748b", margin: "0 0 60px", lineHeight: 1.6, maxWidth: "500px" }}>
+                <p className="mt-0 mb-8 max-w-[500px] text-base leading-[1.6] text-slate-500 sm:text-lg lg:mb-[60px] lg:text-xl">
                   Join a logistics network that respects your time, pays you fast, and gives you total control.
                 </p>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "40px" }}>
+                <div className="flex flex-col gap-7 sm:gap-10">
                   {[
                     { title: "Flexible Scheduling", desc: "Choose full-time or part-time routes that fit your lifestyle." },
                     { title: "On-Demand Routes", desc: "Access live route postings instantly through the CMJL App." },
                     { title: "Weekly Direct Deposit", desc: "Get paid reliably every single week, directly to your account." }
                   ].map((item, idx) => (
-                    <div key={idx} style={{ display: "flex", gap: "24px" }}>
-                      <div style={{ fontSize: "24px", fontWeight: 300, color: "#94a3b8", fontFamily: "var(--font-mono)" }}>
+                    <div key={idx} className="flex gap-4 sm:gap-6">
+                      <div className="shrink-0 font-[var(--font-mono)] text-xl font-light text-slate-400 sm:text-2xl">
                         0{idx + 1}
                       </div>
-                      <div>
-                        <h3 style={{ fontSize: "24px", fontWeight: 700, color: "#0f172a", marginBottom: "12px", fontFamily: "var(--font-primary)" }}>{item.title}</h3>
-                        <p style={{ margin: 0, color: "#475569", lineHeight: 1.6, fontSize: "18px", maxWidth: "400px" }}>{item.desc}</p>
+                      <div className="min-w-0">
+                        <h3 className="mb-3 font-[var(--font-primary)] text-xl leading-tight font-bold text-slate-900 sm:text-2xl">{item.title}</h3>
+                        <p className="m-0 max-w-[400px] text-base leading-[1.6] text-slate-600 sm:text-lg">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -191,13 +182,13 @@ export default function CareersPage() {
               </div>
 
               {/* RIGHT SIDE: REQUIREMENTS (INFOGRAPHIC GRID) */}
-              <div style={{ flex: "1 1 500px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "40px" }}>
-                  <div style={{ width: "48px", height: "4px", backgroundColor: "#E31E24", borderRadius: "2px" }} />
-                  <h3 style={{ fontSize: "32px", fontWeight: 700, color: "#0f172a", margin: 0, fontFamily: "var(--font-primary)", letterSpacing: "-0.02em" }}>Driver Requirements</h3>
+              <div className="min-w-0">
+                <div className="mb-6 flex items-center gap-3 sm:mb-10 sm:gap-4">
+                  <div className="h-1 w-6 shrink-0 rounded-xs bg-[#E31E24] sm:w-12" />
+                  <h3 className="m-0 font-[var(--font-primary)] text-2xl leading-tight font-bold tracking-[-0.02em] text-slate-900 sm:text-[32px]">Driver Requirements</h3>
                 </div>
                 
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "24px" }}>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-6 xl:grid-cols-2">
                   {[
                     { short: "21+", desc: "Years of age or older" },
                     { short: "ID", desc: "Valid driver's license" },
@@ -206,10 +197,9 @@ export default function CareersPage() {
                     { short: "Clear", desc: "Pass background check" },
                     { short: "Pro", desc: "Professional attitude" }
                   ].map((req, idx) => (
-                    <div key={idx} style={{ 
+                    <div key={idx} className="min-w-0 px-4 py-5 sm:px-6 sm:py-8" style={{
                       background: "#ffffff", 
                       borderRadius: "20px", 
-                      padding: "32px 24px",
                       border: "2px solid #f1f5f9",
                       display: "flex", flexDirection: "column",
                       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -238,10 +228,10 @@ export default function CareersPage() {
                       }
                     }}
                     >
-                      <div className="req-icon" style={{ fontSize: "36px", fontWeight: 800, color: "#0f172a", marginBottom: "16px", fontFamily: "var(--font-primary)", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)", display: "inline-block", letterSpacing: "-0.04em" }}>
+                      <div className="req-icon text-[30px] sm:text-4xl" style={{ fontWeight: 800, color: "#0f172a", marginBottom: "16px", fontFamily: "var(--font-primary)", transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)", display: "inline-block", letterSpacing: "-0.04em" }}>
                         {req.short}
                       </div>
-                      <p style={{ margin: 0, fontSize: "16px", color: "#64748b", fontWeight: 500, lineHeight: 1.6 }}>
+                      <p className="m-0 text-sm leading-[1.6] font-medium text-slate-500 sm:text-base">
                         {req.desc}
                       </p>
                     </div>
@@ -254,66 +244,43 @@ export default function CareersPage() {
         </section>
 
         {/* ── CTA SECTION (Download App) ── */}
-        <section style={{ padding: "0 40px 160px", backgroundColor: "#eef2f7" }}>
-          <div style={{
-            maxWidth: "1400px",
-            margin: "0 auto",
-            background: "#000000",
-            borderRadius: "40px",
-            padding: "80px",
-            position: "relative",
-            overflow: "hidden",
-            boxShadow: "0 40px 80px rgba(0, 0, 0, 0.15)"
-          }}>
+        <section className="bg-[#eef2f7] px-4 pb-16 sm:px-6 sm:pb-24 lg:px-10 lg:pb-40">
+          <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-3xl bg-black px-6 py-9 shadow-[0_40px_80px_rgba(0,0,0,0.15)] sm:rounded-[40px] sm:p-10 lg:p-20">
             <div style={{ position: "absolute", top: "-50%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(227, 30, 36, 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
             <div style={{ position: "absolute", bottom: "-20%", left: "10%", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "60px", position: "relative", zIndex: 1, flexWrap: "wrap" }}>
+            <div className="relative z-1 flex flex-col gap-8 xl:flex-row xl:items-center xl:justify-between xl:gap-[60px]">
 
-              <div style={{ flex: "1 1 500px" }}>
+              <div className="min-w-0 flex-1">
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "10px 20px", backgroundColor: "rgba(227, 30, 36, 0.1)", borderRadius: "100px", marginBottom: "32px", border: "1px solid rgba(227, 30, 36, 0.2)" }}>
                   <Smartphone size={18} color="#E31E24" />
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: "14px", color: "#E31E24", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700 }}>Start Today</span>
                 </div>
 
-                <h2 style={{ fontFamily: "var(--font-primary)", fontSize: "clamp(48px, 5vw, 64px)", fontWeight: 450, letterSpacing: "-0.02em", marginBottom: "24px", color: "#ffffff", lineHeight: 1.05 }}>
+                <h2 className="mb-6 font-[var(--font-primary)] text-[clamp(32px,5vw,64px)] leading-[1.1] font-[450] tracking-[-0.02em] text-white lg:leading-[1.05]">
                   Download the <span style={{ color: "#E31E24" }}>CMJL</span> <br /> Driver App<span style={{ color: "#E31E24" }}>.</span>
                 </h2>
 
-                <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.7)", marginBottom: "0", lineHeight: 1.6, maxWidth: "540px", fontWeight: 400 }}>
+                <p className="mb-0 max-w-[540px] text-base leading-[1.6] font-normal text-white/70 sm:text-lg lg:text-xl">
                   Complete your onboarding and start accepting delivery opportunities immediately.
                 </p>
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "20px", minWidth: "300px", flexShrink: 0 }}>
-                <a href="https://apps.apple.com/app/cmjl/id6775973879" target="_blank" rel="noopener noreferrer" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
-                  padding: "24px 40px", backgroundColor: "#E31E24", color: "#ffffff",
-                  textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
-                  borderRadius: "20px", transition: "all 0.3s ease",
-                  boxShadow: "0 20px 40px rgba(227, 30, 36, 0.2)"
-                }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 30px 60px rgba(227, 30, 36, 0.3)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 20px 40px rgba(227, 30, 36, 0.2)"; }}
+              <div className="flex w-full min-w-0 shrink-0 flex-col gap-5 xl:w-[320px]">
+                <a href="https://apps.apple.com/app/cmjl/id6775973879" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-3 rounded-[20px] bg-[#E31E24] px-4 py-4 text-sm font-bold tracking-[0.04em] text-white uppercase no-underline shadow-[0_20px_40px_rgba(227,30,36,0.2)] transition-transform hover:-translate-y-1 sm:gap-5 sm:px-10 sm:py-6 sm:text-base"
                 >
                   <span>iPhone App Store</span>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(0,0,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-black/10">
                     <ArrowRight size={20} />
                   </div>
                 </a>
 
-                <a href="https://play.google.com/store/apps/details?id=net.expeditedtransport.driverapp&pcampaignid=web_share" target="_blank" rel="noopener noreferrer" style={{
-                  display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px",
-                  padding: "24px 40px", backgroundColor: "rgba(255,255,255,0.05)", color: "#ffffff",
-                  textTransform: "uppercase", fontSize: "16px", fontWeight: 700, letterSpacing: "1px", textDecoration: "none",
-                  borderRadius: "20px", transition: "all 0.3s ease",
-                  border: "1px solid rgba(255,255,255,0.1)"
-                }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.05)"; e.currentTarget.style.transform = "translateY(0)"; }}
+                <a href="https://play.google.com/store/apps/details?id=net.expeditedtransport.driverapp&pcampaignid=web_share" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-between gap-3 rounded-[20px] border border-white/10 bg-white/5 px-4 py-4 text-sm font-bold tracking-[0.04em] text-white uppercase no-underline transition-all hover:-translate-y-1 hover:bg-white/10 sm:gap-5 sm:px-10 sm:py-6 sm:text-base"
                 >
                   <span>Google Play Store</span>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white/10">
                     <ArrowRight size={20} />
                   </div>
                 </a>
@@ -323,7 +290,7 @@ export default function CareersPage() {
           </div>
         </section>
 
-      </div>
+      </main>
       <div style={{ position: "relative", zIndex: 6 }}>
         <HotshotFaqSection />
       </div>
